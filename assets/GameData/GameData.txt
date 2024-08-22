@@ -1,0 +1,27 @@
+
+    Karlos Quake Game data
+
+    Dir structure
+
+    progs/
+        directory for user models
+    gfx/
+        directory for user graphics for console, palette etc...
+    maps/
+        directory for user map configurations
+
+    pak0
+        quake.rc
+            base initialization file
+        default.cfg
+            default game configuration
+        gfx/
+            non-user graphics data for help screens etc...
+        progs/
+            non-user models for miscellaneous game objects
+        maps/
+            default map configurations
+
+    pak1
+        sound/
+            all game specific sounds
