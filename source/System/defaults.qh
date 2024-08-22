@@ -1,0 +1,15 @@
+// system/defaults.qh
+// registered cvar flags...
+
+float  DEV_NOMONSTERS      = 128;
+
+string QSYS_PATCHVER = "$VER: Karlos QuakePatch 1.8r2 (12/10/1999)";
+string QSYS_SERVERMOD = "--- Karlos Quake 1.8r4 ---\npowered by AMIGA\n";
+
+float EDICT_EXPIRE   = 30; // max lifetime of temp entity
+.float inertia;
+
+void() version_System =
+{
+   sprint(self, "KQ/System 3.53 06:05:2000\n");
+};

@@ -1,0 +1,15 @@
+// monsters/defaults.qh
+
+float SPAWN_CRUCIFIED = 1;
+
+.float inpain;
+
+entity  le1, le2;
+entity  shub;
+float   hknight_type;
+float   lightning_end;
+
+void() version_Monsters =
+{
+   sprint(self, "KQ/Monsters 2.33 09:10:2000\n");
+};

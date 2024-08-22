@@ -1,0 +1,6 @@
+list dirs lformat "makeheader %n" to t:all.tmp
+execute t:all.tmp
+delete t:all.tmp
+buildit
+
+

@@ -1,0 +1,16 @@
+stack 131072
+if exists progs.dat
+   delete progs.dat
+endif
+faqcc
+;qcc
+changetaskpri 0
+
+ask "Copy progs.dat file to game directory (Y/AOK) ? >"
+if warn
+   copy progs.dat to dh5:quake/karlos/
+   protect progs.#? +a
+   protect #?/#?(.qc|.qh) +a
+endif
+
+

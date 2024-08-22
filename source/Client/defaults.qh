@@ -1,0 +1,100 @@
+// client/defaults
+
+// special client stuff - stored in parm16
+
+float MAX_SKIN          = 31;  // maximum client skin number
+float CL_GENDERBIT      = 32;  // client sex                 0 MALE      1 FEMALE
+float CL_MESSAGEBIT     = 64;  // client fullscreen messages 0 INACTIVE  1 ACTIVE
+float CL_INVENTORYBIT   = 128; // client inventory switch    0 INACTIVE  1 ACTIVE
+float CL_SHOW_TARGETS   = 256; // display target netnames
+
+
+float CL_ADMIN          = 1;  // first client is administrator
+float CL_SERVER_ACCESS  = 2;  // if set, this client has access to server
+
+// additional client flags
+float FL_USING_CAMERA        = 16384;    //    camera active
+float FL_USING_TARGET        = 32768;    //    target active
+float FL_USING_TORCH         = 65536;    //    torch active
+float FL_USING_GUIDE         = 131072;   //    laser guide active
+float FL_USING_GRAPPLE       = 262144;   //    grapple selected
+float FL_USING_ION           = 524288;   //    ion selected
+float FL_SMOOTH_SUBENTS      = 1048576;  //    smooth subentities active
+float FL_SAVE_BITS           = 2080768;  //    save flag mask
+
+// local screenmessages
+float MSG_INFO       = 0;     // info
+float MSG_WARN       = 1;     // warning
+float MSG_OTHER      = 2;     // misc...
+
+// ion colour indecies
+float ION_BITS        = 3584; // bits 9-11 of temp1
+float ION_WHITE_IDX   = 0;
+float ION_BLUE_IDX    = 512;
+float ION_RED_IDX     = 1024;
+float ION_MAGENTA_IDX = 1536;
+float ION_GREEN_IDX   = 2048;
+float ION_CYAN_IDX    = 2560;
+float ION_YELLOW_IDX  = 3072;
+
+// bits 12/13 of temp1 used for handedness
+
+float CL_NOHANDVIEW     = 0;    // no weaponview
+float CL_RIGHTHANDED    = 4096; // client is right handed
+float CL_LEFTHANDED     = 8192; // client is left handed
+float CL_CENTREHANDED   = 12288;// client is centre handed
+
+float CL_SAVE_BITS      = 12768; // all client bits except skin/ion colour
+
+// incremental colours (index to index + 16)
+float ION_WHITE = 0;
+float ION_CYAN  = 32;
+float ION_GREEN = 48;
+float ION_RED   = 64;
+
+// decremental colours (index - 16 to index)
+float ION_MAGENTA = 160;
+float ION_YELLOW  = 208;
+float ION_BLUE    = 224;
+
+// addtional client fields
+.float      server_master;       // True if client has server access
+.float      server_access;
+.float      suitbreathtime;      // time inbetween breath noises when usin suit
+.float      wadetime;            // interal between water treading sounds
+.float      burntime;            // interval between acid/lava burning sounds
+
+.float      extraflags;          // inventory/setgender/fullscreen messages
+.float      gender;              // stores current player gender
+.string     attacking_with;      // stores the exact name of the thing used to attack
+.float      inventory;           // inventory contents
+.float      ion_colour;          // ion_cannon colour (for deathmatch esp)
+.float      netname_delay;       // time needed to target a thing to see name
+
+.float index_player;             // client specific modelindex player (gender)
+
+float modelindex_eyes, modelindex_player;
+float multi_damage;
+
+// fx_manager stuff
+.float cl_color;
+
+.float def_gamma;        // default gamma value (brightness)
+.float def_fov;          // default field of view
+.float cur_gamma;        // current field of gamma
+.float cur_fov;          // current field of view
+
+.float update_fx_vars;   // time to next update fx manager (client)
+.entity fx_manager;      // the effect handling entity itself
+
+
+.float  cell_charge;
+.float  hit_z;
+.float  hand_grenade_time;
+
+entity  multi_ent;
+
+void() version_Client =
+{
+   sprint(self, "KQ/Client 2.17 22:04:2000\n");
+};

@@ -1,0 +1,217 @@
+/*
+   $VER: convconback 1.1 © Karlos '99 (15/09/1999)
+*/
+
+parse arg user_args
+
+main:
+   /* Decode user args, test and load bitmap */
+   init()
+
+   /* Copy image resolution and pixel chunk to lmpfile */
+
+   lmpfile.name  = samedir(source.name)||'conback.lmp'
+   lmpfile.res   = source.check3 
+   lmpfile.chunk = substr(source.raw, 1078, 64000)
+
+   /* time operation */
+   time(r)
+
+   if writelmp() then,
+      /* .lmp file was written OK*/
+      say 'a'x"   Graphic "lmpfile.name" written successfully, conversion took "time(e)" s"
+
+   /* Clean Exit*/
+   prexit(0)
+
+/*---------------------------------------------------------------------------------------*/
+
+writelmp:
+   /* Write .lmp file to same directory as source image */
+
+   if open(NEW_LMP, lmpfile.name, w) then,
+      do
+         /* write resolution hunk */
+         writech(NEW_LMP, lmpfile.res)
+
+         /* flip image ?*/
+         if flip then,
+            do
+               say pos(4,9)||"flipping image : lines to go "
+               i = 199
+               do until i < 0
+                  a = 1 + (i * 320);
+                  lmpfile.line = substr(lmpfile.chunk, a, 320)
+                  writech(NEW_LMP, lmpfile.line)
+                  say pos(33,9)right(i,3)
+                  i = i - 1
+               end
+            end
+         else,
+            /* just write image chunk directly */
+            writech(NEW_LMP, lmpfile.chunk)
+
+         /*writech(NEW_LMP, lmpfile.chunk)*/
+         call close(NEW_LMP)
+
+         /* file written OK */
+         return 1
+      end
+
+   /* There was an error opening conback.lmp file */
+   prexit(20, "Couldn't write "lmpfile.name".")
+
+/*---------------------------------------------------------------------------------------*/
+
+prexit:
+   /* Print error message, arg(2) if exit code non zero */
+   if arg(1) ~= 0 then,
+      say "   Error : "||arg(2)
+
+   exit arg(1)
+
+/*---------------------------------------------------------------------------------------*/
+
+init:
+   flip = 0
+   bmpname = init.args(user_args,"FLIP/S,IMAGE:")
+
+   /* no arguments given ? */
+   if bmpname = '' then,
+      do
+         say "No new console backdrop graphics today then, eh ?"
+         prexit(0)
+      end
+
+   if init.srcfile(bmpname) then,
+      do
+         say 'a'x"   image data loaded correctly"
+
+         /* source image loaded OK */
+         return 1
+      end
+
+   /* A problem opwning source image file */
+   prexit(10, "Couldnt load bitmap file.")
+
+/*---------------------------------------------------------------------------------------*/
+
+init.args:
+   procedure expose flip
+   args = strip(arg(1), B, ' ')
+   if right(args, 1) = '?' then,
+      /* user asked for help */
+      do
+         call showhelp()
+         options prompt Arg(2)
+         parse pull c_line
+         args = strip(c_line, B, ' ')
+      end
+
+   if upper(word(args, 1)) = "FLIP" then,
+      do
+         flip = 1 /* flip the image vertically */
+         return strip(substr(args, 5), B, ' "')
+      end
+   return strip(args, B, ' "')
+
+/*---------------------------------------------------------------------------------------*/
+
+init.srcfile:
+   say '1b630a'x||"File : '"arg(1)"'..."
+   /* first check file length - use AmigaDOS list command, store in env*/
+   address command 'sys:c/list >env:conbacktemp "'arg(1)'" lformat "%l"'
+
+   /* open our env var */
+   if ~open(LENCHK, "env:conbacktemp") then,
+      do
+         say "   Oops, I seem to have an internal error - I can't access my own temp env variable."
+         return 0
+      end
+
+   /* read length, max 10 chars, strip any spaces */
+   source.check1 = readln(LENCHK)
+
+   /* close and remove our env var */
+   close (LENCHK)
+   address command 'unsetenv conbacktemp'
+
+   if open(BITMAP,arg(1),R) then,
+      do
+         source.raw = readch(BITMAP, 65536)
+         close(BITMAP)
+
+         /* check image formatand length */
+         source.check2 = left(source.raw, 3)
+
+         /* check image resolution */
+         source.check3 = substr(source.raw,19,8)
+
+         say "   testing file..."
+         if source.check1 < 65078 then,
+          /* too small ? - exit program */
+             do
+                say "   filesize : file does not seem to large enough (length < 65078 bytes)."
+                return 0
+             end
+         else,
+            if source.check1 > 65078 then,
+               /* too big ? - image may be corrupt, but won't harm game */
+               do
+                  say "   filesize   : file length ("source.check1") exceed expected value (65078) - it may look screwy."
+               end
+            else,
+               say "   filesize   : OK"
+
+         if source.check2 ~= "BM6" then,
+            /* not a bitmap ? - may exit program*/
+            do
+               say "   format     : file does not seem to be a valid Windoze bitmap file."
+               return 0
+            end
+         else,
+            say "   format     : OK"
+
+         if source.check3 ~= '40010000C8000000'x then,
+            /* wrong resolution ? - better exit*/
+            do
+               say "   dimensions : file does not seem to be 320x200x8 resolution. Forcing 320x200."
+               source.check3 = '40010000C8000000'x
+            end
+         else,
+            say "   dimensions : correct"
+
+         /* everything seems OK */
+         source.name   = arg(1) /* image name (and path) - needed for output */
+         return 1
+      end
+
+   /* an undiagnosed error occurred opening the source*/
+   return 0
+
+/*---------------------------------------------------------------------------------------*/
+
+samedir:
+   if length(compress(arg(1),'/')) < length(arg(1)) then,
+      return left(arg(1), lastpos('/',arg(1)))
+   return left(arg(1), lastpos(':',arg(1)))
+
+/*---------------------------------------------------------------------------------------*/
+
+pos: Procedure ; return '9b'x||Arg(2)||'3b'x||Arg(1)||'48'x
+   /* Say pos(<x>,<y>) */
+
+showhelp:
+   say '1b630a'x||"convconback 1.1 © Karlos '99"||'0a0a'x,
+      "   Use me to convert 320x200 8-bit Windoze bitmaps into conback.lmp files for use in"||'a'x,
+      "Quake."||'a'x,
+      "   Please note, your bitmap file should be saved with compression disabled, and "||'a'x,
+      "preferentially, upside down (this allows the fastest conversion). I can flip the"||'a'x,
+      "image for you, if you use the 'FLIP' parameter, but this may take a short time."
+   say ,
+      "   After conversion, I will write the new 'conback.lmp' file to the same directory"||'a'x,
+      "as your original bitmap file."||'a'x,
+      "   Then, simply copy the conback.lmp file to your 'Quake/<game mod>/gfx/' subdirectory,"||'a'x,
+      "where <game mod> is the name of the modification (you may need to create the '../gfx/"||'a'x,
+      "subdirectory yourself.)."||'a'x
+   return
