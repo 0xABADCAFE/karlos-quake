@@ -1,6 +1,6 @@
 //
 /*---public---*/
-// $VER: dog.qc 1.4 � Karlos'99 (14/07/1999)
+// $VER: dog.qc 1.4 ? Karlos'99 (14/07/1999)
 
    float() CheckDogJump ;
    float() DogCheckAttack ;
@@ -504,6 +504,8 @@ void() monster_dog =
 
    // Set the alerted sound, monster_init() will set up the standard alert behaviour
    self.noise = "dog/dsight.wav";
+
+   self.check_attack = DogCheckAttack;
 
    monster_init ("progs/dog.mdl", '-32 -32 -24', '32 32 24', 25, 10);
    self.netname = "a rottweiler";

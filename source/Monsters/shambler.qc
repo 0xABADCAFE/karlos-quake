@@ -1,6 +1,6 @@
 // shambler.qc
 /*---public---*/
-// $VER: shambler.qc 1.4 � Karlos '99 (12/07/1999)
+// $VER: shambler.qc 1.4 ? Karlos '99 (12/07/1999)
 
    void() monster_shambler ;
 /*---private---*/
@@ -411,6 +411,8 @@ void() monster_shambler =
 
    // Set the alerted sound, monster_init() will set up the standard alert behaviour
    self.noise = "shambler/ssight.wav";
+
+   self.check_attack = ShamCheckAttack;
 
    monster_init ("progs/shambler.mdl", VEC_HULL2_MIN, VEC_HULL2_MAX, 600, 250);
    self.netname = "a shambler";

@@ -1,3 +1,7 @@
+    KQ WIP 2024
+
+    - Rework functions depending on .classname check chains to methods
+
     KQ1.8r4 Work in Progress 10.2.2000
     TO DO
 
@@ -49,7 +53,7 @@
 
 
     KQ1.8r4 Work in Progress 6.2.2000
- 
+
     FIXED : Located bug in monster activation that lead to occasional invulnerable enemy.
 
     ADDED : Allow monster to switch enemies of a team member calls and
@@ -62,4 +66,4 @@ of killing caller
 to attack team_undead_1
 
 
-    
+

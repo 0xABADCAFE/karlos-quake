@@ -1,6 +1,6 @@
 // scragg.qc
 /*---public---*/
-// $VER: Scragg.qc 1.2 � Karlos '99 (17/07/1999)
+// $VER: Scragg.qc 1.2 ? Karlos '99 (17/07/1999)
 
    float() WizardCheckAttack ;
    float() WizardAttackFinished ;
@@ -388,6 +388,8 @@ void() monster_wizard =
 
    // Set the alerted sound, monster_init() will set up the standard alert behaviour
    self.noise = "wizard/wsight.wav";
+
+   self.check_attack = WizardCheckAttack;
 
    monster_init ("progs/wizard.mdl", '-16 -16 -24', '16 16 40', 80, 40);
    self.netname = "a scragg";

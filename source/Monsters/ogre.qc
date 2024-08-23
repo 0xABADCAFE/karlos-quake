@@ -611,6 +611,7 @@ void() monster_ogre =
 
    // Set the alerted sound, monster_init() will set up the standard alert behaviour
    self.noise = "ogre/ogwake.wav";
+   self.check_attack = OgreCheckAttack;
 
    monster_init ("progs/ogre.mdl", VEC_HULL2_MIN, VEC_HULL2_MAX, 120, 75);
    self.netname = "an ogre";

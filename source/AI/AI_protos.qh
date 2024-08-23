@@ -93,7 +93,6 @@ float(entity targ) range;
 float(entity targ) infront;
 float() FindTarget;
 float() FacingIdeal;
-float() CheckAnyAttack;
 float(entity targ) visible;
 
 float() ai_test_jump;

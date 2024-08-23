@@ -108,6 +108,10 @@ void(string mdlname, vector bmin, vector bmax, float hbase, float hvar) monster_
         }
     }
 
+    if (!self.check_attack) {
+        self.check_attack = CheckAttack;
+    }
+
     // bump monster count
     total_monsters = total_monsters + 1;
 };

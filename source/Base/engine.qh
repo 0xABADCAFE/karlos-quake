@@ -39,14 +39,12 @@ float entity_count;
 entity() new_entity                            = #14;
 void(entity e) rem_entity                      = #15;
 
-entity() spawn =
-{
+entity() spawn = {
     entity_count = entity_count + 1;
     return new_entity();
 };
 
-void (entity e) remove =
-{
+void (entity e) remove = {
     rem_entity(e);
     entity_count = entity_count - 1;
 };

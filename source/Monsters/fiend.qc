@@ -1,6 +1,6 @@
 // fiend.qc
 /*---public---*/
-// $VER: fiend.qc 1.8 � Karlos'99 (17/09/1999)
+// $VER: fiend.qc 1.8 ? Karlos'99 (17/09/1999)
 
    void() monster_demon1 ;
    float() CheckDemonMelee ;
@@ -457,6 +457,8 @@ void() monster_demon1 =
 
    // Set the alerted sound, monster_init() will set up the standard alert behaviour
    self.noise = "demon/sight2.wav";
+
+   self.check_attack = DemonCheckAttack;
 
    monster_init ("progs/demon.mdl", VEC_HULL_MIN, VEC_HULL_MAX, 280, 100);
    self.netname = "a feind";

@@ -23,7 +23,6 @@ float(entity targ) range;
 float(entity targ) infront;
 float() FindTarget;
 float() FacingIdeal;
-float() CheckAnyAttack;
 float(entity targ) visible;
 
 float() ai_test_jump;
@@ -505,32 +504,6 @@ float() FacingIdeal = {
 };
 
 
-//=============================================================================
-
-//float()  WizardCheckAttack;
-//float()  DogCheckAttack;
-
-// TODO - move to an entity method
-float() CheckAnyAttack =
-{
-   if (!enemy_vis)
-      return;
-   if (self.classname == "monster_army")
-      return SoldierCheckAttack ();
-   if (self.classname == "monster_ogre")
-      return OgreCheckAttack ();
-   if (self.classname == "monster_shambler")
-      return ShamCheckAttack ();
-   if (self.classname == "monster_demon1")
-      return DemonCheckAttack ();
-   if (self.classname == "monster_dog")
-      return DogCheckAttack ();
-   if (self.classname == "monster_wizard")
-      return WizardCheckAttack ();
-   return CheckAttack ();
-};
-
-
 /*=============================================================================
    ai_run_melee
       Turn and close until within an angle to launch a melee attack
@@ -595,8 +568,8 @@ void(float dist) ai_run = {
 
     movedist = dist;
 
-        // see if the enemy is dead
-        // if (self.enemy.health <= 0) // old code based on health
+    // see if the enemy is dead
+    // if (self.enemy.health <= 0) // old code based on health
 
     if (self.enemy.deadflag != DEAD_NO) {
         self.enemy = world;
@@ -681,8 +654,8 @@ void(float dist) ai_run = {
         return;
     }
 
-    if (CheckAnyAttack()) {
-        return;              // beginning an attack
+    if (enemy_vis && self.check_attack()) {
+        return; // beginning an attack
     }
 
     if (self.attack_state == AS_SLIDING) {

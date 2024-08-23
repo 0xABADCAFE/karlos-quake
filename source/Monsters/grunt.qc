@@ -568,6 +568,8 @@ void() monster_army =
    // Set the alerted sound, monster_init() will set up the standard alert behaviour
    self.noise = "soldier/sight1.wav";
 
+   self.check_attack = SoldierCheckAttack;
+
    monster_init("progs/soldier.mdl", '-16 -16 -24', '16 16 40', 35, 20);
    self.netname = "a grunt";
 
@@ -578,6 +580,7 @@ void() monster_army =
    self.th_pain = army_pain;
    self.th_die = army_die;
    self.think = monster_walk;
+
 
    ai_join_team(TRUE); // can be a team leader
 };

@@ -488,6 +488,7 @@ string   skin_name32;
 .void()     th_die;
 
 .void()     th_alerted;
+.float()    check_attack;
 
 .entity  oldenemy;      // mad at this player before taking damage
 
