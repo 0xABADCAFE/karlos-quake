@@ -40,7 +40,7 @@ entity() new_entity                            = #14;
 void(entity e) rem_entity                      = #15;
 
 entity() spawn =
-{   
+{
     entity_count = entity_count + 1;
     return new_entity();
 };
@@ -60,7 +60,7 @@ void (entity e) remove =
 // forent->owner == test, or test->owner == forent
 // a forent of world is ignored
 
-void(vector v1, vector v2, float nomonsters, entity forent) traceline = #16;  
+void(vector v1, vector v2, float nomonsters, entity forent) traceline = #16;
 
 entity() checkclient                                 = #17;   // returns a client to look for
 entity(entity start, .string fld, string match) find = #18;
@@ -204,7 +204,7 @@ void(entity e) setspawnparms     = #78;      // set parm1... to the
 void(vector tdest, float tspeed, void() func) SUB_CalcMove;
 void(entity ent, vector tdest, float tspeed, void() func) SUB_CalcMoveEnt;
 void(vector destangle, float tspeed, void() func) SUB_CalcAngleMove;
-void()  SUB_CalcMoveDone;
+void() SUB_CalcMoveDone;
 void() SUB_CalcAngleMoveDone;
 void() SUB_Null;
 void() SUB_UseTargets;
@@ -215,12 +215,10 @@ void() SUB_Remove;
 //
 void(entity targ, entity inflictor, entity attacker, float damage) T_Damage;
 
-
-float (entity e, float healamount, float ignore) T_Heal; // health function
+float(entity e, float healamount, float ignore) T_Heal; // health function
 
 float(entity targ, entity inflictor) CanDamage;
 
-void () version_Base =
-{
+void () version_Base = {
     sprint(self, "KQ/Base 2.05 04:04:2000\n");
 };
