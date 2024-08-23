@@ -60,9 +60,9 @@ float    parm1, parm2, parm3, parm4, parm5, parm6, parm7, parm8, parm9, parm10, 
 
 //
 // global variables set by built in functions
-// 
+//
 vector      v_forward, v_up, v_right;  // set by makevectors()
-   
+
 // set by traceline / tracebox
 float    trace_allsolid;
 float    trace_startsolid;
@@ -487,6 +487,8 @@ string   skin_name32;
 .void(entity attacker, float damage)      th_pain;
 .void()     th_die;
 
+.void()     th_alerted;
+
 .entity  oldenemy;      // mad at this player before taking damage
 
 .float   speed;
@@ -570,12 +572,12 @@ float SAY_ENEMY_DOWN    = 4;
 //
 .float      aflag;
 .float      dmg;        // damage done by door when hit
-   
+
 //
 // misc
 //
 .float      cnt;        // misc flag
-   
+
 //
 // subs
 //

@@ -1,141 +1,16 @@
-// Header table for directory 'World' created at 23:54:36 on 10 May 2000
+// Header table for directory 'World' created at 18:04:53 on 23 Aug 2024
 //
 //========================================================================================
 //
+// sourcefile : World/items.qc, 39511 bytes
+// sourcefile : World/ambient.qc, 11601 bytes
 // sourcefile : World/buttons.qc, 3375 bytes
 // sourcefile : World/doors.qc, 18990 bytes
-// sourcefile : World/plats.qc, 8693 bytes
-// sourcefile : World/triggers.qc, 16378 bytes
 // sourcefile : World/world.qc, 15053 bytes
-// sourcefile : World/items.qc, 39511 bytes
+// sourcefile : World/triggers.qc, 16378 bytes
 // sourcefile : World/traps.qc, 6393 bytes
-// sourcefile : World/ambient.qc, 11601 bytes
+// sourcefile : World/plats.qc, 8693 bytes
 //=========================================================================================
-
-
-// World/buttons.qc...
-
-/*---public---*/
-// $VER: buttons.qc 1.06 © id software
-// public function prototypes
-void() button_blocked;
-void() button_done;
-void() button_fire;
-void() button_killed;
-void() button_return;
-void() button_touch;
-void() button_use;
-void() button_wait;
-void() func_button;
-/*---private---*/
-
-
-// World/doors.qc...
-
-/*---public---*/
-// $VER: doors.qc
-// public function prototypes
-void() door_blocked ;
-void() door_fire ;
-void() door_go_down ;
-void() door_go_up ;
-void() door_hit_bottom ;
-void() door_hit_top ;
-void() door_killed ;
-void() door_touch ;
-void() door_trigger_touch ;
-void() door_use ;
-void() func_door ;
-void() fd_secret_done ;
-void() fd_secret_move1 ;
-void() fd_secret_move2 ;
-void() fd_secret_move3 ;
-void() fd_secret_move4 ;
-void() fd_secret_move5 ;
-void() fd_secret_move6 ;
-void() fd_secret_use ;
-void() func_door_secret ;
-void() secret_blocked ;
-void() secret_touch ;
-void() LinkDoors ;
-/*---private---*/
-
-
-// World/plats.qc...
-
-/*---public---*/
-// $VER: plats.qc 1.06 © id software
-void() plat_center_touch ;
-void() plat_crush ;
-void() plat_go_down ;
-void() plat_go_up ;
-void() plat_hit_bottom ;
-void() plat_hit_top ;
-void() plat_outside_touch ;
-void() plat_spawn_inside_trigger ;
-void() plat_trigger_use ;
-void() plat_use ;
-
-void() func_plat ;
-void() func_train ;
-void() func_train_find ;
-
-void() misc_teleporttrain ;
-void() train_blocked ;
-void() train_next ;
-void() train_use ;
-void() train_wait ;
-/*---private---*/
-
-
-// World/triggers.qc...
-
-/*---public---*/
-// $VER: triggers.qc 2.00 © Karlos'99 (12/07/1999)
-// public function prototypes
-
-void() multi_killed ;
-void() multi_touch ;
-void() multi_trigger ;
-void() multi_use ;
-void() multi_wait ;
-void() play_teleport ;
-
-void() hurt_on ;
-void() hurt_touch ;
-void() info_teleport_destination ;
-
-void() trigger_counter ;
-void() trigger_hurt ;
-void() trigger_monsterjump ;
-void() trigger_monsterjump_touch ;
-void() trigger_multiple ;
-void() trigger_once ;
-void() trigger_onlyregistered ;
-void() trigger_onlyregistered_touch ;
-void() trigger_push ;
-void() trigger_push_touch ;
-void() trigger_reactivate ;
-void() trigger_relay ;
-void() trigger_secret ;
-void() trigger_setskill ;
-void() trigger_skill_touch ;
-void() trigger_teleport ;
-
-void(vector org) spawn_tfog ;
-void(vector org, entity death_owner) spawn_tdeath ;
-/*---private---*/
-
-
-// World/world.qc...
-
-/*---public---*/
-// $VER: world.qc 1.85 © Karlos '99 (10/10/1999)
-
-void() worldspawn;
-void() StartFrame ;
-void(entity ent) CopyToBodyQue;
-/*---private---*/
 
 
 // World/items.qc...
@@ -189,19 +64,6 @@ void() weapon_touch ;
 /*---private---*/
 
 
-// World/traps.qc...
-
-/*---public---*/
-// $VER: traps.qc 1.00 © Karlos (10/10/1999)
-// public function prototypes
-void() misc_explobox ;
-void() misc_explobox2 ;
-void() misc_fireball ;
-void() trap_shooter ;
-void() trap_spikeshooter ;
-/*---private---*/
-
-
 // World/ambient.qc...
 
 /*---public---*/
@@ -231,4 +93,142 @@ void() light_fluorospark ;
 void() light_globe ;
 void() light_torch_small_walltorch ;
 void() light_use ;
+/*---private---*/
+
+
+// World/buttons.qc...
+
+/*---public---*/
+// $VER: buttons.qc 1.06 © id software
+// public function prototypes
+void() button_blocked;
+void() button_done;
+void() button_fire;
+void() button_killed;
+void() button_return;
+void() button_touch;
+void() button_use;
+void() button_wait;
+void() func_button;
+/*---private---*/
+
+
+// World/doors.qc...
+
+/*---public---*/
+// $VER: doors.qc
+// public function prototypes
+void() door_blocked ;
+void() door_fire ;
+void() door_go_down ;
+void() door_go_up ;
+void() door_hit_bottom ;
+void() door_hit_top ;
+void() door_killed ;
+void() door_touch ;
+void() door_trigger_touch ;
+void() door_use ;
+void() func_door ;
+void() fd_secret_done ;
+void() fd_secret_move1 ;
+void() fd_secret_move2 ;
+void() fd_secret_move3 ;
+void() fd_secret_move4 ;
+void() fd_secret_move5 ;
+void() fd_secret_move6 ;
+void() fd_secret_use ;
+void() func_door_secret ;
+void() secret_blocked ;
+void() secret_touch ;
+void() LinkDoors ;
+/*---private---*/
+
+
+// World/world.qc...
+
+/*---public---*/
+// $VER: world.qc 1.85 © Karlos '99 (10/10/1999)
+
+void() worldspawn;
+void() StartFrame ;
+void(entity ent) CopyToBodyQue;
+/*---private---*/
+
+
+// World/triggers.qc...
+
+/*---public---*/
+// $VER: triggers.qc 2.00 © Karlos'99 (12/07/1999)
+// public function prototypes
+
+void() multi_killed ;
+void() multi_touch ;
+void() multi_trigger ;
+void() multi_use ;
+void() multi_wait ;
+void() play_teleport ;
+
+void() hurt_on ;
+void() hurt_touch ;
+void() info_teleport_destination ;
+
+void() trigger_counter ;
+void() trigger_hurt ;
+void() trigger_monsterjump ;
+void() trigger_monsterjump_touch ;
+void() trigger_multiple ;
+void() trigger_once ;
+void() trigger_onlyregistered ;
+void() trigger_onlyregistered_touch ;
+void() trigger_push ;
+void() trigger_push_touch ;
+void() trigger_reactivate ;
+void() trigger_relay ;
+void() trigger_secret ;
+void() trigger_setskill ;
+void() trigger_skill_touch ;
+void() trigger_teleport ;
+
+void(vector org) spawn_tfog ;
+void(vector org, entity death_owner) spawn_tdeath ;
+/*---private---*/
+
+
+// World/traps.qc...
+
+/*---public---*/
+// $VER: traps.qc 1.00 © Karlos (10/10/1999)
+// public function prototypes
+void() misc_explobox ;
+void() misc_explobox2 ;
+void() misc_fireball ;
+void() trap_shooter ;
+void() trap_spikeshooter ;
+/*---private---*/
+
+
+// World/plats.qc...
+
+/*---public---*/
+// $VER: plats.qc 1.06 © id software
+void() plat_center_touch ;
+void() plat_crush ;
+void() plat_go_down ;
+void() plat_go_up ;
+void() plat_hit_bottom ;
+void() plat_hit_top ;
+void() plat_outside_touch ;
+void() plat_spawn_inside_trigger ;
+void() plat_trigger_use ;
+void() plat_use ;
+
+void() func_plat ;
+void() func_train ;
+void() func_train_find ;
+
+void() misc_teleporttrain ;
+void() train_blocked ;
+void() train_next ;
+void() train_use ;
+void() train_wait ;
 /*---private---*/

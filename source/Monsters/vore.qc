@@ -1,6 +1,6 @@
 // vore.qc
 /*---public---*/
-// $VER: vore.qc 1.1 ® Karlos '99 (12/07/1999)
+// $VER: vore.qc 1.1 ï¿½ Karlos '99 (12/07/1999)
 
    void() monster_shalrath;
 /*---private---*/
@@ -27,7 +27,7 @@ $scale 0.7
 $frame attack1 attack2 attack3 attack4 attack5 attack6 attack7 attack8
 $frame attack9 attack10 attack11
 
-$frame pain1 pain2 pain3 pain4 pain5 
+$frame pain1 pain2 pain3 pain4 pain5
 
 $frame death1 death2 death3 death4 death5 death6 death7
 
@@ -158,7 +158,7 @@ void() ShalMissile =
    missile.movetype = MOVETYPE_FLYMISSILE;
    setmodel (missile, "progs/v_spike.mdl");
 
-   setsize (missile, '0 0 0', '0 0 0');      
+   setsize (missile, '0 0 0', '0 0 0');
 
    missile.origin = self.origin + '0 0 10';
    missile.velocity = dir * 400;
@@ -184,7 +184,7 @@ void() ShalHome =
    self.velocity = dir * ( 200 + skill_fact * 75);
 
    self.nextthink = time + 0.2;
-   self.think = ShalHome;  
+   self.think = ShalHome;
 };
 
 void() ShalMissileTouch =
@@ -193,7 +193,7 @@ void() ShalMissileTouch =
       return;     // don't explode on owner
 
    if (other.classname == "monster_zombie")
-      T_Damage (other, self, self, 110);  
+      T_Damage (other, self, self, 110);
    T_RadiusDamage (self, self.owner, 40, world);
 
    BecomeExplosion();
@@ -225,7 +225,7 @@ void() monster_shalrath =
       precache_model2 ("progs/shalrath.mdl");
       precache_model2 ("progs/h_shal.mdl");
       precache_model2 ("progs/v_spike.mdl");
-   
+
       precache_sound2 ("shalrath/attack.wav");
       precache_sound2 ("shalrath/attack2.wav");
       precache_sound2 ("shalrath/death.wav");
@@ -233,7 +233,11 @@ void() monster_shalrath =
       precache_sound2 ("shalrath/pain.wav");
       precache_sound2 ("shalrath/sight.wav");
    }
-   monster_initialise ("progs/shalrath.mdl", VEC_HULL2_MIN, VEC_HULL2_MAX, 350, 150);
+
+   // Set the alerted sound, monster_init() will set up the standard alert behaviour
+   self.noise = "shalrath/sight.wav";
+
+   monster_init ("progs/shalrath.mdl", VEC_HULL2_MIN, VEC_HULL2_MAX, 350, 150);
    self.netname = "a vore";
    self.th_stand = shal_stand;
    self.th_walk = shal_walk1;
@@ -245,7 +249,7 @@ void() monster_shalrath =
    self.think = monster_walk;
 
    // vores currently join TEAM_NONE
-   ai_join_team(FALSE); // cannot be a team leader 
+   ai_join_team(FALSE); // cannot be a team leader
 
    self.nextthink = time + 0.5 + random ()*0.5;
 };

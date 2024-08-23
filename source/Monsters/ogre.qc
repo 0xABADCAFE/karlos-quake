@@ -1,6 +1,6 @@
 // ogre.qc
 /*---public---*/
-// $VER: ogre.qc 1.4 ® Karlos '99 (17/07/1999)
+// $VER: ogre.qc 1.4 ï¿½ Karlos '99 (17/07/1999)
 
    void() monster_ogre ;
    void() monster_ogre_marksman ;
@@ -23,7 +23,7 @@
 
 $cd id1/models/ogre_c
 $origin 0 0 24
-$base base     
+$base base
 $skin base
 
 $frame   stand1 stand2 stand3 stand4 stand5 stand6 stand7 stand8 stand9
@@ -117,7 +117,7 @@ void() OgreFireGrenade =
    local   float   g;      // Gravity -- g = 1 is Earth gravity.
 
    g = (cvar("sv_gravity")) * 0.00125;   // Find gravity in terms of g.
-   
+
    self.effects = self.effects | (FX_FLASH & effectflags);
 
    sound (self, CHAN_WEAPON, "weapons/grenade.wav", 1, ATTN_NORM);
@@ -126,9 +126,9 @@ void() OgreFireGrenade =
    missile.owner = self;
    missile.movetype = MOVETYPE_BOUNCE;
    missile.solid = SOLID_BBOX;
-   missile.flags = missile.flags | FL_CANTPUSH;      
+   missile.flags = missile.flags | FL_CANTPUSH;
 
-// set missile speed 
+// set missile speed
 
    makevectors (self.angles);
 
@@ -143,7 +143,7 @@ void() OgreFireGrenade =
     // The monster will lob a projectile that is guaranteed to hit  //
     // a stationary target within a radius of 1000.  If the target  //
     // is moving, it may aim the projectile a bit lower to counter  //
-    // any attempt to run underneath the grenade.                   //     
+    // any attempt to run underneath the grenade.                   //
     //--------------------------------------------------------------//
 
    if (self.enemy.velocity_x || self.enemy.velocity_y)
@@ -179,15 +179,15 @@ void() OgreFireGrenade =
    missile.avelocity = '300 300 300';
 
    missile.angles = vectoangles(missile.velocity);
-   
+
    missile.touch = OgreGrenadeTouch;
-   
+
 // set missile duration
    missile.nextthink = time + 2.5;
    missile.think = OgreGrenadeExplode;
 
    setmodel (missile, "progs/grenade.mdl");
-   setsize (missile, '0 0 0', '0 0 0');      
+   setsize (missile, '0 0 0', '0 0 0');
    setorigin (missile, self.origin);
 };
 
@@ -197,7 +197,7 @@ void() OgreFireGrenade =
 /*=============================================================================
 
    chainsaw
- 
+
    FIXME
 
 =============================================================================*/
@@ -218,11 +218,11 @@ local float    ldmg;
 
    if (vlen(delta) > 100)
       return;
-      
+
    ldmg = (random() + random() + random()) * 4;
    self.enemy.deathtype = "melee";
    T_Damage (self.enemy, self, self, ldmg);
-   
+
    if (side)
    {
       makevectors (self.angles);
@@ -482,10 +482,10 @@ void(entity attacker, float damage) ogre_pain =
    if (self.pain_finished > time)
       return;
 
-   sound (self, CHAN_VOICE, "ogre/ogpain1.wav", 1, ATTN_NORM);    
+   sound (self, CHAN_VOICE, "ogre/ogpain1.wav", 1, ATTN_NORM);
 
    r = random();
-   
+
    if (r < 0.25)
    {
       ogre_pain1 ();
@@ -599,7 +599,7 @@ void() monster_ogre =
       precache_model ("progs/ogre.mdl");
       precache_model ("progs/h_ogre.mdl");
       precache_model ("progs/grenade.mdl");
- 
+
       precache_sound ("ogre/ogdrag.wav");
       precache_sound ("ogre/ogdth.wav");
       precache_sound ("ogre/ogidle.wav");
@@ -608,7 +608,11 @@ void() monster_ogre =
       precache_sound ("ogre/ogsawatk.wav");
       precache_sound ("ogre/ogwake.wav");
    }
-   monster_initialise ("progs/ogre.mdl", VEC_HULL2_MIN, VEC_HULL2_MAX, 120, 75);
+
+   // Set the alerted sound, monster_init() will set up the standard alert behaviour
+   self.noise = "ogre/ogwake.wav";
+
+   monster_init ("progs/ogre.mdl", VEC_HULL2_MIN, VEC_HULL2_MAX, 120, 75);
    self.netname = "an ogre";
    self.th_stand = ogre_stand1;
    self.th_walk = ogre_walk1;

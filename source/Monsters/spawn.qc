@@ -1,6 +1,6 @@
 // spawn.qc
 /*---public---*/
-// $VER: spawn.qc 1.1 ® Karlos '99 (02/07/1999)
+// $VER: spawn.qc 1.1 ï¿½ Karlos '99 (02/07/1999)
 
    void() monster_tarbaby;
 /*---private---*/
@@ -20,7 +20,7 @@
 
 $cd id1/models/tarbaby
 $origin 0 0 24
-$base base     
+$base base
 
 $skin skin
 
@@ -110,7 +110,7 @@ void()   Tar_JumpTouch =
       if ( vlen(self.velocity) > 400 )
       {
          ldmg = 10 + 10*random();
-         T_Damage (other, self, self, ldmg); 
+         T_Damage (other, self, self, ldmg);
          sound (self, CHAN_WEAPON, "blob/hit1.wav", 1, ATTN_NORM);
       }
    }
@@ -160,7 +160,7 @@ void()   tbaby_jump2    =[ $jump2,  tbaby_jump3    ] {ai_face();};
 void()   tbaby_jump3    =[ $jump3,  tbaby_jump4    ] {ai_face();};
 void()   tbaby_jump4    =[ $jump4,  tbaby_jump5    ] {ai_face();};
 void()   tbaby_jump5    =[ $jump5,  tbaby_jump6    ]
-{  
+{
    self.movetype = MOVETYPE_BOUNCE;
    self.touch = Tar_JumpTouch;
    makevectors (self.angles);
@@ -182,7 +182,7 @@ void() tbaby_pain =
 void()   tbaby_die1  =[ $exp,    tbaby_die2  ] {
 self.takedamage = DAMAGE_NO;
 };
-void()   tbaby_die2  =[ $exp,    tbaby_run1  ] 
+void()   tbaby_die2  =[ $exp,    tbaby_run1  ]
 {
    T_RadiusDamage (self, self, 120, world);
 
@@ -228,7 +228,11 @@ void() monster_tarbaby =
       precache_sound2 ("blob/land1.wav");
       precache_sound2 ("blob/sight1.wav");
    }
-   monster_initialise ("progs/tarbaby.mdl", '-16 -16 -24', '16 16 40', 80, 30);
+
+   // Set the alerted sound, monster_init() will set up the standard alert behaviour
+   self.noise = "blob/sight1.wav";
+
+   monster_init ("progs/tarbaby.mdl", '-16 -16 -24', '16 16 40', 80, 30);
    self.netname = "a spawn";
    self.th_stand = tbaby_stand1;
    self.th_walk = tbaby_walk1;

@@ -1,25 +1,13 @@
-// Header table for directory 'Misc' created at 23:54:40 on 10 May 2000
+// Header table for directory 'Misc' created at 18:04:52 on 23 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : Misc/models.qc, 8996 bytes
-// sourcefile : Misc/sprites.qc, 484 bytes
 // sourcefile : Misc/effects.qc, 27266 bytes
 // sourcefile : Misc/corpse.qc, 3634 bytes
 // sourcefile : Misc/fx_manager.qc, 7501 bytes
+// sourcefile : Misc/sprites.qc, 484 bytes
+// sourcefile : Misc/models.qc, 8996 bytes
 //=========================================================================================
-
-
-// Misc/models.qc...
-
-
-
-
-
-// Misc/sprites.qc...
-
-
-
 
 
 // Misc/effects.qc...
@@ -84,3 +72,15 @@ void () fx_manager_remove;
 void () fx_manager_think;
 
 /*---private---*/
+
+
+// Misc/sprites.qc...
+
+
+
+
+
+// Misc/models.qc...
+
+
+

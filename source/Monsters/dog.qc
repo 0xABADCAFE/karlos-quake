@@ -1,6 +1,6 @@
 //
 /*---public---*/
-// $VER: dog.qc 1.4 © Karlos'99 (14/07/1999)
+// $VER: dog.qc 1.4 ï¿½ Karlos'99 (14/07/1999)
 
    float() CheckDogJump ;
    float() DogCheckAttack ;
@@ -76,7 +76,7 @@ local float    ldmg;
 
    if (vlen(delta) > 100)
       return;
-      
+
    ldmg = (random() + random() + random()) * 8;
    T_Damage (self.enemy, self, self, ldmg);
 
@@ -93,13 +93,13 @@ void()   Dog_JumpTouch =
 
    if (self.deadflag != DEAD_NO)
       return;
-      
+
    if (other.takedamage)
    {
       if ( vlen(self.velocity) > 300 )
       {
          ldmg = 10 + 10*random();
-         T_Damage (other, self, self, ldmg); 
+         T_Damage (other, self, self, ldmg);
       }
    }
 
@@ -409,27 +409,27 @@ float()  CheckDogJump =
    if (self.origin_z + self.maxs_z < self.enemy.origin_z + self.enemy.mins_z
    + 0.25 * self.enemy.size_z)
       return FALSE;
-*/      
+*/
    dist = self.enemy.origin - self.origin;
 
    // check vertical reach
    // refuses to jump too far ;)
    if (dist_z > 200 || dist_z < -400)
       return FALSE;
-      
+
    dist = self.enemy.origin - self.origin;
    dist_z = 0;
-   
+
    d = vlen(dist);
-   
+
    if (d < 80)
       return FALSE;
-      
+
    if (d > 150)
       return FALSE;
 
-   // Now check if jump is physically OK 
-      
+   // Now check if jump is physically OK
+
    return ai_test_jump();
 };
 
@@ -455,7 +455,7 @@ float()  DogCheckAttack =
          self.attack_state = AS_MELEE;
          return TRUE;
       }
-     
+
       if (CheckDogJump ())
       {
       self.attack_state = AS_MISSILE;
@@ -502,7 +502,10 @@ void() monster_dog =
       precache_sound ("dog/idle.wav");
    }
 
-   monster_initialise ("progs/dog.mdl", '-32 -32 -24', '32 32 24', 25, 10);
+   // Set the alerted sound, monster_init() will set up the standard alert behaviour
+   self.noise = "dog/dsight.wav";
+
+   monster_init ("progs/dog.mdl", '-32 -32 -24', '32 32 24', 25, 10);
    self.netname = "a rottweiler";
    self.th_stand = dog_stand1;
    self.th_walk = dog_walk1;

@@ -1,117 +1,59 @@
-// Header table for directory 'Monsters' created at 23:54:43 on 10 May 2000
+// Header table for directory 'Monsters' created at 18:04:54 on 23 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : Monsters/dog.qc, 15167 bytes
-// sourcefile : Monsters/knight.qc, 11404 bytes
-// sourcefile : Monsters/monsters.qc, 7708 bytes
-// sourcefile : Monsters/ogre.qc, 19877 bytes
-// sourcefile : Monsters/shambler.qc, 13870 bytes
-// sourcefile : Monsters/enforcer.qc, 19411 bytes
-// sourcefile : Monsters/spawn.qc, 8305 bytes
-// sourcefile : Monsters/grunt.qc, 19157 bytes
-// sourcefile : Monsters/vore.qc, 8249 bytes
+// sourcefile : Monsters/rotfish.qc, 8474 bytes
+// sourcefile : Monsters/zombie.qc, 23230 bytes
+// sourcefile : Monsters/vore.qc, 8355 bytes
+// sourcefile : Monsters/spawn.qc, 8414 bytes
 // sourcefile : Monsters/shub.qc, 10246 bytes
-// sourcefile : Monsters/hellknight.qc, 20968 bytes
-// sourcefile : Monsters/rotfish.qc, 8478 bytes
-// sourcefile : Monsters/fiend.qc, 13899 bytes
+// sourcefile : Monsters/shambler.qc, 13952 bytes
+// sourcefile : Monsters/scragg.qc, 11971 bytes
+// sourcefile : Monsters/ogre.qc, 19945 bytes
+// sourcefile : Monsters/monsters.qc, 8092 bytes
+// sourcefile : Monsters/knight.qc, 11520 bytes
+// sourcefile : Monsters/hellknight.qc, 21059 bytes
+// sourcefile : Monsters/grunt.qc, 19256 bytes
+// sourcefile : Monsters/fiend.qc, 13970 bytes
+// sourcefile : Monsters/enforcer.qc, 19852 bytes
+// sourcefile : Monsters/dog.qc, 15234 bytes
 // sourcefile : Monsters/chthon.qc, 13241 bytes
-// sourcefile : Monsters/zombie.qc, 23138 bytes
-// sourcefile : Monsters/scragg.qc, 11899 bytes
 //=========================================================================================
 
 
-// Monsters/dog.qc...
+// Monsters/rotfish.qc...
 
 /*---public---*/
-// $VER: dog.qc 1.4 © Karlos'99 (14/07/1999)
+// $VER: rotfish.qc 1.1 ï¿½ Karlos '99 (15/07/1999), original 1.06 by id software
 
-float() CheckDogJump ;
-float() DogCheckAttack ;
-void() monster_dog ;
+void() monster_fish;
 /*---private---*/
 
 
-// Monsters/knight.qc...
+// Monsters/zombie.qc...
 
 /*---public---*/
-// $VER: knight.qc 1.6 © Karlos '99 (24/08/1999)
-void() monster_knight ;
-/*---private---*/
+// $VER: zombie.qc 1.7 ï¿½ Karlos'99 (31/07/1999)
 
-
-// Monsters/monsters.qc...
-
-/*---public---*/
-// monster.qc 2,00 © Karlos'99 (01/08/1999)
-
-void(string mdlname, vector bmin, vector bmax, float hbase, float hvar)monster_initialise;
-void() monster_use ;
-void() monster_death_use ;
-void() monster_walk ;
-void() walkmonster_start ;
-void() monster_fly ;
-void() flymonster_start ;
-void() monster_swim ;
-void() swimmonster_start ;
-void() clear_monster_caches;
-/*---private---*/
-
-
-// Monsters/ogre.qc...
-
-/*---public---*/
-// $VER: ogre.qc 1.4 ® Karlos '99 (17/07/1999)
-
-void() monster_ogre ;
-void() monster_ogre_marksman ;
-/*---private---*/
-
-
-// Monsters/shambler.qc...
-
-/*---public---*/
-// $VER: shambler.qc 1.4 ® Karlos '99 (12/07/1999)
-
-void() monster_shambler ;
-/*---private---*/
-
-
-// Monsters/enforcer.qc...
-
-/*---public---*/
-// $VER: enforcer.qc 2.12 © Karlos '99 (15/11/1999), original 1.06 by id software
-
-void() Laser_Touch ;
-void(vector org, vector vec) LaunchLaser ;
-void() monster_enforcer ;
-/*---private---*/
-
-
-// Monsters/spawn.qc...
-
-/*---public---*/
-// $VER: spawn.qc 1.1 ® Karlos '99 (02/07/1999)
-
-void() monster_tarbaby;
-/*---private---*/
-
-
-// Monsters/grunt.qc...
-
-/*---public---*/
-// $VER: grunt.qc 1.8 © Karlos '99 (16/09/1999)
-
-void() monster_army;
+void() monster_zombie;
 /*---private---*/
 
 
 // Monsters/vore.qc...
 
 /*---public---*/
-// $VER: vore.qc 1.1 ® Karlos '99 (12/07/1999)
+// $VER: vore.qc 1.1 ï¿½ Karlos '99 (12/07/1999)
 
 void() monster_shalrath;
+/*---private---*/
+
+
+// Monsters/spawn.qc...
+
+/*---public---*/
+// $VER: spawn.qc 1.1 ï¿½ Karlos '99 (02/07/1999)
+
+void() monster_tarbaby;
 /*---private---*/
 
 
@@ -128,10 +70,66 @@ void() finale_4;
 /*---private---*/
 
 
+// Monsters/shambler.qc...
+
+/*---public---*/
+// $VER: shambler.qc 1.4 ï¿½ Karlos '99 (12/07/1999)
+
+void() monster_shambler ;
+/*---private---*/
+
+
+// Monsters/scragg.qc...
+
+/*---public---*/
+// $VER: Scragg.qc 1.2 ï¿½ Karlos '99 (17/07/1999)
+
+float() WizardCheckAttack ;
+float() WizardAttackFinished ;
+void() monster_wizard ;
+/*---private---*/
+
+
+// Monsters/ogre.qc...
+
+/*---public---*/
+// $VER: ogre.qc 1.4 ï¿½ Karlos '99 (17/07/1999)
+
+void() monster_ogre ;
+void() monster_ogre_marksman ;
+/*---private---*/
+
+
+// Monsters/monsters.qc...
+
+/*---public---*/
+// monster.qc 2,00 © Karlos'99 (01/08/1999)
+
+void(string mdlname, vector bmin, vector bmax, float hbase, float hvar) monster_init;
+void() monster_use ;
+void() monster_death_use ;
+void() monster_walk ;
+void() walkmonster_start ;
+void() monster_fly ;
+void() flymonster_start ;
+void() monster_swim ;
+void() swimmonster_start ;
+void() clear_monster_caches;
+/*---private---*/
+
+
+// Monsters/knight.qc...
+
+/*---public---*/
+// $VER: knight.qc 1.6 ï¿½ Karlos '99 (24/08/1999)
+void() monster_knight ;
+/*---private---*/
+
+
 // Monsters/hellknight.qc...
 
 /*---public---*/
-// $VER: hellknight.qc 2.0 © Karlos '99 (24/08/1999)
+// $VER: hellknight.qc 2.0 ï¿½ Karlos '99 (24/08/1999)
 
 void() CheckForCharge ;
 void() CheckContinueCharge ;
@@ -139,19 +137,19 @@ void() monster_hell_knight ;
 /*---private---*/
 
 
-// Monsters/rotfish.qc...
+// Monsters/grunt.qc...
 
 /*---public---*/
-// $VER: rotfish.qc 1.1 © Karlos '99 (15/07/1999), original 1.06 by id software
+// $VER: grunt.qc 1.8 ï¿½ Karlos '99 (16/09/1999)
 
-void() monster_fish;
+void() monster_army;
 /*---private---*/
 
 
 // Monsters/fiend.qc...
 
 /*---public---*/
-// $VER: fiend.qc 1.8 © Karlos'99 (17/09/1999)
+// $VER: fiend.qc 1.8 ï¿½ Karlos'99 (17/09/1999)
 
 void() monster_demon1 ;
 float() CheckDemonMelee ;
@@ -162,30 +160,32 @@ void() Demon_JumpTouch ;
 /*---private---*/
 
 
+// Monsters/enforcer.qc...
+
+/*---public---*/
+// $VER: enforcer.qc 2.12 ï¿½ Karlos '99 (15/11/1999), original 1.06 by id software
+
+void() Laser_Touch ;
+void(vector org, vector vec) LaunchLaser ;
+void() monster_enforcer ;
+/*---private---*/
+
+
+// Monsters/dog.qc...
+
+/*---public---*/
+// $VER: dog.qc 1.4 ï¿½ Karlos'99 (14/07/1999)
+
+float() CheckDogJump ;
+float() DogCheckAttack ;
+void() monster_dog ;
+/*---private---*/
+
+
 // Monsters/chthon.qc...
 
 /*---public---*/
 // $VER: chthon.qc 1.1 ® Karlos '99 (22/07/1999)
 
 void() monster_boss;
-/*---private---*/
-
-
-// Monsters/zombie.qc...
-
-/*---public---*/
-// $VER: zombie.qc 1.7 © Karlos'99 (31/07/1999)
-
-void() monster_zombie;
-/*---private---*/
-
-
-// Monsters/scragg.qc...
-
-/*---public---*/
-// $VER: Scragg.qc 1.2 ® Karlos '99 (17/07/1999)
-
-float() WizardCheckAttack ;
-float() WizardAttackFinished ;
-void() monster_wizard ;
 /*---private---*/

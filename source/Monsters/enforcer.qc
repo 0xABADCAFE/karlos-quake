@@ -1,6 +1,6 @@
 // enforcer.qc
 /*---public---*/
-// $VER: enforcer.qc 2.12 © Karlos '99 (15/11/1999), original 1.06 by id software
+// $VER: enforcer.qc 2.12 ï¿½ Karlos '99 (15/11/1999), original 1.06 by id software
 
    void() Laser_Touch ;
    void(vector org, vector vec) LaunchLaser ;
@@ -9,6 +9,8 @@
 
 void() enf_ion1;
 void() enf_atk1;
+
+
 
 /*=========================================================================================
 
@@ -31,7 +33,7 @@ void() enf_atk1;
 
 $cd id1/models/enforcer
 $origin 0 -6 24
-$base base     
+$base base
 $skin skin
 
 $frame stand1 stand2 stand3 stand4 stand5 stand6 stand7
@@ -67,7 +69,7 @@ $frame paind17 paind18 paind19
 void() Laser_Touch =
 {
    local vector org;
-   
+
    if (other == self.owner)
       return;     // don't explode on owner
 
@@ -76,7 +78,7 @@ void() Laser_Touch =
       remove(self);
       return;
    }
-   
+
    sound (self, CHAN_WEAPON, "enforcer/enfstop.wav", 1, ATTN_STATIC);
    org = self.origin - 8*normalize(self.velocity);
 
@@ -93,7 +95,7 @@ void() Laser_Touch =
       WriteCoord (MSG_BROADCAST, org_y);
       WriteCoord (MSG_BROADCAST, org_z);
    }
-   remove(self);  
+   remove(self);
 };
 
 
@@ -104,12 +106,12 @@ void() Laser_Touch =
 void(vector org, vector tovec) LaunchLaser =
 {
    local vector   vec;
-      
+
    if (self.classname == "monster_enforcer")
       sound (self, CHAN_WEAPON, "enforcer/enfire.wav", 1, ATTN_NORM);
 
    vec = normalize(tovec);
-   
+
    newmis = spawn();
    newmis.owner = self;
    newmis.movetype = MOVETYPE_FLY;
@@ -117,7 +119,7 @@ void(vector org, vector tovec) LaunchLaser =
    newmis.effects = (FX_GLOW & effectflags);
 
    setmodel (newmis, "progs/laser.mdl");
-   setsize (newmis, '0 0 0', '0 0 0');    
+   setsize (newmis, '0 0 0', '0 0 0');
 
    setorigin (newmis, org);
 
@@ -448,7 +450,7 @@ void(entity attacker, float damage) enf_pain =
    r = random ();
    if (self.pain_finished > time)
       return;
-   
+
    if (r < 0.5)
       sound (self, CHAN_VOICE, "enforcer/pain1.wav", 1, ATTN_NORM);
    else
@@ -537,6 +539,25 @@ void() enf_die =
       enf_fdie1 ();
 };
 
+void() enf_alerted = {
+    local float rsnd;
+    local string my_noise;
+    rsnd = rint(random() * 3);
+    if (rsnd == 1) {
+        my_noise = "enforcer/sight1.wav";
+    }
+    else if (rsnd == 2) {
+        my_noise = "enforcer/sight2.wav";
+    }
+    else if (rsnd == 0) {
+        my_noise = "enforcer/sight3.wav";
+    }
+    else {
+        my_noise = "enforcer/sight4.wav";
+    }
+    sound(self, CHAN_VOICE, my_noise, 1, ATTN_NORM);
+};
+
 /*---endprivate---*/
 
 void() monster_enforcer =
@@ -583,7 +604,10 @@ void() monster_enforcer =
       precache_sound2 ("enforcer/sight3.wav");
       precache_sound2 ("enforcer/sight4.wav");
    }
-   monster_initialise ("progs/enforcer.mdl", '-16 -16 -24', '16 16 40', 80, 40);
+
+   self.th_alerted = enf_alerted;
+
+   monster_init ("progs/enforcer.mdl", '-16 -16 -24', '16 16 40', 80, 40);
    self.netname = "an enforcer";
    self.th_stand = enf_stand1;
    self.th_walk = enf_walk1;

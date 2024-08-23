@@ -8,7 +8,7 @@ changetaskpri 0
 
 ask "Copy progs.dat file to game directory (Y/AOK) ? >"
 if warn
-   copy progs.dat to dh5:quake/karlos/
+   copy progs.dat to /game/Karlos/
    protect progs.#? +a
    protect #?/#?(.qc|.qh) +a
 endif

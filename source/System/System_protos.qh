@@ -1,11 +1,33 @@
-// Header table for directory 'System' created at 23:54:42 on 10 May 2000
+// Header table for directory 'System' created at 18:04:57 on 23 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : System/utilities.qc, 9539 bytes
 // sourcefile : System/version.qc, 697 bytes
+// sourcefile : System/utilities.qc, 9539 bytes
 // sourcefile : System/subs.qc, 7489 bytes
 //=========================================================================================
+
+
+// System/version.qc...
+
+/*---public---*/
+// $VER: version.qc 1.82 ® Karlos (14/10/1999)
+// public functions defined
+
+void() version_info;
+
+// defined elsewhere
+
+void() version_AI;
+void() version_World;
+void() version_Client;
+void() version_Misc;
+void() version_System;
+void() version_Monsters;
+void() version_Server;
+void() version_Base;
+
+/*---private---*/
 
 
 // System/utilities.qc...
@@ -28,28 +50,6 @@ float sound1_used;
 float sound2_used;
 float sound3_used;
 float sound4_used;
-
-/*---private---*/
-
-
-// System/version.qc...
-
-/*---public---*/
-// $VER: version.qc 1.82 ® Karlos (14/10/1999)
-// public functions defined
-
-void() version_info;
-
-// defined elsewhere
-
-void() version_AI;
-void() version_World;
-void() version_Client;
-void() version_Misc;
-void() version_System;
-void() version_Monsters;
-void() version_Server;
-void() version_Base;
 
 /*---private---*/
 

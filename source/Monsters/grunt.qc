@@ -1,6 +1,6 @@
 // grunt.qc
 /*---public---*/
-// $VER: grunt.qc 1.8 © Karlos '99 (16/09/1999)
+// $VER: grunt.qc 1.8 ï¿½ Karlos '99 (16/09/1999)
 
    void() monster_army;
 /*---private---*/
@@ -29,7 +29,7 @@
 // Model defs...
 $cd id1/models/soldier3
 $origin 0 -6 24
-$base base     
+$base base
 $skin skin
 
 // Frame defs...
@@ -356,7 +356,7 @@ void()   army_cdie11 =[ $deathc11, army_cdie11 ] {corpse ("progs/h_guard.mdl", 6
 void(entity attacker, float damage) army_pain =
 {
    local float r;
-   
+
    if (self.pain_finished > time)
       return;
 
@@ -437,14 +437,14 @@ void() army_fire =
    local vector   dir;
 
    ai_face();
-   
+
    sound (self, CHAN_WEAPON, "weapons/guncock.wav", 1, ATTN_NORM);
 
    // fire somewhat behind the player, so a dodging player is harder to hit
-   
+
    dir = self.enemy.origin - self.enemy.velocity*0.2;
    dir = normalize (dir - self.origin);
-   
+
    FireBullets (4, dir, '0.1 0.1 0');
 };
 
@@ -505,7 +505,7 @@ void() army_die =
    if (random() < 0.5)
       army_die1 ();
    else
-      army_cdie1 (); 
+      army_cdie1 ();
 };
 
 /*==============================================================================
@@ -513,7 +513,7 @@ void() army_die =
 ==============================================================================*/
 
 void() monster_army =
-{  
+{
    if (deathmatch)
    {
       remove(self);
@@ -565,7 +565,10 @@ void() monster_army =
 
    precache_sound ("player/udeath.wav");     // gib death - should be precached
 
-   monster_initialise ("progs/soldier.mdl", '-16 -16 -24', '16 16 40', 35, 20);
+   // Set the alerted sound, monster_init() will set up the standard alert behaviour
+   self.noise = "soldier/sight1.wav";
+
+   monster_init("progs/soldier.mdl", '-16 -16 -24', '16 16 40', 35, 20);
    self.netname = "a grunt";
 
    self.th_stand = army_stand1;

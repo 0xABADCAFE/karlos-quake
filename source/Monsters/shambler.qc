@@ -1,6 +1,6 @@
 // shambler.qc
 /*---public---*/
-// $VER: shambler.qc 1.4 ® Karlos '99 (12/07/1999)
+// $VER: shambler.qc 1.4 ï¿½ Karlos '99 (12/07/1999)
 
    void() monster_shambler ;
 /*---private---*/
@@ -22,32 +22,32 @@
 
 $cd id1/models/shams
 $origin 0 0 24
-$base base     
+$base base
 $skin base
 
 $frame stand1 stand2 stand3 stand4 stand5 stand6 stand7 stand8 stand9
 $frame stand10 stand11 stand12 stand13 stand14 stand15 stand16 stand17
 
-$frame walk1 walk2 walk3 walk4 walk5 walk6 walk7 
+$frame walk1 walk2 walk3 walk4 walk5 walk6 walk7
 $frame walk8 walk9 walk10 walk11 walk12
 
 $frame   run1 run2 run3 run4 run5 run6
 
-$frame smash1 smash2 smash3 smash4 smash5 smash6 smash7 
+$frame smash1 smash2 smash3 smash4 smash5 smash6 smash7
 $frame smash8 smash9 smash10 smash11 smash12
 
-$frame swingr1 swingr2 swingr3 swingr4 swingr5 
+$frame swingr1 swingr2 swingr3 swingr4 swingr5
 $frame swingr6 swingr7 swingr8 swingr9
 
-$frame swingl1 swingl2 swingl3 swingl4 swingl5 
+$frame swingl1 swingl2 swingl3 swingl4 swingl5
 $frame swingl6 swingl7 swingl8 swingl9
 
-$frame magic1 magic2 magic3 magic4 magic5 
+$frame magic1 magic2 magic3 magic4 magic5
 $frame magic6 magic7 magic8 magic9 magic10 magic11 magic12
 
 $frame pain1 pain2 pain3 pain4 pain5 pain6
 
-$frame death1 death2 death3 death4 death5 death6 
+$frame death1 death2 death3 death4 death5 death6
 $frame death7 death8 death9 death10 death11
 
 /*---private---*/
@@ -127,7 +127,7 @@ void() sham_smash10    =[      $smash10,      sham_smash11   ]
       return;
    if (!CanDamage (self.enemy, self))
       return;
-       
+
    ldmg = (random() + random() + random()) * 40;
    self.enemy.deathtype = "melee";
    T_Damage (self.enemy, self, self, ldmg);
@@ -155,7 +155,7 @@ void(float side) ShamClaw =
 
    if (vlen(delta) > 100)
       return;
-      
+
    ldmg = (random() + random() + random()) * 20;
    self.enemy.deathtype == "melee";
    T_Damage (self.enemy, self, self, ldmg);
@@ -212,7 +212,7 @@ void() sham_swingr9 =[      $swingr9,      sham_run1  ]
 void() sham_melee =
 {
    local float chance;
-   
+
    chance = random();
    if (chance > 0.6 || self.health == 600)
       sham_smash1 ();
@@ -228,7 +228,7 @@ void() sham_melee =
 void() CastLightning =
 {
    local vector   org, dir;
-   
+
    self.effects = self.effects | (FX_FLASH & effectflags);
 
    ai_face ();
@@ -338,7 +338,7 @@ void(entity attacker, float damage) sham_pain =
    if (self.pain_finished > time)
       return;
    self.pain_finished = time + 2;
-      
+
    sham_pain1 ();
 };
 
@@ -397,7 +397,7 @@ void() monster_shambler =
       precache_model ("progs/s_light.mdl");
       precache_model ("progs/h_shams.mdl");
       precache_model ("progs/bolt.mdl");
-   
+
       precache_sound ("shambler/sattck1.wav");
       precache_sound ("shambler/sboom.wav");
       precache_sound ("shambler/sdeath.wav");
@@ -409,7 +409,10 @@ void() monster_shambler =
       precache_sound ("shambler/smack.wav");
    }
 
-   monster_initialise ("progs/shambler.mdl", VEC_HULL2_MIN, VEC_HULL2_MAX, 600, 250);
+   // Set the alerted sound, monster_init() will set up the standard alert behaviour
+   self.noise = "shambler/ssight.wav";
+
+   monster_init ("progs/shambler.mdl", VEC_HULL2_MIN, VEC_HULL2_MAX, 600, 250);
    self.netname = "a shambler";
    self.th_stand = sham_stand1;
    self.th_walk = sham_walk1;

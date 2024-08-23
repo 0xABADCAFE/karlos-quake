@@ -1,6 +1,6 @@
 // knight.qc
 /*---public---*/
-// $VER: knight.qc 1.6 © Karlos '99 (24/08/1999)
+// $VER: knight.qc 1.6 ï¿½ Karlos '99 (24/08/1999)
    void() monster_knight ;
 /*---private---*/
 /*=========================================================================================
@@ -190,7 +190,7 @@ void(entity attacker, float damage) knight_pain =
       knight_painb1 ();
       self.pain_finished = time + 1;
    }
-   
+
 };
 
 //===========================================================================
@@ -299,7 +299,10 @@ void() monster_knight =
    precache_sound ("knight/sword2.wav");
    precache_sound ("knight/idle.wav");
 
-   monster_initialise ("progs/knight.mdl", '-16 -16 -24', '16 16 40', 75, 30);
+   // Set the alerted sound, monster_init() will set up the standard alert behaviour
+   self.noise = "knight/ksight.wav";
+
+   monster_init ("progs/knight.mdl", '-16 -16 -24', '16 16 40', 75, 30);
    self.netname = "a knight";
    self.th_stand = knight_stand1;
    self.th_walk = knight_walk1;

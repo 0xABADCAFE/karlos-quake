@@ -1,13 +1,66 @@
-// Header table for directory 'Server' created at 14:50:07 on 22 Aug 2024
+// Header table for directory 'Server' created at 18:04:55 on 23 Aug 2024
 //
 //========================================================================================
 //
+// sourcefile : Server/server.qc, 14938 bytes
 // sourcefile : Server/randomgame.qc, 8605 bytes
 // sourcefile : Server/mikerules.qc, 10496 bytes
 // sourcefile : Server/impulse.qc, 7634 bytes
 // sourcefile : Server/cheats.qc, 3793 bytes
-// sourcefile : Server/server.qc, 14938 bytes
 //=========================================================================================
+
+
+// Server/server.qc...
+
+/*---public---*/
+// $VER: server.qc, 1.94 © Karlos (17/10/1999)
+
+// public function prototypes
+// highlevel
+void() toggle_admin_messages;
+void() show_server_key;
+void() check_client_key;
+
+// lighting
+void() cycle_light_fx;
+void() toggle_glow_fx;
+void() toggle_flash_fx;
+void() toggle_static_fx;
+
+// explosions
+void() cycle_explode_fx;
+void() toggle_fast_explode;
+void() toggle_multi_explode;
+void() toggle_smart_explode;
+
+// console fx
+void() toggle_con_gamma;
+void() toggle_con_flash;
+void() toggle_con_fov;
+
+// sound
+void() toggle_sound_limit;
+void() toggle_sound_plus;
+
+// violence
+void() cycle_violence;
+void() toggle_blood;
+void() toggle_gibs;
+void() toggle_corpse;
+
+// gameplay
+void() toggle_shrapnel;
+void() toggle_mikerules;
+void() toggle_randomgame;
+
+// lowlevel
+void() save_server_opts;
+void() set_server_opts;
+void() default_server_opts;
+void() create_server_key;
+void(entity e) report_to_administrator;
+
+/*---private---*/
 
 
 // Server/randomgame.qc...
@@ -61,57 +114,4 @@ void() InvisibilityCheat;
 void() ProtectCheat;
 void() QuadCheat;
 void() RuneCheat;
-/*---private---*/
-
-
-// Server/server.qc...
-
-/*---public---*/
-// $VER: server.qc, 1.94 © Karlos (17/10/1999)
-
-// public function prototypes
-// highlevel
-void() toggle_admin_messages;
-void() show_server_key;
-void() check_client_key;
-
-// lighting
-void() cycle_light_fx;
-void() toggle_glow_fx;
-void() toggle_flash_fx;
-void() toggle_static_fx;
-
-// explosions
-void() cycle_explode_fx;
-void() toggle_fast_explode;
-void() toggle_multi_explode;
-void() toggle_smart_explode;
-
-// console fx
-void() toggle_con_gamma;
-void() toggle_con_flash;
-void() toggle_con_fov;
-
-// sound
-void() toggle_sound_limit;
-void() toggle_sound_plus;
-
-// violence
-void() cycle_violence;
-void() toggle_blood;
-void() toggle_gibs;
-void() toggle_corpse;
-
-// gameplay
-void() toggle_shrapnel;
-void() toggle_mikerules;
-void() toggle_randomgame;
-
-// lowlevel
-void() save_server_opts;
-void() set_server_opts;
-void() default_server_opts;
-void() create_server_key;
-void(entity e) report_to_administrator;
-
 /*---private---*/

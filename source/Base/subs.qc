@@ -8,23 +8,26 @@ float(entity targ) visible;
 void() SUB_Null = {};
 void() SUB_Remove = {remove(self);};
 
+void() SUB_AlertedSound = {
+    sound(self, CHAN_VOICE, self.noise, 1, ATTN_NORM);
+};
+
 /*
 QuakeEd only writes a single float for angles (bad idea), so up and down are
 just constant angles.
 */
-vector() SetMovedir =
-{
-   if (self.angles == '0 -1 0')
-      self.movedir = '0 0 1';
-   else if (self.angles == '0 -2 0')
-      self.movedir = '0 0 -1';
-   else
-   {
-      makevectors (self.angles);
-      self.movedir = v_forward;
-   }
-   
-   self.angles = '0 0 0';
+vector() SetMovedir = {
+    if (self.angles == '0 -1 0') {
+        self.movedir = '0 0 1';
+    }
+    else if (self.angles == '0 -2 0') {
+        self.movedir = '0 0 -1';
+    }
+    else {
+        makevectors(self.angles);
+        self.movedir = v_forward;
+    }
+    self.angles = '0 0 0';
 };
 
 /*
@@ -81,13 +84,13 @@ local float    len, traveltime;
       self.nextthink = self.ltime + 0.1;
       return;
    }
-      
+
 // set destdelta to the vector needed to move
    vdestdelta = tdest - self.origin;
-   
+
 // calculate length of vector
    len = vlen (vdestdelta);
-   
+
 // divide by speed to get time to reach dest
    traveltime = len / tspeed;
 
@@ -97,12 +100,12 @@ local float    len, traveltime;
       self.nextthink = self.ltime + 0.1;
       return;
    }
-   
+
 // set nextthink to trigger a think when dest is reached
    self.nextthink = self.ltime + traveltime;
 
 // scale the destdelta vector by the time spent traveling to get velocity
-   self.velocity = vdestdelta * (1/traveltime); // qcc won't take vec/float   
+   self.velocity = vdestdelta * (1/traveltime); // qcc won't take vec/float
 };
 
 /*
@@ -125,7 +128,7 @@ void()  SUB_CalcMoveDone =
 SUB_CalcAngleMove
 
 calculate self.avelocity and self.nextthink to reach destangle from
-self.angles rotating 
+self.angles rotating
 
 The calling function should make sure self.think is valid
 ===============
@@ -146,13 +149,13 @@ local float    len, traveltime;
 
    if (!tspeed)
       objerror("No speed is defined!");
-      
+
 // set destdelta to the vector needed to move
    destdelta = destangle - self.angles;
-   
+
 // calculate length of vector
    len = vlen (destdelta);
-   
+
 // divide by speed to get time to reach dest
    traveltime = len / tspeed;
 
@@ -161,7 +164,7 @@ local float    len, traveltime;
 
 // scale the destdelta vector by the time spent traveling to get velocity
    self.avelocity = destdelta * (1 / traveltime);
-   
+
    self.think1 = func;
    self.finalangle = destangle;
    self.think = SUB_CalcAngleMoveDone;
@@ -230,8 +233,8 @@ void() SUB_UseTargets =
       t.target = self.target;
       return;
    }
-   
-   
+
+
 //
 // print the message
 //
@@ -256,7 +259,7 @@ void() SUB_UseTargets =
          remove (t);
       } while ( 1 );
    }
-   
+
 //
 // fire targets
 //
@@ -285,7 +288,7 @@ void() SUB_UseTargets =
          activator = act;
       } while ( 1 );
    }
-   
+
 
 };
 
@@ -322,7 +325,7 @@ void (void() thinkst) SUB_CheckRefire =
 
    self.cnt = 1;
    self.think = thinkst;
- 
+
 };
 
 void() SUB_regen =

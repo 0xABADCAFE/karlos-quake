@@ -1,6 +1,6 @@
 // scragg.qc
 /*---public---*/
-// $VER: Scragg.qc 1.2 ® Karlos '99 (17/07/1999)
+// $VER: Scragg.qc 1.2 ï¿½ Karlos '99 (17/07/1999)
 
    float() WizardCheckAttack ;
    float() WizardAttackFinished ;
@@ -24,7 +24,7 @@
 
 $cd id1/models/a_wizard
 $origin 0 0 24
-$base wizbase  
+$base wizbase
 $skin wizbase
 
 $frame hover1 hover2 hover3 hover4 hover5 hover6 hover7 hover8
@@ -84,7 +84,7 @@ void() wiz_side1;
 ==========================================================================*/
 float()  WizardCheckAttack =
 {
-   local vector   spot1, spot2;  
+   local vector   spot1, spot2;
    local entity   targ;
    local float    chance;
 
@@ -107,9 +107,9 @@ float()  WizardCheckAttack =
          }
          return FALSE;
       }
-      
+
       targ = self.enemy;
-   
+
    // see if any entities are in the way of the shot
       spot1 = self.origin + self.view_ofs;
       spot2 = targ.origin + targ.view_ofs;
@@ -125,7 +125,7 @@ float()  WizardCheckAttack =
          }
          return FALSE;
       }
-         
+
       if (enemy_range == RANGE_MELEE)
          chance = 0.9;
       else if (enemy_range == RANGE_NEAR)
@@ -157,7 +157,7 @@ float()  WizardCheckAttack =
             wiz_side1 ();
          }
       }
-   }   
+   }
    return FALSE;
 };
 
@@ -195,8 +195,8 @@ void() Wiz_FastFire =
    {
       self.owner.effects = self.owner.effects | (FX_FLASH & effectflags);
 
-      makevectors (self.enemy.angles); 
-   
+      makevectors (self.enemy.angles);
+
       sound (self, CHAN_WEAPON, "wizard/wattack.wav", 1, ATTN_NORM);
       launch_snot (self.origin);
       newmis.owner = self.owner;
@@ -209,7 +209,7 @@ void() Wiz_FastFire =
 void() Wiz_StartFast =
 {
    local entity   missile;
-   
+
    sound (self, CHAN_WEAPON, "wizard/wattack.wav", 1, ATTN_NORM);
    self.v_angle = self.angles;
    makevectors (self.angles);
@@ -217,7 +217,7 @@ void() Wiz_StartFast =
    missile = spawn ();
    missile.owner = self;
    missile.nextthink = time + 0.6;
-   setsize (missile, '0 0 0', '0 0 0');      
+   setsize (missile, '0 0 0', '0 0 0');
    setorigin (missile, self.origin + '0 0 30' + v_forward*14 + v_right*14);
    missile.enemy = self.enemy;
    missile.nextthink = time + 0.8;
@@ -226,7 +226,7 @@ void() Wiz_StartFast =
    missile = spawn ();
    missile.owner = self;
    missile.nextthink = time + 1;
-   setsize (missile, '0 0 0', '0 0 0');      
+   setsize (missile, '0 0 0', '0 0 0');
    setorigin (missile, self.origin + '0 0 30' + v_forward*14 + v_right* -14);
    missile.enemy = self.enemy;
    missile.nextthink = time + 0.3;
@@ -242,7 +242,7 @@ local float wr;
    if (self.waitmin < time)
    {
       self.waitmin = time + 2;
-      if (wr > 4.5) 
+      if (wr > 4.5)
          sound (self, CHAN_VOICE, "wizard/widle1.wav", 1,  ATTN_IDLE);
       if (wr < 1.5)
          sound (self, CHAN_VOICE, "wizard/widle2.wav", 1, ATTN_IDLE);
@@ -385,7 +385,11 @@ void() monster_wizard =
       precache_sound ("wizard/wpain.wav");
       precache_sound ("wizard/wsight.wav");
    }
-   monster_initialise ("progs/wizard.mdl", '-16 -16 -24', '16 16 40', 80, 40);
+
+   // Set the alerted sound, monster_init() will set up the standard alert behaviour
+   self.noise = "wizard/wsight.wav";
+
+   monster_init ("progs/wizard.mdl", '-16 -16 -24', '16 16 40', 80, 40);
    self.netname = "a scragg";
    self.th_stand = wiz_stand1;
    self.th_walk = wiz_walk1;
@@ -395,5 +399,5 @@ void() monster_wizard =
    self.th_die = wiz_die;
    self.think = monster_fly;
 
-   ai_join_team(TRUE); // can be a team leader   
+   ai_join_team(TRUE); // can be a team leader
 };

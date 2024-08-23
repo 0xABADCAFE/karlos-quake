@@ -1,6 +1,6 @@
 // rotfish.qc
 /*---public---*/
-// $VER: rotfish.qc 1.1 © Karlos '99 (15/07/1999), original 1.06 by id software
+// $VER: rotfish.qc 1.1 ï¿½ Karlos '99 (15/07/1999), original 1.06 by id software
 
    void() monster_fish;
 /*---private---*/
@@ -197,7 +197,7 @@ void() monster_fish =
       precache_sound2 ("fish/bite.wav");
       precache_sound2 ("fish/idle.wav");
    }
-   monster_initialise ("progs/fish.mdl", '-16 -16 -24', '16 16 24', 20 ,10);
+   monster_init ("progs/fish.mdl", '-16 -16 -24', '16 16 24', 20 ,10);
    self.netname = "a rotfish";
 
    self.th_stand = f_stand1;

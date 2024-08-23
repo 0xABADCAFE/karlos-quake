@@ -1,21 +1,21 @@
-// Header table for directory 'Base' created at 23:54:47 on 10 May 2000
+// Header table for directory 'Base' created at 18:04:58 on 23 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : Base/defs.qc, 17142 bytes
-// sourcefile : Base/subs.qc, 7191 bytes
+// sourcefile : Base/subs.qc, 7252 bytes
+// sourcefile : Base/defs.qc, 17082 bytes
 //=========================================================================================
-
-
-// Base/defs.qc...
-
-/*---public---*/
-// $VER: defs.qc 2.00 © Karlos '99 (14/07/1999)
-/*---private---*/
 
 
 // Base/subs.qc...
 
 /*---public---*/
 // $VER: subs.qc 1.10 © Karlos 99
+/*---private---*/
+
+
+// Base/defs.qc...
+
+/*---public---*/
+// $VER: defs.qc 2.00 © Karlos '99 (14/07/1999)
 /*---private---*/

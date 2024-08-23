@@ -1,6 +1,6 @@
 // fiend.qc
 /*---public---*/
-// $VER: fiend.qc 1.8 © Karlos'99 (17/09/1999)
+// $VER: fiend.qc 1.8 ï¿½ Karlos'99 (17/09/1999)
 
    void() monster_demon1 ;
    float() CheckDemonMelee ;
@@ -222,7 +222,7 @@ void(entity attacker, float damage) demon1_pain =
 
    if (random()*200 > damage)
       return;     // didn't flinch
-      
+
    demon1_pain1 ();
 };
 
@@ -303,7 +303,7 @@ float()  CheckDemonJump =
    if (self.origin_z + self.maxs_z < self.enemy.origin_z + self.enemy.mins_z
    + 0.25 * self.enemy.size_z)
       return FALSE;
-*/      
+*/
    dist = self.enemy.origin - self.origin;
 
    // check vertical reach
@@ -312,12 +312,12 @@ float()  CheckDemonJump =
       return FALSE;
 
    dist_z = 0;
-     
+
    d = vlen(dist);
-   
+
    if (d < 100)
       return FALSE;
-      
+
    if (d > 200)
    {
       if (random() < 0.9)
@@ -361,7 +361,7 @@ void(float side)  Demon_Melee =
 {
    local float ldmg;
    local vector   delta;
-   
+
    ai_face ();
    walkmove (self.ideal_yaw, 12);   // allow a little closing
 
@@ -371,11 +371,11 @@ void(float side)  Demon_Melee =
       return;
    if (!CanDamage (self.enemy, self))
       return;
-      
+
    sound (self, CHAN_WEAPON, "demon/dhit2.wav", 1, ATTN_NORM);
    ldmg = 10 + 5*random();
    self.enemy.deathtype = "melee";
-   T_Damage (self.enemy, self, self, ldmg);  
+   T_Damage (self.enemy, self, self, ldmg);
 
    makevectors (self.angles);
    SpawnMeatSpray (self.origin + v_forward*16, side * v_right);
@@ -387,7 +387,7 @@ void()   Demon_JumpTouch =
    local float ldmg;
 
 
-      
+
    if (other.takedamage)
    {
       other.deathtype = "melee";
@@ -396,7 +396,7 @@ void()   Demon_JumpTouch =
          ldmg = 40 + 10*random();
          if (other.deadflag == DEAD_DEAD)
             ldmg = ldmg * 3;
-         T_Damage (other, self, self, ldmg); 
+         T_Damage (other, self, self, ldmg);
       }
    }
 
@@ -455,7 +455,10 @@ void() monster_demon1 =
       precache_sound ("demon/sight2.wav");
    }
 
-   monster_initialise ("progs/demon.mdl", VEC_HULL_MIN, VEC_HULL_MAX, 280, 100);
+   // Set the alerted sound, monster_init() will set up the standard alert behaviour
+   self.noise = "demon/sight2.wav";
+
+   monster_init ("progs/demon.mdl", VEC_HULL_MIN, VEC_HULL_MAX, 280, 100);
    self.netname = "a feind";
    self.th_stand = demon1_stand1;
    self.th_walk = demon1_walk1;
@@ -467,7 +470,7 @@ void() monster_demon1 =
    self.think = monster_walk;
 
    // fiends currently join TEAM_NONE
-   ai_join_team(FALSE); // cannot be a team leader   
+   ai_join_team(FALSE); // cannot be a team leader
 };
 
 
