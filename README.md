@@ -61,3 +61,37 @@ There are numerous other changes, e.g. additional sound effects, etc.
 
 ## Commands
 The following console commands are defined and can be bound to keys.
+
+### Inventory
+| Command | Description |
+| - | - |
+| inventory | Lists the current inventory |
+| use_inventory | Toggles the use immediately / store for later inventory mode |
+| use_axe | Switch to the axe |
+| use_shotgun | Switch to the shotgun |
+| use_supershot | Switch to the super shotgun |
+| use_nailgun | Switch to the nailgun |
+| use_supernail | Switch to the super nailgun |
+| use_grenade | Switch to the grenade launcher |
+| use_rocket | Switch to the rocket launcher |
+| use_bolt | Switch to the thunderbolt |
+| use_next | Switch to the next available weapon |
+| use_prev | Switch to the previous available weapon |
+| use_grapple | Switch to the grappling hook |
+| release_grap | Detach the grappling hook |
+| extend_grap | Lengthen the grapple chain |
+| shorten_grap | Wind the grapple chain. Consumes cells |
+| use_torch | Toggles on the torch. Consumes cells |
+| use_target | Toggles the in-world target |
+| use_guidance | Turns on missile guidance if the target is enabled. Be careful! |
+| drop | Drop the current weapon |
+| use_suit | Equip a previously collected environment suit |
+| use_quad | Equip a previously collected quad damage |
+| use_ring | Equip a previously collected ring of shadows |
+| use_protect | Equip a previously collected pentagram of protection |
+
+### Player
+
+### Admin
+
+### Cheats
