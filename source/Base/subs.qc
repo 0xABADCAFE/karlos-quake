@@ -5,7 +5,9 @@
 
 float(entity targ) visible;
 
-void() SUB_Null = {};
+void() SUB_Null = {
+
+};
 
 void() SUB_Remove = {
     remove(self);
@@ -140,8 +142,7 @@ void(entity ent, vector destangle, float tspeed, void() func) SUB_CalcAngleMoveE
     self = stemp;
 };
 
-void(vector destangle, float tspeed, void() func) SUB_CalcAngleMove =
-{
+void(vector destangle, float tspeed, void() func) SUB_CalcAngleMove = {
     local vector   destdelta;
     local float    len, traveltime;
 

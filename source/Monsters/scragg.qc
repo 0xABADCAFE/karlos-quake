@@ -17,7 +17,7 @@
 
    Specifics..
 
-      Replaced the shootin function with one using smart_shoot_ahead function, thus
+      Replaced the shootin function with one using ai_shoot_ahead function, thus
    allowing speculative shooting
 
 =========================================================================================*/
@@ -70,7 +70,7 @@ void(vector org) launch_snot =
    setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
    setorigin (newmis, org);
 
-   smart_shoot_ahead (self.enemy, newmis, 500 + 200 * skill);
+   ai_shoot_ahead (self.enemy, newmis, 500 + 200 * skill);
 };
 
 void() wiz_run1;

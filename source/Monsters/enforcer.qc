@@ -23,7 +23,7 @@ void() enf_atk1;
    Hit points          : 80, 40
 
    Specifics..
-      Uses new smart_aim_ahead() ai for speculative targeting based on opponents velocity
+      Uses new ai_predict_aim() ai for speculative targeting based on opponents velocity
       and position.
       Projectile speed sensitive to skill setting
       Footstep handling
@@ -175,14 +175,14 @@ void() enforcer_fire_laser =
 
    dist = vlen(self.origin - self.enemy.origin);
 
-   // use smart_aim_ahead(), basing intercept time on distance
+   // use ai_predict_aim(), basing intercept time on distance
    // if closeish, use intercept of 0.5 time units
    // else use intercept of about 0.75 units
 
    if (dist < 2000)
-      self.futuretarget = smart_aim_ahead (self.enemy, 700 + skill * 200, 0.5, enf_shoot_ahead, targ_too_far);
+      self.futuretarget = ai_predict_aim (self.enemy, 700 + skill * 200, 0.5, enf_shoot_ahead, targ_too_far);
    else
-      self.futuretarget = smart_aim_ahead (self.enemy, 700 + skill * 200, 0.75, enf_shoot_ahead, targ_too_far);
+      self.futuretarget = ai_predict_aim (self.enemy, 700 + skill * 200, 0.75, enf_shoot_ahead, targ_too_far);
 };
 
 //====================================================================================

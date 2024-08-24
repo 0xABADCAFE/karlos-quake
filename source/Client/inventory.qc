@@ -5,11 +5,11 @@
 
 // public function prototypes
 // highlevel
-   void() toggle_inventory;
-   void() list_inventory;
-   void(float use_item) activate_inventory_item;
-   void(float thing_dropped) drop_item;
-   void() precache_inventory;
+void() toggle_inventory;
+void() list_inventory;
+void(float use_item) activate_inventory_item;
+void(float thing_dropped) drop_item;
+void() precache_inventory;
 /*---private---*/
 
 //========================================================================
@@ -339,29 +339,29 @@ void() precache_inventory =
    // we use this function to precache the item sounds when the item itself
    // is not in the level
 //   if (parm1 & IT_SUIT)
-//   {    
-      precache_sound ("items/suit.wav");
-      precache_sound ("items/suit2.wav");
-      precache_sound ("shared/inhale.wav");
-      precache_sound ("shared/exhale.wav");
-      precache_sound ("shared/w_exhale.wav");
+//   {
+      precache_sound("items/suit.wav");
+      precache_sound("items/suit2.wav");
+      precache_sound("shared/inhale.wav");
+      precache_sound("shared/exhale.wav");
+      precache_sound("shared/w_exhale.wav");
 //   }
 //   if (parm1 & IT_INVULNERABILITY)
 //   {
-      precache_sound ("items/protect.wav");
-      precache_sound ("items/protect2.wav");
-      precache_sound ("items/protect3.wav");
+      precache_sound("items/protect.wav");
+      precache_sound("items/protect2.wav");
+      precache_sound("items/protect3.wav");
 //   }
 //   if (parm1 & IT_INVISIBILITY)
 //   {
-      precache_sound ("items/inv1.wav");
-      precache_sound ("items/inv2.wav");
-      precache_sound ("items/inv3.wav");
+      precache_sound("items/inv1.wav");
+      precache_sound("items/inv2.wav");
+      precache_sound("items/inv3.wav");
 //   }
 //   if (parm1 & IT_QUAD)
 //   {
-      precache_sound ("items/damage.wav");
-      precache_sound ("items/damage2.wav");
-      precache_sound ("items/damage3.wav");
+      precache_sound("items/damage.wav");
+      precache_sound("items/damage2.wav");
+      precache_sound("items/damage3.wav");
 //   }
 };

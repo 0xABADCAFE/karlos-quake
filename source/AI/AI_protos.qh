@@ -14,11 +14,11 @@
 // AI/ai_team.qc...
 
 /*---public---*/
-// $VER: ai_team.qc 1.00 © Karlos'99 (23/1/2000)
+// $VER: ai_team.qc 1.00 ï¿½ Karlos'99 (23/1/2000)
 
 // public function prototypes
 float (entity observer, entity observed) is_enemy_member;
-void(entity caller, float radius, float by_sight, float by_sound) call_backup;
+void(entity caller, float radius, float by_sight, float by_sound) team_call_for_backup;
 void() set_enemy_all;
 void() set_enemy_none;
 
@@ -28,7 +28,7 @@ void() set_enemy_none;
 // AI/ai_team_manage.qc...
 
 /*---public---*/
-// $VER: ai_team_manage.qc 1.10 © Karlos (05/02/2000)
+// $VER: ai_team_manage.qc 1.10 ï¿½ Karlos (05/02/2000)
 
 // public function prototypes
 
@@ -49,18 +49,18 @@ void(float team_id) list_enemy_teams;
 // AI/smart.qc...
 
 /*---public---*/
-// $VER: smart.qc 2.02 © Karlos (24/1/2000)
+// $VER: smart.qc 2.02 ï¿½ Karlos (24/1/2000)
 
 // public function prototypes
 
-vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void() too_far) smart_aim_ahead;
-void(entity targ, entity projectile, float proj_speed) smart_shoot_ahead;
+vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void() too_far) ai_predict_aim;
+void(entity targ, entity projectile, float proj_speed) ai_shoot_ahead;
 
 
-float(entity what) smart_judge_hazard;
-entity (entity who, float viewdist) smart_pick_new_target;
+float(entity what) ai_judge_hazard;
+entity (entity who, float viewdist) ai_pick_new_target;
 
-void(entity monster, entity startler) smart_alert;
+void(entity monster, entity startler) ai_alert;
 void(entity thing, entity initiator, float radius, float by_sight, float by_sound) smart_radius_alert;
 float(entity thing, entity to) is_visible;
 float(entity thing, entity to) is_audible;
@@ -72,7 +72,7 @@ float(entity thing, entity to) is_audible;
 // AI/combat.qc...
 
 /*---public---*/
-// $VER: combat.qc 1.82 ® Karlos '99 (02/10/1999)
+// $VER: combat.qc 1.82 ï¿½ Karlos '99 (02/10/1999)
 // public function prototypes
 float(entity targ, entity inflictor) CanDamage;
 void(entity targ, entity attacker) Killed;
@@ -85,7 +85,7 @@ void(entity attacker, float damage) T_BeamDamage;
 // AI/ai.qc...
 
 /*---public---*/
-// $VER: ai.qc 2.21 © Karlos (10/02/2000)
+// $VER: ai.qc 2.21 ï¿½ Karlos (10/02/2000)
 
 // public function prototypes
 float(float v) anglemod;
@@ -121,7 +121,7 @@ void(float dist) ai_run;
 // AI/fight.qc...
 
 /*---public---*/
-// $VER: fight.qc 1.06 © id software
+// $VER: fight.qc 1.06 ï¿½ id software
 
 // public function prototypes
 float() CheckAttack;

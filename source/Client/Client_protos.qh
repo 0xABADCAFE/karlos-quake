@@ -17,7 +17,7 @@
 // Client/player.qc...
 
 /*---public---*/
-// $VER: player.qc 1.72 ® Karlos (11/09/1999)
+// $VER: player.qc 1.72 ï¿½ Karlos (11/09/1999)
 
 // public function prototypes
 // highlevel
@@ -51,7 +51,7 @@ void() precache_female;
 // Client/inventory.qc...
 
 /*---public---*/
-// $VER: inventory.qc 1.53 © Karlos (22/09/1999)
+// $VER: inventory.qc 1.53 ï¿½ Karlos (22/09/1999)
 
 // public function prototypes
 // highlevel
@@ -66,7 +66,7 @@ void() precache_inventory;
 // Client/weapons.qc...
 
 /*---public---*/
-// $VER: weapons.qc 2.18 © Karlos '00 (22/1/2000)
+// $VER: weapons.qc 2.18 ï¿½ Karlos '00 (22/1/2000)
 
 // public function protoypes
 // highlevel
@@ -106,7 +106,7 @@ void() superspike_touch;
 // Client/grapple.qc...
 
 /*---public---*/
-// $VER: grapple.qc 1.12 © Karlos (08/10/1999) based on code by Perceli Manole
+// $VER: grapple.qc 1.12 ï¿½ Karlos (08/10/1999) based on code by Perceli Manole
 
 // public functions provided
 // highlevel
@@ -124,7 +124,7 @@ void(vector shot_dir, float shot_impulse) grapple_weapon_kick; // weaponkick eff
 // Client/skins.qc...
 
 /*---public---*/
-// $VER: skins.qc 1.20 © Karlos '99 (13/09/1999)
+// $VER: skins.qc 1.20 ï¿½ Karlos '99 (13/09/1999)
 
 // public function prototypes
 // highlevel
@@ -136,7 +136,7 @@ void (float opt) change_client_skin;
 // Client/target.qc...
 
 /*---public---*/
-// $VER: target.qc 1.97 © Karlos (10/3/2000)
+// $VER: target.qc 1.97 ï¿½ Karlos (10/3/2000)
 
 // public function prototypes
 // highlevel
@@ -152,11 +152,11 @@ void(entity torch_owner)              toggle_torch;
 // Client/camera.qc...
 
 /*---public---*/
-// $VER: camera.qc 1.74 © Karlos '00 (22/1/2000)
+// $VER: camera.qc 1.74 ï¿½ Karlos '00 (22/1/2000)
 
 // public function prototypes
 // highlevel
-void()                                toggle_camera;
+void()                                camera_toggle;
 void(float opt)                       camera_change_zmult;
 void(float opt)                       camera_change_dist;
 
@@ -170,7 +170,7 @@ void(entity msg_ent, entity view_ent) set_viewport;
 // Client/client_extra.qc...
 
 /*---public---*/
-// $VER: client_extra.qc 1.97 © Karlos '99 (17/10/1999)
+// $VER: client_extra.qc 1.97 ï¿½ Karlos '99 (17/10/1999)
 
 // public function prototypes
 // highlevel
@@ -193,7 +193,7 @@ void (entity targ, entity attacker) ClientObituary;
 // Client/client.qc...
 
 /*---public---*/
-// $VER: client.qc 1.85 © Karlos (11/10/1999)
+// $VER: client.qc 1.85 ï¿½ Karlos (11/10/1999)
 
 // public function prototypes
 // highlevel

@@ -15,7 +15,7 @@
 //
 //============================================================================
 /*---public---*/
-// $VER: ai.qc 2.21 © Karlos (10/02/2000)
+// $VER: ai.qc 2.21 ï¿½ Karlos (10/02/2000)
 
 // public function prototypes
 float(float v) anglemod;
@@ -24,9 +24,7 @@ float(entity targ) infront;
 float() FindTarget;
 float() FacingIdeal;
 float(entity targ) visible;
-
 float() ai_test_jump;
-
 void() movetarget_f;
 void() path_corner;
 void() t_movetarget;
@@ -130,7 +128,6 @@ void() path_corner = { movetarget_f(); };
       moving towards it, change the next destination and continue.
 ================================================================================*/
 void() t_movetarget = {
-
     if (other.enemy) {
         return;     // fighting, not following a path
     }
@@ -194,7 +191,6 @@ float(entity targ) range = {
       returns 1 if the entity is visible to self, even if not infront ()
 ===============================================================================*/
 float (entity targ) visible = {
-
     if (targ.items & IT_INVISIBILITY) {
         return FALSE;
     }
@@ -222,7 +218,6 @@ float (entity targ) visible = {
       returns 1 if the entity is in front (in sight) of self
 ===============================================================================*/
 float(entity targ) infront = {
-
     if (targ.items & IT_INVISIBILITY) {
         return FALSE;
     }
@@ -248,6 +243,7 @@ float() ai_test_jump = {
     if (!(self.flags & FL_ONGROUND)) {
         return FALSE;
     }
+
     makevectors(self.angles);
 
     // make sure we don't trace outside the map
@@ -593,7 +589,7 @@ void(float dist) ai_run = {
         }
         else {
             // Couldn't see old enemy so look for a new one
-            self.enemy = smart_pick_new_target(self, 500);
+            self.enemy = ai_pick_new_target(self, 500);
 
             // self.enemy = world;
 

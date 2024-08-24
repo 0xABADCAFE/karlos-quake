@@ -1,6 +1,6 @@
 // impulse.qc
 /*---public---*/
-// $VER: impulse.qc 1.89 © Karlos (14/04/2000)
+// $VER: impulse.qc 1.89 ï¿½ Karlos (14/04/2000)
 
 // public function prototypes
    void() ImpulseCommands;
@@ -125,7 +125,7 @@ void () ImpulseCommands_2 =
 
    // camera stuff
    if (self.impulse == IM_TOGGLE_CAMERA)
-      toggle_camera();
+      camera_toggle();
    if (self.impulse == IM_CAMERA_DOWN)
       camera_change_zmult(0);
    if (self.impulse == IM_CAMERA_UP)
