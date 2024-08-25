@@ -22,7 +22,7 @@ void() ogre_swing1;
 void() sham_smash1;
 void() sham_swingr1;
 void() sham_swingl1;
-float()  DemonCheckAttack;
+float()  demon_check_attack;
 
 void(float side)  Demon_Melee;
 

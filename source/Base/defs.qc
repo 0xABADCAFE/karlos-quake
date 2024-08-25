@@ -507,7 +507,7 @@ float AS_MISSILE     = 4;
 // special radio messages for grunt / enforcer...
 float SAY_ENEMY_SIGHTED = 1;
 float SAY_DESTROY_GREEN = 2;
-float SAY_RODGER        = 3;
+float SAY_ROGER        = 3;
 float SAY_ENEMY_DOWN    = 4;
 
 //

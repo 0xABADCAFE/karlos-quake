@@ -60,7 +60,7 @@ void() monster_tarbaby;
 // Monsters/shub.qc...
 
 /*---public---*/
-// $VER: shub.qc 1.1 ® Karlos '99 (22/07/1999)
+// $VER: shub.qc 1.1 ï¿½ Karlos '99 (22/07/1999)
 
 void() monster_oldone;
 void() finale_1;
@@ -103,7 +103,7 @@ void() monster_ogre_marksman ;
 // Monsters/monsters.qc...
 
 /*---public---*/
-// monster.qc 2,00 © Karlos'99 (01/08/1999)
+// monster.qc 2,00 ï¿½ Karlos'99 (01/08/1999)
 
 void(string mdlname, vector bmin, vector bmax, float hbase, float hvar) monster_init;
 void() monster_use ;
@@ -152,11 +152,11 @@ void() monster_army;
 // $VER: fiend.qc 1.8 ï¿½ Karlos'99 (17/09/1999)
 
 void() monster_demon1 ;
-float() CheckDemonMelee ;
-float() CheckDemonJump ;
-float() DemonCheckAttack ;
+float() demon_check_melee ;
+float() demon_check_jump ;
+float() demon_check_attack ;
 void(float side) Demon_Melee ;
-void() Demon_JumpTouch ;
+void() demon_jump_touch ;
 /*---private---*/
 
 
@@ -176,8 +176,8 @@ void() monster_enforcer ;
 /*---public---*/
 // $VER: dog.qc 1.4 ï¿½ Karlos'99 (14/07/1999)
 
-float() CheckDogJump ;
-float() DogCheckAttack ;
+float() dog_check_jump ;
+float() dog_check_attack ;
 void() monster_dog ;
 /*---private---*/
 
@@ -185,7 +185,7 @@ void() monster_dog ;
 // Monsters/chthon.qc...
 
 /*---public---*/
-// $VER: chthon.qc 1.1 ® Karlos '99 (22/07/1999)
+// $VER: chthon.qc 1.1 ï¿½ Karlos '99 (22/07/1999)
 
 void() monster_boss;
 /*---private---*/

@@ -125,7 +125,7 @@ void(float dist) ai_run;
 
 // public function prototypes
 float() CheckAttack;
-float() SoldierCheckAttack;
+float() army_check_attack;
 float() ShamCheckAttack;
 float() OgreCheckAttack;
 void() knight_attack;
