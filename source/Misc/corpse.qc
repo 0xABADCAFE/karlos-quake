@@ -2,7 +2,7 @@
 /*---public---*/
 // $VER: corpse.qc 2.00 © Karlos '99 (14.7.99)
 // public function prototypes
-   void(string headmdl, float bodyinertia, float mindamage) corpse;
+void(string headmdl, float bodyinertia, float mindamage) corpse;
 /*---private---*/
 
 /*==============================================================================
@@ -42,70 +42,72 @@
 
 // Inflict damage to corpse
 
-void() corpse_maim =
-{
-   if ((self.classname == "monster_knight" || self.classname == "monster_hell_knight") && self.deathtype == "melee")
-      armour_clang(self);
+void() corpse_maim = {
+    if ((
+        self.classname == "monster_knight" ||
+        self.classname == "monster_hell_knight"
+        ) && self.deathtype == "melee"
+    ) {
+        armour_clang(self);
+    }
 
-   SpawnBlood (self.origin, crandom() * 20 * v_forward, 30);
+    SpawnBlood(self.origin, crandom() * 20 * v_forward, 30);
 
-   if (random() < 0.5)
-      sound(self, CHAN_VOICE, "shared/corpsehit1.wav", 0.6 + random() * 0.4, ATTN_NORM);
+    if (random() < 0.5) {
+        sound(self, CHAN_VOICE, "shared/corpsehit1.wav", 0.6 + random() * 0.4, ATTN_NORM);
+    }
 
-   if (random() < 0.3)
-   {
-      sound(self, CHAN_BODY, "shared/corpsehit2.wav", 0.6 + random() * 0.4, ATTN_NORM);
-      SpawnMeatSpray (self.origin, crandom() * 100 * v_right);
-   }
+    if (random() < 0.3) {
+        sound(self, CHAN_BODY, "shared/corpsehit2.wav", 0.6 + random() * 0.4, ATTN_NORM);
+        SpawnMeatSpray(self.origin, crandom() * 100 * v_right);
+    }
 };
 
 // Destroy corpse
-void() corpse_destroy =
-{
-   if (effectflags & FX_GORE_GIBS)
-      giblet (self.netname, 2*self.health);
-   else
-      remove (self);
+void() corpse_destroy = {
+    if (effectflags & FX_GORE_GIBS) {
+        giblet(self.netname, 2 * self.health);
+    }
+    else {
+        remove(self);
+    }
 };
 
 // corpse routine
-void(string headmdl, float bodyinertia, float mindamage) corpse =
-{
-   self.deadflag   = DEAD_DEAD;             // used to define death
-   self.ltime = time;
-   self.think = SUB_Remove;
-   self.nextthink = time + EDICT_EXPIRE;
-   self.flags      = self.flags - (self.flags & FL_MONSTER);
-   self.netname    = headmdl;
-   self.inertia    = bodyinertia;
+void(string headmdl, float bodyinertia, float mindamage) corpse = {
+    self.deadflag   = DEAD_DEAD;             // used to define death
+    self.ltime      = time;
+    self.think      = SUB_Remove;
+    self.nextthink  = time + EDICT_EXPIRE;
+    self.flags      = self.flags - (self.flags & FL_MONSTER);
+    self.netname    = headmdl;
+    self.inertia    = bodyinertia * 0.25; // lighten up a bit
+    self.velocity_x = 0;
+    self.velocity_y = 0;
 
-   self.velocity_x = 0;
-   self.velocity_y = 0;
-   setsize (self, '-16 -16 -24', '16 16 0');     // hack for now
+    setsize(self, '-16 -16 -24', '16 16 0');     // hack for now
 
-   if (effectflags & FX_GORE_CORPSE)
-   {
-      // corpse gore
-      self.health     = mindamage * (1 + random()); // minimum damage
-      self.takedamage = DAMAGE_YES;                 // don't target automatically
-      self.solid      = SOLID_BBOX;                 // Simple bounding box solidity
-      self.movetype   = MOVETYPE_STEP;              // Simple pushable
-      self.th_pain    = corpse_maim;
-      self.th_die     = corpse_destroy;
-      self.touch      = entity_push;
-   }
-   else
-   {
-      // simple dead body
-      self.takedamage = DAMAGE_NO;
-      self.solid      = SOLID_NOT;
-      self.movetype   = MOVETYPE_NONE;
-   }
+    if (effectflags & FX_GORE_CORPSE) {
+        // corpse gore
+        self.health     = mindamage * (1 + random()); // minimum damage
+        self.takedamage = DAMAGE_YES;                 // don't target automatically
+        self.solid      = SOLID_BBOX;                 // Simple bounding box solidity
+        self.movetype   = MOVETYPE_STEP;              // Simple pushable
+        self.th_pain    = corpse_maim;
+        self.th_die     = corpse_destroy;
+        self.touch      = entity_push;
+    }
+    else {
+        // simple dead body
+        self.takedamage = DAMAGE_NO;
+        self.solid      = SOLID_NOT;
+        self.movetype   = MOVETYPE_NONE;
+    }
 
-   // strip all AI
-   self.th_stand   = SUB_Null;
-   self.th_walk    = SUB_Null;
-   self.th_run     = SUB_Null;
-   self.th_melee   = SUB_Null;
-   self.th_missile = SUB_Null;
+    // strip all AI
+    self.th_stand   = SUB_Null;
+    self.th_walk    = SUB_Null;
+    self.th_run     = SUB_Null;
+    self.th_melee   = SUB_Null;
+    self.th_missile = SUB_Null;
 };
