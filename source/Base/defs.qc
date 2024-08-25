@@ -1,6 +1,6 @@
 // defs.qc
 /*---public---*/
-// $VER: defs.qc 2.00 © Karlos '99 (14/07/1999)
+// $VER: defs.qc 2.00 Karlos '99 (14/07/1999)
 /*---private---*/
 
 /*==============================================================================
@@ -355,7 +355,7 @@ float STATE_BOTTOM         = 1;
 float STATE_UP             = 2;
 float STATE_DOWN           = 3;
 
-vector   VEC_ORIGIN        = '0 0 0';
+vector   VEC_ZERO        = '0 0 0';
 vector   VEC_HULL_MIN      = '-16 -16 -24';
 vector   VEC_HULL_MAX      = '16 16 32';
 

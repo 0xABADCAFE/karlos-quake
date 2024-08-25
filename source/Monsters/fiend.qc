@@ -345,7 +345,7 @@ float()  DemonCheckAttack =
       return TRUE;
    }
 
-   if (CheckDemonJump ())
+   if (CheckDemonJump())
    {
       self.attack_state = AS_MISSILE;
       sound (self, CHAN_VOICE, "demon/djump.wav", 1, ATTN_NORM);

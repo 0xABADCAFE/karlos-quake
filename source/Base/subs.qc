@@ -1,6 +1,6 @@
 // subs.qc
 /*---public---*/
-// $VER: subs.qc 1.10 © Karlos 99
+// $VER: subs.qc 1.10 Karlos 99
 /*---private---*/
 
 float(entity targ) visible;
@@ -32,7 +32,7 @@ vector() SetMovedir = {
         makevectors(self.angles);
         self.movedir = v_forward;
     }
-    self.angles = '0 0 0';
+    self.angles = VEC_ZERO;
 };
 
 /*
@@ -43,7 +43,7 @@ InitTrigger
 void() InitTrigger = {
     // trigger angles are used for one-way touches.  An angle of 0 is assumed
     // to mean no restrictions, so use a yaw of 360 instead.
-    if (self.angles != '0 0 0') {
+    if (self.angles != VEC_ZERO) {
         SetMovedir();
     }
     self.solid = SOLID_TRIGGER;
@@ -82,7 +82,7 @@ void(vector tdest, float tspeed, void() func) SUB_CalcMove = {
     self.think     = SUB_CalcMoveDone;
 
     if (tdest == self.origin) {
-        self.velocity = '0 0 0';
+        self.velocity = VEC_ZERO;
         self.nextthink = self.ltime + 0.1;
         return;
     }
@@ -97,7 +97,7 @@ void(vector tdest, float tspeed, void() func) SUB_CalcMove = {
     traveltime = len / tspeed;
 
     if (traveltime < 0.1) {
-        self.velocity  = '0 0 0';
+        self.velocity  = VEC_ZERO;
         self.nextthink = self.ltime + 0.1;
         return;
     }
@@ -116,7 +116,7 @@ After moving, set origin to exact final destination
 */
 void() SUB_CalcMoveDone = {
     setorigin(self, self.finaldest);
-    self.velocity = '0 0 0';
+    self.velocity = VEC_ZERO;
     self.nextthink = -1;
     if (self.think1) {
         self.think1();
@@ -177,7 +177,7 @@ After rotating, set angle to exact final angle
 */
 void() SUB_CalcAngleMoveDone = {
     self.angles = self.finalangle;
-    self.avelocity = '0 0 0';
+    self.avelocity = VEC_ZERO;
     self.nextthink = -1;
     if (self.think1) {
         self.think1();

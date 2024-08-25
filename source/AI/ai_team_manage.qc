@@ -10,7 +10,7 @@
 //
 //============================================================================
 /*---public---*/
-// $VER: ai_team_manage.qc 1.10 © Karlos (05/02/2000)
+// $VER: ai_team_manage.qc 1.10 Karlos (05/02/2000)
 
 // public function prototypes
 
@@ -58,7 +58,7 @@ void() ai_reset_teams =
         if (diff_class_enemy_lim > same_class_enemy_lim)
             diff_class_enemy_lim = same_class_enemy_lim;
     }
- 
+
 
     dprint ("Monster team parameters initialized\n");
 
@@ -121,7 +121,7 @@ void() ai_reset_teams =
     team_ogre_1_leader = world;
     team_ogre_2_leader = world;
     team_ogre_3_leader = world;
-    
+
 };
 
 //================================================================================
@@ -320,7 +320,7 @@ void(float team_id) list_enemy_teams =
                 dprint (name_of_team(id_bit));
                 dprint (", ");
             }
-        }    
+        }
     }
     else if (team_id == TEAM_ARMY_2)
     {
@@ -496,7 +496,7 @@ void(entity whosdead, entity whodunnit) ai_update_teams =
                          whodunnit.netname,
                          " [", t_name,"]\n");
             }
- 
+
             team_army_1_leader = world;
         }
         // blacklist whodunnit's team
@@ -509,7 +509,7 @@ void(entity whosdead, entity whodunnit) ai_update_teams =
                 team_army_1_enemy = team_army_1_enemy | whodunnit.teamgroup;
             else if (random() > same_class_enemy_lim)
                 team_army_1_enemy = team_army_1_enemy | whodunnit.teamgroup;
-        }            
+        }
     }
 
     else if (whosdead.teamgroup == TEAM_ARMY_2)
@@ -776,7 +776,7 @@ void(entity whosdead, entity whodunnit) ai_update_teams =
                 team_ogre_2_enemy = team_ogre_2_enemy | whodunnit.teamgroup;
             else if (random() > same_class_enemy_lim)
                 team_ogre_2_enemy = team_ogre_2_enemy | whodunnit.teamgroup;
-        }      
+        }
     }
 
     else if (whosdead.teamgroup == TEAM_OGRE_3)
@@ -859,7 +859,7 @@ void(float can_be_leader) ai_join_team =
     // If suitable, he is assigned the team leader there isn't one
     // already. If there is, a random() > 0.7 chance is used that he
     // will usurp the existing team leader. This should help prevent
-    // all team leaders being too close to the start of the map... 
+    // all team leaders being too close to the start of the map...
 
     if (random() < team_dispersion)
     {
@@ -880,16 +880,16 @@ void(float can_be_leader) ai_join_team =
 
     self.teamclass = team_class;
 
-//----------------------------------------------------------------------    
+//----------------------------------------------------------------------
     if (team_class == TEAM_ARMY_1)
-    {        
+    {
         while (!joined_ok)
         {
             if (trygroup == TEAM_ARMY_1 && numtries < 3)
             {
                 if (team_army_1_size < team_maxmembers)
                 {
-                    if (can_be_leader && 
+                    if (can_be_leader &&
                         (team_army_1_leader == world ||
                          random() > 0.7))
                     team_army_1_leader = self;
@@ -902,7 +902,7 @@ void(float can_be_leader) ai_join_team =
                 {
                     numtries = numtries + 1;
                     trygroup = TEAM_ARMY_2;
-                }                    
+                }
             }
 
             if (trygroup == TEAM_ARMY_2 && numtries < 3)
@@ -957,7 +957,7 @@ void(float can_be_leader) ai_join_team =
     }
     //----------------------------------------------------------------------------
     else if (team_class == TEAM_KNIGHT_1)
-    {        
+    {
         while (!joined_ok)
         {
             if (trygroup == TEAM_KNIGHT_1 && numtries < 3)
@@ -977,14 +977,14 @@ void(float can_be_leader) ai_join_team =
                 {
                     numtries = numtries + 1;
                     trygroup = TEAM_KNIGHT_2;
-                }                    
+                }
             }
 
             if (trygroup == TEAM_KNIGHT_2 && numtries < 3)
             {
                 if (team_knight_2_size < team_maxmembers)
                 {
-                    if (can_be_leader && 
+                    if (can_be_leader &&
                         (team_knight_2_leader == world ||
                          random() > 0.7))
                         team_knight_2_leader = self;
@@ -1029,10 +1029,10 @@ void(float can_be_leader) ai_join_team =
                 team_none_size = team_none_size+1;
             }
         }
-    } 
+    }
     //----------------------------------------------------------------------------
     else if (team_class == TEAM_UNDEAD_1)
-    {        
+    {
         while (!joined_ok)
         {
             if (trygroup == TEAM_UNDEAD_1 && numtries < 3)
@@ -1052,7 +1052,7 @@ void(float can_be_leader) ai_join_team =
                 {
                     numtries = numtries + 1;
                     trygroup = TEAM_UNDEAD_2;
-                }                    
+                }
             }
 
             if (trygroup == TEAM_UNDEAD_2 && numtries < 3)
@@ -1105,9 +1105,9 @@ void(float can_be_leader) ai_join_team =
             }
         }
     }
-    //---------------------------------------------------------------------------- 
+    //----------------------------------------------------------------------------
     else if (team_class == TEAM_OGRE_1)
-    {        
+    {
         while (!joined_ok)
         {
             if (trygroup == TEAM_OGRE_1 && numtries < 3)
@@ -1127,7 +1127,7 @@ void(float can_be_leader) ai_join_team =
                 {
                     numtries = numtries + 1;
                     trygroup = TEAM_OGRE_2;
-                }                    
+                }
             }
 
             if (trygroup == TEAM_OGRE_2 && numtries < 3)
@@ -1180,6 +1180,6 @@ void(float can_be_leader) ai_join_team =
                 self.teammember = team_none_size;
             }
         }
-    }    
+    }
 };
 

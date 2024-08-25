@@ -68,7 +68,7 @@ $frame pull1 pull2 pull3 pull4 pull5 pull6 pull7 pull8 pull9 pull10 pull11
 
 void() OgreGrenadeExplode =
 {
-   smart_radius_alert (self, self.owner, 600, TRUE, TRUE);
+   ai_radius_alert (self, self.owner, 600, TRUE, TRUE);
    T_RadiusDamage (self, self.owner, 30 * (1 + random()), world);
    BecomeExplosion();
 };
@@ -100,8 +100,8 @@ void() OgreGrenadeTouch =
    else
       sound (self, CHAN_WEAPON, "weapons/bounce3.wav", 0.6 + (0.3 * random()), ATTN_NORM);
 
-   if (self.velocity == '0 0 0')
-      self.avelocity = '0 0 0';
+   if (self.velocity == VEC_ZERO)
+      self.avelocity = VEC_ZERO;
 };
 
 /*================
@@ -187,7 +187,7 @@ void() OgreFireGrenade =
    missile.think = OgreGrenadeExplode;
 
    setmodel (missile, "progs/grenade.mdl");
-   setsize (missile, '0 0 0', '0 0 0');
+   setsize (missile, VEC_ZERO, VEC_ZERO);
    setorigin (missile, self.origin);
 };
 
@@ -554,7 +554,7 @@ void() ogre_die =
    self.ammo_rockets = 1 + rint(random()*2);
 
    if (random() < 0.05)
-      drop_item(IT_GRENADE_LAUNCHER);
+      inv_drop_item(IT_GRENADE_LAUNCHER);
 
    if (random() < 0.5)
       ogre_die1 ();

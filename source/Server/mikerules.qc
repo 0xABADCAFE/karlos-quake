@@ -1,6 +1,6 @@
 // mikerules.qc
 /*---public---*/
-// $VER: mikerules 1.04 © Mike 'XC' Childs, coded by Karlos (03/10/1999)
+// $VER: mikerules 1.04 ï¿½ Mike 'XC' Childs, coded by Karlos (03/10/1999)
 
 // public function prototypes
 // lowlevel
@@ -180,7 +180,7 @@ void() version_mikerules =
 //    The damage of the weapon, relative to it's normal state, is used to
 //    calculate a reliability factor. This in turn will be used to introduce weapon jams
 //    We can also then set the damage value as a health value for a weapon drop using
-//    client/inventory.qc - drop_item(), such that dropped weapons inherit the damage
+//    client/inventory.qc - inv_drop_item(), such that dropped weapons inherit the damage
 //    as a health value, hence no need to define extra vars for world/items.qc
 //
 //    External functions requiring modification / coding
@@ -192,7 +192,7 @@ void() version_mikerules =
 //    client/client.qc/SetChangeParms()   - add encode_weapon_damagestats()
 //    client/client.qc/SetNewParms()      - clear/default damage stats
 //    client/client_extra.qc/save_client_extraparms - add MR_ENABLE to temp1 save
-//    client/inventory.qc/drop_item()     - enable and add code for damge > health
+//    client/inventory.qc/inv_drop_item()     - enable and add code for damge > health
 //                                          inheritance
 //    world/items.qc/become_pickup()      - new function needed to allow dropped
 //                                          thing to be recollected after a time

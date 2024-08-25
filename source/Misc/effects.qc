@@ -1,6 +1,6 @@
 // effects.qc
 /*---public---*/
-// $VER: effects.qc 1.90 © Karlos (03/04/2000)
+// $VER: effects.qc 1.90 ï¿½ Karlos (03/04/2000)
 
 // public function prototypes
 // gore effects
@@ -123,7 +123,7 @@ void(vector org, vector vel) SpawnMeatSpray =
    missile.think = SUB_Remove;
 
    setmodel (missile, "progs/zom_gib.mdl");
-   setsize (missile, '0 0 0', '0 0 0');
+   setsize (missile, VEC_ZERO, VEC_ZERO);
    setorigin (missile, org);
 };
 
@@ -204,7 +204,7 @@ void(string gibname, float damage) throw_gib =
    meat = spawn();
    meat.origin = self.origin;
    setmodel (meat, gibname);
-   setsize (meat, '0 0 0', '0 0 0');
+   setsize (meat, VEC_ZERO, VEC_ZERO);
    meat.velocity = gib_velocity (damage);
    meat.movetype = MOVETYPE_BOUNCE;
 
@@ -466,7 +466,7 @@ void() BecomeExplosion =
       if (!(effectflags & (FX_FLASH | FX_GLOW)))
       {
          // no lights - do particles only...
-         particle (self.origin, '0 0 0', 75, 255);
+         particle (self.origin, VEC_ZERO, 75, 255);
       }
       else
       {
@@ -581,7 +581,7 @@ void(vector org) exp_shrapnel =
        newmis.think = SUB_Remove;
        newmis.nextthink = time + 3;
        setmodel (newmis, "progs/spike.mdl");
-       setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
+       setsize (newmis, VEC_ZERO, VEC_ZERO);
        setorigin (newmis, org + 20*dir);
        newmis.velocity = 1400 * normalize(dir);
    }

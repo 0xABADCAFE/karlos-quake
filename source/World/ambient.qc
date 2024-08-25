@@ -1,6 +1,6 @@
 // ambient.qc
 /*---public---*/
-// $VER: ambient.qc 2.00 © Karlos'99 (01/08/1999)
+// $VER: ambient.qc 2.00 ï¿½ Karlos'99 (01/08/1999)
 // public function prototypes
    void() ambient_comp_hum ;
    void() ambient_drip ;
@@ -292,7 +292,7 @@ void() func_wall_use =
 
 void() func_wall =
 {
-   self.angles = '0 0 0';
+   self.angles = VEC_ZERO;
    self.movetype = MOVETYPE_PUSH;   // so it doesn't get pushed by anything
    self.solid = SOLID_BSP;
    self.use = func_wall_use;
@@ -306,7 +306,7 @@ void() func_wall =
 void() func_illusionary =
 
 {
-   self.angles = '0 0 0';
+   self.angles = VEC_ZERO;
    self.movetype = MOVETYPE_NONE;
    self.solid = SOLID_NOT;
    setmodel (self, self.model);
@@ -322,7 +322,7 @@ void() func_episodegate =
    if (!(serverflags & self.spawnflags))
       return;        // can still enter episode
 
-   self.angles = '0 0 0';
+   self.angles = VEC_ZERO;
    self.movetype = MOVETYPE_PUSH;   // so it doesn't get pushed by anything
    self.solid = SOLID_BSP;
    self.use = func_wall_use;
@@ -337,7 +337,7 @@ void() func_bossgate =
 {
    if ( (serverflags & 15) == 15)
       return;     // all episodes completed
-   self.angles = '0 0 0';
+   self.angles = VEC_ZERO;
    self.movetype = MOVETYPE_PUSH;   // so it doesn't get pushed by anything
    self.solid = SOLID_BSP;
    self.use = func_wall_use;

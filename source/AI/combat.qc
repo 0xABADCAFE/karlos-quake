@@ -1,6 +1,6 @@
 // combat.qc
 /*---public---*/
-// $VER: combat.qc 1.82 � Karlos '99 (02/10/1999)
+// $VER: combat.qc 1.82 Karlos '99 (02/10/1999)
 // public function prototypes
 float(entity targ, entity inflictor) CanDamage;
 void(entity targ, entity attacker) Killed;

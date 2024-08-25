@@ -15,7 +15,7 @@
 //
 //============================================================================
 /*---public---*/
-// $VER: ai.qc 2.21 � Karlos (10/02/2000)
+// $VER: ai.qc 2.21 Karlos (10/02/2000)
 
 // public function prototypes
 float(float v) anglemod;
@@ -136,10 +136,10 @@ void() t_movetarget = {
         return;
     }
 
-    local entity temp;
-    temp  = self;
+    local entity e_tmp;
+    e_tmp = self;
     self  = other;
-    other = temp;
+    other = e_tmp;
 
     if (self.classname == "monster_ogre") {
         sound(self, CHAN_VOICE, "ogre/ogdrag.wav", 1, ATTN_IDLE);// play chainsaw drag sound
@@ -167,20 +167,20 @@ void() t_movetarget = {
       2  infront and show hostile
       3  only triggered by damage
 ===============================================================================*/
-float(entity targ) range = {
-    local vector   spot1, spot2;
+float(entity e) range = {
+    local vector   v1, v2;
     local float    r;
-    spot1 = self.origin + self.view_ofs;
-    spot2 = targ.origin + targ.view_ofs;
+    v1 = self.origin + self.view_ofs;
+    v2 = e.origin    + e.view_ofs;
 
-    r = vlen(spot1 - spot2);
+    r = vlen(v1 - v2);
     if (r < 120) {
         return RANGE_MELEE;
     }
-    if (r < 500) {
+    else if (r < 500) {
         return RANGE_NEAR;
     }
-    if (r < 1600) {
+    else if (r < 1600) {
         return RANGE_MID;
     }
     return RANGE_FAR;
@@ -190,16 +190,16 @@ float(entity targ) range = {
    visible
       returns 1 if the entity is visible to self, even if not infront ()
 ===============================================================================*/
-float (entity targ) visible = {
-    if (targ.items & IT_INVISIBILITY) {
+float (entity e) visible = {
+    if (e.items & IT_INVISIBILITY) {
         return FALSE;
     }
 
-    local vector spot1, spot2;
+    local vector v1, v2;
 
-    spot1 = self.origin + self.view_ofs;
-    spot2 = targ.origin + targ.view_ofs;
-    traceline(spot1, spot2, TRUE, self);  // see through other monsters
+    v1 = self.origin + self.view_ofs;
+    v2 = e.origin    + e.view_ofs;
+    traceline(v1, v2, TRUE, self);  // see through other monsters
 
     if (trace_inopen && trace_inwater) {
         return FALSE;        // sight line crossed contents
@@ -217,20 +217,20 @@ float (entity targ) visible = {
    infront
       returns 1 if the entity is in front (in sight) of self
 ===============================================================================*/
-float(entity targ) infront = {
-    if (targ.items & IT_INVISIBILITY) {
+float(entity e) infront = {
+    if (e.items & IT_INVISIBILITY) {
         return FALSE;
     }
 
     makevectors(self.angles);
 
-    local vector   vec;
-    local float    dot;
+    local vector v;
+    local float  d;
 
-    vec = normalize(targ.origin - self.origin);
-    dot = vec * v_forward;
+    v = normalize(e.origin - self.origin);
+    d = v * v_forward;
 
-    if (dot > 0.3) {
+    if (d > 0.3) {
         return TRUE;
     }
     return FALSE;
@@ -464,7 +464,7 @@ void() ai_turn = {
    ChooseTurn
 =============================================================================*/
 void(vector dest3) ChooseTurn = {
-    local vector   dir, newdir;
+    local vector dir, newdir;
 
     dir = self.origin - dest3;
 

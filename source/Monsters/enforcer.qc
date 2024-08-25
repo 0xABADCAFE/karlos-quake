@@ -119,7 +119,7 @@ void(vector org, vector tovec) LaunchLaser =
    newmis.effects = (FX_GLOW & effectflags);
 
    setmodel (newmis, "progs/laser.mdl");
-   setsize (newmis, '0 0 0', '0 0 0');
+   setsize (newmis, VEC_ZERO, VEC_ZERO);
 
    setorigin (newmis, org);
 
@@ -531,7 +531,7 @@ void() enf_die =
    setsize (self, '-12 -12 -24', '12 12 0');  // not so big when dead...
 
    if (random() < 0.05)
-      drop_item(IT_LIGHTNING);
+      inv_drop_item(IT_LIGHTNING);
 
    if (random() > 0.5)
       enf_die1 ();

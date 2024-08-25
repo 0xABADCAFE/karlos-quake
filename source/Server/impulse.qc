@@ -27,7 +27,7 @@ void() ImpulseCommands =
       CycleWeaponReverseCommand ();
 
    if (self.impulse == IM_DROPWEAPON)
-      drop_item (self.weapon);
+      inv_drop_item (self.weapon);
    if (self.impulse == IM_THROW_GRENADE)
       W_ThrowGrenade ();
 
@@ -46,37 +46,37 @@ void() ImpulseCommands =
       BiosuitCheat ();
 
    if (self.impulse == IM_USE_INVENTORY)
-      toggle_inventory();
+      inv_toggle();
    if (self.impulse == IM_TOGGLE_SCREENMSG)
       toggle_screenmessages();
    if (self.impulse == IM_TOGGLE_TARGET)
-      toggle_lasertarget(self);
+      inv_toggle_target(self);
    if (self.impulse == IM_TOGGLE_TORCH)
-      toggle_torch(self);
+      inv_toggle_torch(self);
    if (self.impulse == IM_TOGGLE_GUIDEDMISSILES)
       toggle_guidedmissiles();
 
    // grappling hook
    if (self.impulse == IM_RELEASE_GRAPPLE)
-      unhook_grapple();
+      inv_grapple_release();
    if (self.impulse == IM_GRAPPLE_EXTEND)
-      extend_grapple_chain();
+      inv_grapple_extend();
    if (self.impulse == IM_GRAPPLE_SHORTEN)
-      shorten_grapple_chain();
+      inv_grapple_retract();
    if (self.impulse == IM_GRAPPLE_HANG)
-      lock_grapple_chain();
+      inv_grapple_lock();
 
    // inventory stuff
    if (self.impulse == IM_SHOW_INVENTORY)
-      list_inventory();
+      inv_list_items();
    if (self.impulse == IM_ACTIVATE_SUIT)
-      activate_inventory_item(IT_SUIT);
+      inv_equip_item(IT_SUIT);
    if (self.impulse == IM_ACTIVATE_QUAD)
-      activate_inventory_item(IT_QUAD);
+      inv_equip_item(IT_QUAD);
    if (self.impulse == IM_ACTIVATE_RING)
-      activate_inventory_item(IT_INVISIBILITY);
+      inv_equip_item(IT_INVISIBILITY);
    if (self.impulse == IM_ACTIVATE_PENT)
-      activate_inventory_item(IT_INVULNERABILITY);
+      inv_equip_item(IT_INVULNERABILITY);
 
 //==============================================================================
 // disabled until further notice

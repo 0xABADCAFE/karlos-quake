@@ -98,7 +98,7 @@ void(float offset) hknight_shot =
    launch_spike (org, vec);
    newmis.classname = "knightspike";
    setmodel (newmis, "progs/k_spike.mdl");
-   setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
+   setsize (newmis, VEC_ZERO, VEC_ZERO);
    newmis.velocity = vec*300;
    sound (self, CHAN_WEAPON, "hknight/attack1.wav", 1, ATTN_NORM);
 };

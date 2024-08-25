@@ -91,7 +91,7 @@ void (float opt) cycle_ion_colour = {
     }
 
     if (effectflags & FX_CON_FLASH) {
-        stuffcmd (self, "bf\n");
+        stuffcmd(self, "bf\n");
     }
 
     bprint2(self.netname, " changed ion colour to ");

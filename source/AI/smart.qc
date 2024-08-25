@@ -1,6 +1,6 @@
 // smart.qc
 /*---public---*/
-// $VER: smart.qc 2.02 � Karlos (24/1/2000)
+// $VER: smart.qc 2.02 Karlos (24/1/2000)
 
 // public function prototypes
 
@@ -12,7 +12,7 @@ float(entity what) ai_judge_hazard;
 entity (entity who, float viewdist) ai_pick_new_target;
 
 void(entity monster, entity startler) ai_alert;
-void(entity thing, entity initiator, float radius, float by_sight, float by_sound) smart_radius_alert;
+void(entity thing, entity initiator, float radius, float by_sight, float by_sound) ai_radius_alert;
 float(entity thing, entity to) is_visible;
 float(entity thing, entity to) is_audible;
 
@@ -172,7 +172,7 @@ void(entity monster, entity startler) ai_alert = {
     }
 };
 
-void(entity thing, entity initiator, float radius, float by_sight, float by_sound) smart_radius_alert = {
+void(entity thing, entity initiator, float radius, float by_sight, float by_sound) ai_radius_alert = {
     if (deathmatch) {
         return;
     }

@@ -1,6 +1,6 @@
 // subs.qc
 /*---public---*/
-// $VER: subs.qc 1.06 © id software
+// $VER: subs.qc 1.06 ï¿½ id software
 
 // public function prototypes
    void() SUB_Null;
@@ -46,7 +46,7 @@ vector() SetMovedir =
       self.movedir = v_forward;
    }
    
-   self.angles = '0 0 0';
+   self.angles = VEC_ZERO;
 };
 
 /*
@@ -58,7 +58,7 @@ void() InitTrigger =
 {
 // trigger angles are used for one-way touches.  An angle of 0 is assumed
 // to mean no restrictions, so use a yaw of 360 instead.
-   if (self.angles != '0 0 0')
+   if (self.angles != VEC_ZERO)
       SetMovedir ();
    self.solid = SOLID_TRIGGER;
    setmodel (self, self.model);  // set size and link into world
@@ -99,7 +99,7 @@ local float    len, traveltime;
 
    if (tdest == self.origin)
    {
-      self.velocity = '0 0 0';
+      self.velocity = VEC_ZERO;
       self.nextthink = self.ltime + 0.1;
       return;
    }
@@ -115,7 +115,7 @@ local float    len, traveltime;
 
    if (traveltime < 0.1)
    {
-      self.velocity = '0 0 0';
+      self.velocity = VEC_ZERO;
       self.nextthink = self.ltime + 0.1;
       return;
    }
@@ -135,7 +135,7 @@ After moving, set origin to exact final destination
 void()  SUB_CalcMoveDone =
 {
    setorigin(self, self.finaldest);
-   self.velocity = '0 0 0';
+   self.velocity = VEC_ZERO;
    self.nextthink = -1;
    if (self.think1)
       self.think1();
@@ -197,7 +197,7 @@ After rotating, set angle to exact final angle
 void() SUB_CalcAngleMoveDone =
 {
    self.angles = self.finalangle;
-   self.avelocity = '0 0 0';
+   self.avelocity = VEC_ZERO;
    self.nextthink = -1;
    if (self.think1)
       self.think1();

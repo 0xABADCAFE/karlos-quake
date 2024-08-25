@@ -1,15 +1,15 @@
 // grapple.qc
 
 /*---public---*/
-// $VER: grapple.qc 1.12 © Karlos (08/10/1999) based on code by Perceli Manole
+// $VER: grapple.qc 1.12 Karlos (08/10/1999) based on code by Perceli Manole
 
 // public functions provided
 // highlevel
-void() launch_grapple;          // launches hook
-void() unhook_grapple;          // releases hook
-void() shorten_grapple_chain;   // begin winching up
-void() extend_grapple_chain;    // allow to drop
-void() lock_grapple_chain;      // locks chain at current length
+void() inv_grapple_fire;          // launches hook
+void() inv_grapple_release;          // releases hook
+void() inv_grapple_retract;   // begin winching up
+void() inv_grapple_extend;    // allow to drop
+void() inv_grapple_lock;      // locks chain at current length
 void(vector shot_dir, float shot_impulse) grapple_weapon_kick; // weaponkick effect
 // public structure extensions
 .float      grapple;             // grappling hook flags
@@ -118,7 +118,7 @@ void () handle_chainlinks = {
             newlink.movetype    = MOVETYPE_NOCLIP;
             newlink.solid       = SOLID_NOT;
             setmodel(newlink, "progs/chainlink.mdl");
-            setsize(newlink, '0 0 0', '0 0 0');
+            setsize(newlink, VEC_ZERO, VEC_ZERO);
             newlink.goalentity  = world;
             currlink.goalentity = newlink;
         }
@@ -156,7 +156,7 @@ void () handle_chainlinks = {
             currlink.velocity = 10 * (targetpos - currlink.origin);
         }
         else {
-            currlink.velocity = '0 0 0';
+            currlink.velocity = VEC_ZERO;
             setorigin(currlink, targetpos);
         }
     }
@@ -176,8 +176,7 @@ void () handle_chainlinks = {
 //--------------------------------------------------------------------
 // Hook behavior function
 //--------------------------------------------------------------------
-void () grapple_action =
-{
+void () grapple_action = {
     local vector spray;        // for blood
     local vector chainvec;     // chain vector
     local vector velpart;      // player's velocity component moving to or away from hook
@@ -392,7 +391,7 @@ void() grapple_touch = {
 
     if (other.solid != SOLID_SLIDEBOX) {
         sound (self, CHAN_AUTO, "weapons/grapple_hit.wav", 1, ATTN_NORM);
-        self.avelocity = '0 0 0';
+        self.avelocity = VEC_ZERO;
         // automatically wind in if hit world
         if (other == world) {
             if (self.owner.ammo_cells > 4) {
@@ -451,7 +450,7 @@ void(entity grapple_owner) initialise_grapple = {
    newhook.movetype = MOVETYPE_FLY;
    newhook.solid    = SOLID_BBOX;
    setmodel(newhook, "progs/v_spike.mdl");
-   setsize(newhook, '0 0 0', '0 0 0');
+   setsize(newhook, VEC_ZERO, VEC_ZERO);
 
    makevectors(grapple_owner.v_angle);
 
@@ -506,7 +505,7 @@ void() check_grapple_owner_jump = {
 // Checks impulse
 //--------------------------------------------------------------------
 
-void() unhook_grapple = {
+void() inv_grapple_release = {
    if (self.grapple & FL_GRAPPLE_ACTIVE) {
       // drop the hook
       self.grapple = self.grapple - (self.grapple & FL_GRAPPLE_ACTIVE);
@@ -514,7 +513,7 @@ void() unhook_grapple = {
    }
 };
 
-void() launch_grapple = {
+void() inv_grapple_fire = {
    // called from W_FireRocket() in weapons.qc
    // grapple mode must be armed, and not already using grapple
    if (!(self.flags & FL_USING_GRAPPLE)) {
@@ -532,16 +531,16 @@ void() launch_grapple = {
 
       // do player weaponkick and enginekick
       self.punchangle_x = -2 * (!(self.flags & FL_USING_CAMERA));
-      initialise_grapple (self);
-      missile_enginekick_fx(self.origin - v_forward*20, TRUE);
+      initialise_grapple(self);
+      missile_enginekick_fx(self.origin - v_forward * 20, TRUE);
    }
    else {
-      unhook_grapple();
+      inv_grapple_release();
    }
 };
 
 
-void() extend_grapple_chain = {
+void() inv_grapple_extend = {
     if (!(self.grapple & FL_GRAPPLE_ACTIVE)) {
         return;
     }
@@ -554,7 +553,7 @@ void() extend_grapple_chain = {
 };
 
 
-void() shorten_grapple_chain = {
+void() inv_grapple_retract = {
     // initiate chain shorten
 
     if (!(self.grapple & FL_GRAPPLE_ACTIVE)) {
@@ -578,7 +577,7 @@ void() shorten_grapple_chain = {
     self.grapple = self.grapple - (self.grapple & FL_GRAPPLE_EXTENDING);
 };
 
-void() lock_grapple_chain = {
+void() inv_grapple_lock = {
     if (!(self.grapple & FL_GRAPPLE_ACTIVE)) {
         return;
     }

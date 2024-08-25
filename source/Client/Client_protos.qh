@@ -55,11 +55,11 @@ void() precache_female;
 
 // public function prototypes
 // highlevel
-void() toggle_inventory;
-void() list_inventory;
-void(float use_item) activate_inventory_item;
-void(float thing_dropped) drop_item;
-void() precache_inventory;
+void() inv_toggle;
+void() inv_list_items;
+void(float use_item) inv_equip_item;
+void(float item_dropped) inv_drop_item;
+void() inv_prefetch;
 /*---private---*/
 
 
@@ -110,11 +110,11 @@ void() superspike_touch;
 
 // public functions provided
 // highlevel
-void() launch_grapple;          // launches hook
-void() unhook_grapple;          // releases hook
-void() shorten_grapple_chain;   // begin winching up
-void() extend_grapple_chain;    // allow to drop
-void() lock_grapple_chain;      // locks chain at current length
+void() inv_grapple_fire;          // launches hook
+void() inv_grapple_release;          // releases hook
+void() inv_grapple_retract;   // begin winching up
+void() inv_grapple_extend;    // allow to drop
+void() inv_grapple_lock;      // locks chain at current length
 void(vector shot_dir, float shot_impulse) grapple_weapon_kick; // weaponkick effect
 // public structure extensions
 .float      grapple;             // grappling hook flags
@@ -140,8 +140,8 @@ void (float opt) change_client_skin;
 
 // public function prototypes
 // highlevel
-void(entity target_owner)             toggle_lasertarget;
-void(entity torch_owner)              toggle_torch;
+void(entity target_owner)             inv_toggle_target;
+void(entity torch_owner)              inv_toggle_torch;
 
 // public structure extensions
 .entity     laser_target_spot;        // player's laser target

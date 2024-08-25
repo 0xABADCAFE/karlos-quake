@@ -3,7 +3,7 @@
 //   TEAM AI
 //============================================================================
 /*---public---*/
-// $VER: ai_team.qc 1.00 © Karlos'99 (23/1/2000)
+// $VER: ai_team.qc 1.00 Karlos'99 (23/1/2000)
 
 // public function prototypes
 float (entity observer, entity observed) is_enemy_member;

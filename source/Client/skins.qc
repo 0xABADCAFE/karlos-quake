@@ -5,41 +5,39 @@
 
 // public function prototypes
 // highlevel
-   void () load_client_skin;
-   void (float opt) change_client_skin;
+void () load_client_skin;
+void (float opt) change_client_skin;
 /*---private---*/
 
-void () load_client_skin =
-{
-   self.skin = (cvar("temp1") & MAX_SKIN);
-   screen_message(self, "Your skin number has been reset", MSG_INFO, FALSE);
+void () load_client_skin = {
+    self.skin = (cvar("temp1") & MAX_SKIN);
+    screen_message(self, "Your skin number has been reset", MSG_INFO, FALSE);
 };
 
-void (float opt) change_client_skin =
-{
-   local string skinnum, skinname;
+void (float opt) change_client_skin = {
+    local string skinnum, skinname;
 
-   if (opt)
-   {
-      self.skin = self.skin + 1;
-      if (self.skin > MAX_SKIN)
-         self.skin = 0;
-   }
-   else
-   {
-      self.skin = self.skin - 1;
-      if (self.skin < 0)
-         self.skin = MAX_SKIN;
-   }
-   if (effectflags & FX_CON_FLASH)
-      stuffcmd (self, "bf\n");
+    if (opt) {
+        self.skin = self.skin + 1;
+        if (self.skin > MAX_SKIN) {
+            self.skin = 0;
+        }
+    }
+    else {
+        self.skin = self.skin - 1;
+        if (self.skin < 0) {
+            self.skin = MAX_SKIN;
+        }
+    }
+    if (effectflags & FX_CON_FLASH) {
+        stuffcmd(self, "bf\n");
+    }
 
-   // add 1 to skin number to look nice...(1-32 instead of 0-31)
-   skinnum = ftos((self.skin + 1));
+    // add 1 to skin number to look nice...(1-32 instead of 0-31)
+    skinnum = ftos((self.skin + 1));
 
-//   skinname = get_skin_name(self.skin);
-
-   bprint4 (self.netname, " using skin ", skinnum, "\n");
+    //   skinname = get_skin_name(self.skin);
+    bprint4(self.netname, " using skin ", skinnum, "\n");
 };
 
 //-----------------------------------------------------------------------

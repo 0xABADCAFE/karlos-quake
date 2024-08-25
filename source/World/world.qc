@@ -1,6 +1,6 @@
 // world.qc
 /*---public---*/
-// $VER: world.qc 1.85 © Karlos '99 (10/10/1999)
+// $VER: world.qc 1.85 ï¿½ Karlos '99 (10/10/1999)
 
    void() worldspawn;
    void() StartFrame ;
@@ -276,7 +276,7 @@ void() worldspawn =
       }
    }
 
-   precache_inventory(); // get sounds for items not present in level
+   inv_prefetch(); // get sounds for items not present in level
                          // but in possesion of player
 
    precache_sound ("misc/talk.wav");         // talk

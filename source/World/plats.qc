@@ -1,6 +1,6 @@
 // plats.qc
 /*---public---*/
-// $VER: plats.qc 1.06 © id software
+// $VER: plats.qc 1.06 ï¿½ id software
    void() plat_center_touch ;
    void() plat_crush ;
    void() plat_go_down ;
@@ -190,7 +190,7 @@ void() func_plat =
 
 
    self.mangle = self.angles;
-   self.angles = '0 0 0';
+   self.angles = VEC_ZERO;
 
    self.classname = "plat";
    self.solid = SOLID_BSP;

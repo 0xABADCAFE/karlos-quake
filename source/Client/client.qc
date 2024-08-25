@@ -1,7 +1,7 @@
 // client.qc
 
 /*---public---*/
-// $VER: client.qc 1.85 © Karlos (11/10/1999)
+// $VER: client.qc 1.85 Karlos (11/10/1999)
 
 // public function prototypes
 // highlevel
@@ -404,7 +404,7 @@ void() execute_changelevel = {
     pos   = FindIntermission ();
     other = find (world, classname, "player");
     while (other != world) {
-        other.view_ofs   = VEC_ORIGIN;
+        other.view_ofs   = VEC_ZERO;
         other.angles     = other.v_angle = pos.mangle;
         other.fixangle   = TRUE;     // turn this way immediately
         other.nextthink  = time + 0.5;
@@ -839,7 +839,7 @@ void() PlayerDeathThink = {
         forward = vlen (self.velocity);
         forward = forward - 20;
         if (forward <= 0) {
-            self.velocity = VEC_ORIGIN;
+            self.velocity = VEC_ZERO;
         }
         else {
             self.velocity = forward * normalize(self.velocity);
@@ -1111,7 +1111,7 @@ void() PlayerPreThink = {
         return;              // the think tics
     }
 
-    if (self.view_ofs == VEC_ORIGIN) {
+    if (self.view_ofs == VEC_ZERO) {
         return;     // intermission or finale
     }
 
@@ -1142,7 +1142,7 @@ void() PlayerPreThink = {
 
     // teleporters can force a non-moving pause time
     if (time < self.pausetime) {
-        self.velocity = VEC_ORIGIN;
+        self.velocity = VEC_ZERO;
     }
 
     if (
@@ -1324,7 +1324,7 @@ void() CheckPowerups = {
 void() PlayerPostThink = {
     local float mspeed, aspeed, r, falldist;
 
-    if (self.view_ofs == VEC_ORIGIN) {
+    if (self.view_ofs == VEC_ZERO) {
         return;     // intermission or finale
     }
 

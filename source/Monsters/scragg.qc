@@ -67,7 +67,7 @@ void(vector org) launch_snot =
    newmis.nextthink = time + 6;
 
    setmodel (newmis, "progs/w_spike.mdl");
-   setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);
+   setsize (newmis, VEC_ZERO, VEC_ZERO);
    setorigin (newmis, org);
 
    ai_shoot_ahead (self.enemy, newmis, 500 + 200 * skill);
@@ -217,7 +217,7 @@ void() Wiz_StartFast =
    missile = spawn ();
    missile.owner = self;
    missile.nextthink = time + 0.6;
-   setsize (missile, '0 0 0', '0 0 0');
+   setsize (missile, VEC_ZERO, VEC_ZERO);
    setorigin (missile, self.origin + '0 0 30' + v_forward*14 + v_right*14);
    missile.enemy = self.enemy;
    missile.nextthink = time + 0.8;
@@ -226,7 +226,7 @@ void() Wiz_StartFast =
    missile = spawn ();
    missile.owner = self;
    missile.nextthink = time + 1;
-   setsize (missile, '0 0 0', '0 0 0');
+   setsize (missile, VEC_ZERO, VEC_ZERO);
    setorigin (missile, self.origin + '0 0 30' + v_forward*14 + v_right* -14);
    missile.enemy = self.enemy;
    missile.nextthink = time + 0.3;

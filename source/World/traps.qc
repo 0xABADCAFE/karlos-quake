@@ -1,6 +1,6 @@
 // traps.qc
 /*---public---*/
-// $VER: traps.qc 1.00 © Karlos (10/10/1999)
+// $VER: traps.qc 1.00 ï¿½ Karlos (10/10/1999)
 // public function prototypes
    void() misc_explobox ;
    void() misc_explobox2 ;
@@ -45,7 +45,7 @@ void() fire_fly =
    fireball.velocity_z = self.speed + (random() * 200);
    fireball.classname = "fireball";
    setmodel (fireball, "progs/lavaball.mdl");
-   setsize (fireball, '0 0 0', '0 0 0');
+   setsize (fireball, VEC_ZERO, VEC_ZERO);
    setorigin (fireball, self.origin);
    fireball.nextthink = time + 5;
    fireball.think = SUB_Remove;

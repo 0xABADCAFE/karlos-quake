@@ -1,7 +1,7 @@
 // camera.qc
 
 /*---public---*/
-// $VER: camera.qc 1.74 © Karlos '00 (22/1/2000)
+// $VER: camera.qc 1.74 Karlos '00 (22/1/2000)
 
 // public function prototypes
 // highlevel
@@ -80,7 +80,7 @@ void(entity player_ent) switch_weaponviewmodel = {
 
 // called either by player or chase cam entities (to restart)
 // vpos:
-// '0 0 0' = start from player
+// VEC_ZERO = start from player
 // (else use as cam origin)
 
 void(entity camera_owner, vector vpos) camera_start = {
@@ -96,9 +96,9 @@ void(entity camera_owner, vector vpos) camera_start = {
     player_camera.angles      = player_camera.owner.angles;
 
     setmodel(player_camera, "progs/camera.mdl");
-    setsize(player_camera, VEC_ORIGIN, VEC_ORIGIN);
+    setsize(player_camera, VEC_ZERO, VEC_ZERO);
 
-    if (vpos == VEC_ORIGIN) {
+    if (vpos == VEC_ZERO) {
         setorigin(player_camera, player_camera.owner.origin + '0 0 22');
     }
     else {
@@ -146,7 +146,7 @@ void() camera_restart = {
     self.solid    = SOLID_NOT;
     self.movetype = MOVETYPE_FLY;
     setmodel(self, "progs/camera.mdl");
-    setsize(self, VEC_ORIGIN, VEC_ORIGIN);
+    setsize(self, VEC_ZERO, VEC_ZERO);
     setorigin(self, self.owner.origin);
     self.ammo_shells = self.owner.dest2_y / 3; // distance clipping
     self.think       = camera_track;
@@ -166,7 +166,7 @@ void(float opt) camera_stop = {
     // set view-point back to normal
     set_viewport(self.owner, self.owner);
     setmodel(self, "");
-    self.velocity         = VEC_ORIGIN;
+    self.velocity         = VEC_ZERO;
     self.owner.view_ofs_z = 22;
     switch_weaponviewmodel(self.owner);
 
@@ -196,17 +196,17 @@ void () camera_deathview = {
     }
     if (trace_fraction < 1) {
         setorigin(self, trace_endpos - self.dest * 8);
-        self.velocity = VEC_ORIGIN;
+        self.velocity = VEC_ZERO;
     }
 
-    if (self.velocity != VEC_ORIGIN) {
+    if (self.velocity != VEC_ZERO) {
         traceline(self.origin, self.origin + self.dest * 20, TRUE, self.owner);
         if (
             trace_fraction < 1 ||
             trace_inwater ||
             vlen(self.origin - self.owner.origin) > 200
         ) {
-            self.velocity = VEC_ORIGIN;
+            self.velocity = VEC_ZERO;
         }
     }
 };
@@ -214,9 +214,9 @@ void () camera_deathview = {
 //-------------------------------------------------------------------------
 
 void() camera_track = {
-    local vector vtmp1, vtmp2;
+    local vector v1, v2;
     local vector owner_vec, goal, dir;
-    local float  dist, cap, f_f;
+    local float  dist, cap, f;
 
     self.nextthink = time + 0.1;
 
@@ -233,7 +233,7 @@ void() camera_track = {
         }
         else {
             // deathview
-            self.velocity = VEC_ORIGIN - normalize( self.owner.origin - self.origin) * 20;
+            self.velocity = VEC_ZERO - normalize( self.owner.origin - self.origin) * 20;
             self.angles = vectoangles( self.velocity);
             makevectors(self.angles);
             self.dest  = v_forward; // save forward direction, used in camera_deathview
@@ -257,12 +257,12 @@ void() camera_track = {
 
     // get player velocity relative to player's
     // current yaw
-    // f_f (based on running calcs (maxspeed = 400)
+    // f (based on running calcs (maxspeed = 400)
     //  (back ~= 640, forward ~= 0)
     dir_y = self.owner.v_angle_y;
     makevectors(dir);
 
-    f_f = vlen((v_forward * 320) - self.owner.velocity);
+    f = vlen((v_forward * 320) - self.owner.velocity);
 
     // held for use after second makevectors call for
     // pulling forward on a down aim
@@ -305,11 +305,11 @@ void() camera_track = {
 
     // increase height if getting under the player
     if (goal_z < owner_vec_z) {
-        vtmp1   = goal;
-        vtmp1_z = 0;
-        vtmp2   = owner_vec;
-        vtmp2_z = 0;
-        cap     = vlen(vtmp1 - vtmp2);
+        v1   = goal;
+        v1_z = 0;
+        v2   = owner_vec;
+        v2_z = 0;
+        cap     = vlen(v1 - v2);
         if (cap < 100) {
             goal_z = goal_z + ((100 - cap) * 0.6);
             if (goal_z > owner_vec_z) {
@@ -357,22 +357,22 @@ void() camera_track = {
     self.angles = self.owner.angles;
     traceline(self.origin, owner_vec, FALSE, self.owner );
     if (trace_fraction < 1) {
-        // vtmp1_z:  0 = LOS to head
+        // v1_z:  0 = LOS to head
         //          -1 = LOS to feet, but not head
         //          -2 = no LOS
         traceline (self.origin, self.owner.origin - '0 0 24', FALSE, self.owner );
         if (trace_fraction == 1) {
-            vtmp1_z = -1;
+            v1_z = -1;
         }
         else {
-            vtmp1_z = -2;
+            v1_z = -2;
         }
     }
     else {
-        vtmp1_z = 0;
+        v1_z = 0;
     }
 
-    if (vtmp1_z > -2) {
+    if (v1_z > -2) {
         dir  = normalize(goal - self.origin);
         dist = vlen(goal - self.origin);
         cap  = dist * 0.16;
@@ -387,12 +387,12 @@ void() camera_track = {
             self.velocity = dir * dist;
         }
 
-        if (vtmp1_z == -1) {
+        if (v1_z == -1) {
             self.velocity_z = self.velocity_z - 400;
         }
 
         // tighten up if owner running backwards
-        if (f_f > 560) {
+        if (f > 560) {
             cap = self.velocity_z;
             self.velocity = self.velocity * 2;
             self.velocity_z = cap;
@@ -429,7 +429,7 @@ void() camera_track = {
                 self.ammo_nails = self.ammo_nails + 1;
                 if ( self.ammo_nails > 2 ) {
                     self.ammo_nails = 0;
-                    self.velocity   = VEC_ORIGIN;
+                    self.velocity   = VEC_ZERO;
                     setorigin(self, goal);
                 }
             }
@@ -439,7 +439,7 @@ void() camera_track = {
         }
     }
     else {
-        self.velocity = VEC_ORIGIN;
+        self.velocity = VEC_ZERO;
         setorigin(self, goal);
     }
 
@@ -487,7 +487,7 @@ void() camera_toggle = {
         self.flags = self.flags - FL_USING_CAMERA;
     }
     else {
-        camera_start(self, VEC_ORIGIN);
+        camera_start(self, VEC_ZERO);
     }
 };
 
@@ -497,12 +497,12 @@ void() camera_toggle = {
 void() camera_think =
 {
     if (self.owner.flags & FL_USING_CAMERA) {
-        camera_start(self.owner, VEC_ORIGIN);
+        camera_start(self.owner, VEC_ZERO);
     }
 
     if (self.owner.flags & FL_USING_TARGET) {
         self.owner.flags = self.owner.flags - FL_USING_TARGET;
-        toggle_lasertarget(self.owner);
+        inv_toggle_target(self.owner);
     }
 
     remove(self);

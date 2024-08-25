@@ -1,6 +1,6 @@
 // shub.qc
 /*---public---*/
-// $VER: shub.qc 1.1 ® Karlos '99 (22/07/1999)
+// $VER: shub.qc 1.1 ï¿½ Karlos '99 (22/07/1999)
 
    void() monster_oldone;
    void() finale_1;
@@ -137,7 +137,7 @@ void() finale_1 =
    pl = find (world, classname, "player");
    while (pl != world)
    {
-      pl.view_ofs = '0 0 0';
+      pl.view_ofs = VEC_ZERO;
       pl.angles = other.v_angle = pos.mangle;
       pl.fixangle = TRUE;     // turn this way immediately
       pl.map = self.map;

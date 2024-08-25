@@ -1,6 +1,6 @@
 // chthon.qc
 /*---public---*/
-// $VER: chthon.qc 1.1 ® Karlos '99 (22/07/1999)
+// $VER: chthon.qc 1.1 ï¿½ Karlos '99 (22/07/1999)
 
    void() monster_boss;
 /*---private---*/
@@ -234,7 +234,7 @@ void(vector p) boss_missile =
    launch_spike (org, vec);
    setmodel (newmis, "progs/lavaball.mdl");
    newmis.avelocity = '200 100 300';
-   setsize (newmis, VEC_ORIGIN, VEC_ORIGIN);    
+   setsize (newmis, VEC_ZERO, VEC_ZERO);    
    newmis.velocity = vec*300;
    newmis.touch = T_MissileTouch; // rocket explosion
    sound (self, CHAN_WEAPON, "boss1/throw.wav", 1, ATTN_NORM);
