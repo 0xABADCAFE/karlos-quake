@@ -1,0 +1,436 @@
+@hyperguide kqdocs_index
+@$VER: KQuake 1.8 release 3 © Karl Churchill (19/10/1999)
+@Author Karl Churchill
+@macro H0 "@{font helvetica,24}@{jleft}@{i}"
+@macro H1 "@{font helvetica,18}@{jleft}@{i}"
+@macro H2 "@{font helvetica,15}@{jleft}@{ui}@{tab}"
+@macro BT "@{font times,15}@{jleft}@{ui}@{tab}"
+@macro FF "@{font courier,15}@{ui}"
+@path pics/
+@wordwrap
+@background back.iff
+@node main
+@endnode
+@node INDEX "Index"
+@{jleft}@{object "index.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{H0}Index / Glossary 
+
+@{BT}
+@{tab}Command notes
+@{tab}1) Server access only
+@{tab}2) Immediate in single player, change next level in deathmatch/coop
+@{tab}3) Not available in multiplayer
+
+@{separator}
+
+@{H1}    A 
+
+@{FF}@{tab}adminmessages¹
+@{BT}Toggles the use server messages to the administrator.
+
+@{tab}Anchor
+@{tab}Rocket propelled head of the grappling hook apporatus. The anchor will safely grip onto any solid surface, but can be dislodged by heavy shocks.
+
+@{tab}Axe
+@{tab}Melee weapon for close range combat. Inflicts considerable damage to unarmoured enemies, provided you can get close enough. Also useful for activating switches etc. during low ammo conditios, or destroying obstructive corpses.
+
+@{separator}
+
+@{H1}    B 
+
+@{BT}Biosuit
+@{tab}Use-once collectable item, affording protection from poisonous (acid) environments for up to 30 seconds.
+
+@{separator}
+
+@{H1}    C 
+
+@{BT}Camera
+@{tab}Optional viewmode in Karlos Quake giving an exterior view of your player. 
+
+@{FF}@{tab}camera_down
+@{BT}Reduces chase camera vertical offset.
+
+@{FF}@{tab}camera_in
+@{BT}Decreases chase camera chase distance.
+
+@{FF}@{tab}camera_out
+@{BT}Increases chase camera chase distance.
+
+@{FF}@{tab}camera_up
+@{BT}Increases chase camera vertical offset.
+
+@{FF}@{tab}check_key
+@{BT}Verifies a client key for server access.
+
+@{tab}Chthon
+@{tab}Lava dwelling boss from first episode.
+
+@{FF}@{tab}cycle_explode¹
+@{BT}Cycles through most useful explosion settings.
+
+@{FF}@{tab}cycle_lights¹
+@{BT}Cycles through most useful lighting settings.
+
+@{FF}@{tab}cycle_violence¹
+@{BT}Cycles through most useful gore settings.
+
+@{separator}
+
+@{H1}    D 
+
+@{FF}@{tab}drop
+@{BT}Drops the current weapon.
+
+@{separator}
+
+@{H1}    E 
+
+@{BT}Enforcer
+@{tab}Heavy duty military enemy. Cumbersome but packs a punch.
+
+@{FF}@{tab}explodefast¹
+@{BT}Toggles whether or not explosions are fast (no particles and simpified lighting).
+
+@{FF}@{tab}explodemulti¹
+@{BT}Toggles whether or not explosions use single or multiple impact animations.
+
+@{FF}@{tab}explodesmart¹
+@{BT}Toggles whether or not explosions are environment sensitive.
+
+@{FF}@{tab}extend_grap
+@{BT}Starts grapple chain lengthening.
+
+@{separator}
+
+@{H1}    F 
+
+@{BT}Fiend
+@{tab}Large, fast-moving monster. Attacks by ripping its enemies limb from limb and can leap considerable distances.
+
+@{separator}
+
+@{H1}    G 
+
+@{BT}Giblet
+@{tab}n. Chunk of meat left behind after a player or monster has been torn apart.
+@{tab}v. To violently dismember a player or monster using an explosive device or other high energy weapon.
+
+@{FF}@{tab}give_all³
+@{BT}Cheat command giving all weapons, ammo and inventory items.
+
+@{FF}@{tab}give_pent³
+@{BT}Cheat command giving Pentagram of Protection (immediate).
+
+@{FF}@{tab}give_quad³
+@{BT}Cheat command giving Quad Damage (immediate).
+
+@{FF}@{tab}give_ring³
+@{BT}Cheat command giving Ring of Shadows (immediate).
+
+@{FF}@{tab}give_rune³
+@{BT}Cheat command giving an end of episode Rune.
+
+@{FF}@{tab}give_suit³
+@{BT}Cheat command, giving Biosuit (immediate).
+
+@{tab}Grenade Launcher
+@{tab}Projectile weapon which can throw an explosive charge considerable distances. Explodes either on contact with an enemy or after a fixed time has passed.
+
+@{tab}Grunt
+@{tab}Basic military foe, lightly armed but persistant.
+
+@{separator}
+
+@{H1}    H 
+
+@{FF}@{tab}hamd_centre
+@{BT}Sets the weapon view to centre (not in chasecam mode).
+
+@{FF}@{tab}hamd_left
+@{BT}Sets the weapon view to left-handed (not in chasecam mode).
+
+@{FF}@{tab}hamd_none
+@{BT}Clears the weapon view (not in chasecam mode).
+
+@{FF}@{tab}hamd_right
+@{BT}Sets the weapon view to right-handed (not in chasecam mode).
+
+@{FF}@{tab}hang_grap
+@{BT}Locks grappling hook chain at current length.
+
+@{tab}Hellknight
+@{tab}Heavily armed knight. Absorbs punishment and dishes it out with equal ease.
+
+@{separator}
+
+@{H1}    I 
+
+@{FF}@{tab}info
+@{BT}Prints patch version information.
+
+@{FF}@{tab}inventory
+@{BT}Lists player inventory contents.
+
+@{BT}Ion Cannon
+@{tab}High energy weapon, technically the secondary attackmode of the Thunderbolt. The Ion Cannon consumes an entire clip of 10 cells and pumps out a confined stream of highly energertic, charged particles (ions) which disrupt the atom-scale processes of whatever they hit, with lethal effect. It is unquestionably the most powerful weapon in the arsenal available to your player, but has the disadvantages of long recharge times, high ammo consumption and the need for precise aiming.
+
+@{FF}@{tab}ion_next
+@{BT}Cycles player ion trail colour forwards.
+
+@{FF}@{tab}ion_prev
+@{BT}Cycles player ion trail colour backwards.
+
+@{separator}
+
+@{H1}    J 
+
+@{separator}
+
+@{H1}    K 
+
+@{BT}Knight
+@{tab}Basic medieval knight. Individually easy to dispense, but have a marked tendency to attack in groups.
+
+@{separator}
+
+@{H1}    L 
+
+@{separator}
+
+@{H1}    M 
+
+@{FF}@{tab}mikerules¹²
+@{BT}Toggles whether or not Mikerules gameplay is used.
+
+@{separator}
+
+@{H1}    N 
+
+@{separator}
+
+@{H1}    O 
+
+@{BT}Ogre
+@{tab}Large humanoid beast. Enjoys violence, slicing up his enemies with a chainsaw when they get too close, alternatively hurling grenades at those trying to keep a safe distance.
+
+@{separator}
+
+@{H1}    P 
+
+@{BT}Pentagram of Protection
+@{tab}Use-once magical artefact which renders the user invulnerable to all forms of damgafe for 30 seconds.
+
+@{separator}
+
+@{H1}    Q 
+
+@{BT}QBoost. A series of Quake speedup modifications by Christian Michael.
+
+@{tab}Quad Damage
+@{tab}Use-once powerup artefact which quadruples the damage potential of each shot fired for 30 seconds.
+
+@{separator}
+
+@{H1}    R 
+
+@{FF}@{tab}randomize¹
+@{BT}Switches between normal and random gaming. Only affects the next game.
+
+@{FF}@{tab}registered
+@{BT}Displays the value of the 'registered' variable, used to hold most server-specific options.
+
+@{FF}@{tab}release_grap
+@{BT}Releases the grappling hook.
+
+@{tab}Ring of Shadows
+@{tab}Use-once magical artefact, rendering the user invisible to his/her enemies for 30 seconds.
+
+@{tab}Rotfish
+@{tab}The only marine-native beast in the game. Easily dealt with, but tend to be present in groups.
+
+@{tab}Rottweiler
+@{tab}Large, powerful attack dog favoured by military enemies for their abilitity to hunt down and kill undesirables. Despite being easy to kill, they are fast and persistent.
+
+@{separator}
+
+@{H1}    S 
+
+@{BT}Scragg
+@{tab}Magical beast, notable for its ability to float effortlessly through the air. Launches globs of poison slime at its enemies with high precision.
+
+@{tab}Shambler
+@{tab}Huge, cumbersome beast. Soaks up damage from any attack and dispenses with his enemies with a massive electrical discharge.
+
+@{FF}@{tab}shorten_grap
+@{BT}Begins shortening the grappling hook chain (starts winch).
+
+@{FF}@{tab}show_key¹
+@{BT}Prints the current server key.
+
+@{FF}@{tab}show_messages
+@{BT}Toggles whether or not fullscreen messaging is used.
+
+@{FF}@{tab}show_names
+@{BT}Toggles whether or not target naming is used.
+
+@{FF}@{tab}shrapnel¹²
+@{BT}Toggles whether or not shrapnel game rules are used.
+
+@{FF}@{tab}skin_lastset
+@{BT}Sets the player skin to the last set value.
+
+@{FF}@{tab}skin_next
+@{BT}Cycles player skin forwards.
+
+@{FF}@{tab}skin_prev
+@{BT}Cycles player skin backwards.
+
+@{tab}Spawn
+@{tab}Gelatinous blue creature which bounces around randomly in an attempt to confuse its enemy before attacking. Relatively easy to kill, provided you can hit it, but explodes on death.
+
+@{separator}
+
+@{H1}    T 
+
+@{FF}@{tab}temp1
+@{BT}Displays the value of the 'temp1' variable, used to hold most client-specific options.
+ 
+@{BT}TheMod
+@{tab}Extremely fast Quake Multiplayer modification by Christian Michael.
+
+@{FF}@{tab}togglesex
+@{BT}Toggles player gender. Effective during respawns only.
+
+@{FF}@{tab}toggle_blood¹
+@{BT}Toggles whether or not blood effects are enabled.
+
+@{FF}@{tab}toggle_con_fl¹
+@{BT}Toggles whether or not console flash effects are enabled.
+
+@{FF}@{tab}toggle_corpse¹
+@{BT}Toggles whether or not corpses are solid.
+
+@{FF}@{tab}toggle_flash¹
+@{BT}Toggles whether or not flash lighting effects are enabled.
+
+@{FF}@{tab}toggle_fov¹
+@{BT}Toggles whether or not console field of view  effects are enabled.
+
+@{FF}@{tab}toggle_gamma¹
+@{BT}Toggles whether or not console gamma effects are enabled.
+
+@{FF}@{tab}toggle_gibs¹
+@{BT}Toggles whether or not giblets are enabled.
+
+@{FF}@{tab}toggle_glow¹
+@{BT}Toggles whether or not glow lighting effects are enabled.
+
+@{FF}@{tab}toggle_snd_enhance¹
+@{BT}Toggles whether or not spacial sound is enabled.
+
+@{FF}@{tab}toggle_snd_limit¹
+@{BT}Toggles whether or not sound limiting is enabled.
+
+@{FF}@{tab}toggle_static¹
+@{BT}Toggles whether or not ambient lighting effects are enabled.
+
+@{separator}
+
+@{H1}    U 
+
+@{FF}@{tab}use_axe
+@{BT}Selects the Axe.
+
+@{FF}@{tab}use_bolt
+@{BT}Selects the Thunderbold / Ion Cannon.
+
+@{FF}@{tab}use_camera
+@{BT}Toggles whether or not player chase camera is used.
+
+@{FF}@{tab}use_grenade
+@{BT}Selects the Grenade Launcher.
+
+@{FF}@{tab}use_guidance
+@{BT}Toggles whether or not rockets are user guided by the laser target (which, of course, must be active to use this option).
+
+@{FF}@{tab}use_inventory
+@{BT}Toggles whether or not inventory is used.
+
+@{FF}@{tab}use_nailgun
+@{BT}Selects the Nailgun.
+
+@{FF}@{tab}use_next
+@{BT}Selects the next usable weapon.
+
+@{FF}@{tab}use_prev
+@{BT}Selects the previous usable weapon.
+
+@{FF}@{tab}use_protect
+@{BT}Activates the Pentagram of Protection, if available.
+
+@{FF}@{tab}use_quad
+@{BT}Activates the Quad Damage, if available.
+
+@{FF}@{tab}use_ring
+@{BT}Activates the Ring of Shadows, if available.
+
+@{FF}@{tab}use_rocket
+@{BT}Selects the Rocket Launcher / Grappling Hook.
+
+@{FF}@{tab}use_shotgun
+@{BT}Selects the Shotgun.
+
+@{FF}@{tab}use_suit
+@{BT}Activates the Biosuit, if available.
+
+@{FF}@{tab}use_supernail
+@{BT}Selects the Super Nailgun.
+
+@{FF}@{tab}use_supershot
+@{BT}Selects the Super Shotgun.
+
+@{FF}@{tab}use_target
+@{BT}Toggles whether or not the laser target is active.
+
+@{FF}@{tab}use_torch
+@{BT}Toggles whether or not the torch is active.
+
+@{separator}
+
+@{H1}    V 
+
+@{BT}Vore
+@{tab}Magical beast present only in the latter stages of the game.
+
+@{separator}
+
+@{H1}    W 
+
+@{BT}Winch
+@{tab}Motorised part of the grappling hook apporatus, used to pull the player towards the anchor point.
+
+@{separator}
+
+@{H1}    X 
+
+@{BT}Xenium Core
+@{tab}Top custom AlienBreed3D II game, by Mike Childs. Tense, challenging, solid. Download it now.
+
+@{separator}
+
+@{H1}    Y 
+
+@{BT}Yak
+@{tab}Large furry moose-like thing.
+
+@{separator}
+
+@{H1}    Z 
+
+@{BT}Zanzibar
+
+@{tab}Zombie
+@{tab}The undead, ressurected by all that is evil. Slow moving, zombies attack by throwing their rotting entrails at their enemies. The bad news is that, since they are already dead, killing them is not an option. The only way to dispatch these creatures is to fully dismember them using an explosive weapon, the Super Shotgun at point-blank range or the Ion Cannon.
+@endnode

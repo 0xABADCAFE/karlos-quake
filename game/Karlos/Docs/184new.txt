@@ -1,0 +1,358 @@
+
+    Karlos Quake 1.8 release 4 beta
+
+    THIS IS A BETA VERSION !!!
+
+    Karlos Quake 1.8r4 is still under construction. The code has been tested
+under Quake 1.06 and 1.09 and there should be no major bugs. 
+
+//------------------------------------------------------------------------------
+
+
+    Changes from 1.8r3
+
+    What's fixed
+
+    The whole spawning system has been re-written to allow suppression of all
+non-essential entities, keeping the number of active entities within the limits
+set by Quake's engine (around 500 under version 1.09). This should eradicate the
+problems caused by edict overflows (ie using shrapnel no longer unstable).
+
+    Several multiplayer bugs have been fixed - there should be no more major
+problems with global gender changes ;). However, it still seems that clients
+connecting to a server end up male by default. Ladies must therefore switch
+after connecting. No solution for this problem has been found thus far.
+
+    What's not...
+
+    There still remains a flaw in the server secutity that allows clients to
+gain access to the game options without permission. The exact cause has not
+been found, but it seems to occur only after changing a level. Fortunately, all
+gameplay option changes do not have any effect until the next level, so this
+is more of an inconvienience than a serious bug.
+    
+
+//------------------------------------------------------------------------------
+
+
+    What's new
+
+    Effects manager
+
+    A new entity class 'fx_manager' takes over the older fov / gamma API. The
+fx_manager handles all effects that require manipulation of a clients console
+variables in a far more efficient manner, allowing better use of these effects.
+An effect manager is also assigned to the world entity, allowing some nice
+effects...
+
+    True handedness
+
+    The character setup now allows true right/left/centre handedness (including
+a no-weapon view). Previously this was a console macro and thus could not be
+saved in the client settings. Note that bits 12 and 13 of the temp1 console
+variable are now used to store handedness. To set handedness, the following
+values must be added to the existing temp1 value
+
+        No weaponview (centre) : 0      (00)
+        Right handed           : 4096   (01)        
+        Left handed            : 8192   (10)
+        Centre handed          : 12288  (11)
+
+    To change handedness during gameplay, use 'cycle_hands'.
+
+
+    Hand grenades
+
+    It is now possible to use grenades without having a suitable weapon - you
+can now throw them by hand. Range and accuracy is less than for the grenade
+launcher, but it can prove useful in an emergency. Bind 'throw_grenade' to a
+suitable key.
+
+    Curve tracing
+
+    This is a gravity sensitive equivalent of the traceline() function that
+allows monsters to evaluate the best trajectory for throwing things or jumping.
+Beware the Ogre. He doesn't use shoot ahead aiming (yet), but the new curve
+trace allows him to hit unwary targets with frightening precision. Do not expect
+to be able to stand on a higher ledge and shoot at him without swift revenge....
+
+    Monster team AI
+
+    A completely new approach to monster AI has been coded. Monsters now work
+in teams. Team members share objectives, can call each other for help and can
+initiate group attacks. Teams have a designated leader who has the final say
+in the action of his team. The combined effectiveness of a team may be reduced
+signifigantly be the incapacitation of it's leader.
+
+    The team ai is not yet complete, but is working. The following features
+are implemented.
+
+    Adjustable team parameters : can be set for a given map, internal default
+                                 used otherwise
+
+        team size              : the maximum size of any given team
+
+        team dispersion        : how densely packed teams are - smaller values
+                                 mean closer team packing
+
+        team tolerances        : how tolerant of other teams - there are
+                                 separate values for equivalent and non-
+                                 equivalent teams
+
+    Team communication         : Team members can keep each other updated
+                                 on targets, call each other for help etc.
+
+    Team observance            : Teams can keep track of other (hostile)
+                                 teams and respond to individuals calling
+                                 for help (will go for the kill and ambush
+                                 any firends that show up)
+
+    Team assault               : Teams can initiate a group attack on one or
+                                 more members of other team(s)
+
+    The following features are still under construction
+
+    Team regroup               : used to merge equivalent teams when a team
+                                 loses its leader
+    Team retreat               : used to allow teams that become too dispersed
+                                 to concentrate into a smaller, devensive
+                                 position.
+
+    In addition to the above, individual monsters keep their unique intelligence
+so that they can still fight it out independently. The team code allows monsters
+to make best use of their comrades - if a monster kills his target he can then
+use team intelligence to pick a new target or to help one of his friends etc.
+
+
+//------------------------------------------------------------------------------
+
+
+    Setting the team parameters
+
+    The team parameters are set via the precache console variable. This value
+is normally used to tell Quake to preload all data needed for the current game
+if it is set to some non-zero value (usually 1). If this value is not greater
+than 1, the internal team parameters will be used.
+
+    The precache variable is split into several 5-bit values as follows
+ 
+    Bit      21     16     11      6      1  0
+
+    xxxxxxxxxxx  xxxxx  xxxxx  xxxxx  xxxxx  x
+
+    undefined    tol_n  tol_e  disp   size   P
+                 |      |      |      |      |
+                 |      |      |      |      Precache flag (standard)
+                 |      |      |      |
+                 |      |      |      maximum team size (0-31, def = 16)
+                 |      |      |
+                 |      |      team dispersion (0 - 0.96875, def = 0.25)
+                 |      |
+                 |      equivalent team tolerance (0 - 0.96875, def = 0.75)
+                 |
+                 non-equivalent team tolerance (0 - 0.96875, def = 0.25)
+
+    The undefined bits are reserved for future use.
+
+    In a random game, tolerances are increased automatically since teams end up
+highly dispersed.
+
+
+//------------------------------------------------------------------------------
+
+
+    Beta version debugging parameters
+
+    The debugging mode uses the "developer" console variable, which will usually
+be set to zero. The developer variable is currently split into a set of flags
+as follows
+
+    Bit                11    10  9  8      4  2  1  0
+
+    xxxxxxxxxxxxxxxxxxxxx     x  x  x  xxxxx  x  x  x
+    undefined                          undef
+                              |  |  |         |  |  | 
+                              |  |  |         |  |  developer flag (standard)
+                              |  |  |         |  |
+                              |  |  |         |  no pickups
+                              |  |  |         |
+                              |  |  |         no monsters
+                              |  |  |
+                              |  |  show monster info
+                              |  |
+                              |  show monster errors
+                              |
+                              show team ai
+
+    Note that setting any of the flags will enable the standard debug messages,
+since the Quake engine and dprint() functions both check only if the developer
+variable is non-zero.
+
+    Setting the "show monster info" flag will show the assignment of a monster
+in contact with the player's laser target (requires client naming active).
+
+    For the curious, start a game with "developer 1280", which will enable
+"show team ai", "show monster info" and all of the standard developer messages.
+This will report the messages (in human readable form) sent between monsters
+and other team based interactions.
+
+
+//------------------------------------------------------------------------------
+
+    Miscellaneous
+
+    There are several commands pertaining to teams, all for debugging purposes.
+The majority of them require the game to be in developer mode since they report
+using the dprint() function.
+
+
+    Team commands
+
+    teams
+
+        Gives a breakdown of the currently active teams. Requires the developer
+variable to be set to any non-zero value. Displays size, enemies (in numerical
+form) and team leader for each teams. Also reports any unteamed monsters.
+
+    teamx    
+
+        Returns the decoded enemy list for the specified team. Requieres the
+developer variable to be set to any non-zero value. Valid team names are army,
+knight, undead and ogre. X takes values 1-3. For example, to show the enemy
+list of the second knight team, use 'knight2'
+
+    teams_hate
+    teams_norm
+
+        These two commands directly set values in the team database. The first
+will set all teams as enemies of each other. This will not cause monsters to
+immediately kill one another on sight unless the monsters are already in an
+attack state. However, any 'friendly' fire will soon escalate into an all out
+battle - as soon as one monster kills his current enemy, he will look for one
+in his immediate vicinity - any monster from another team will appear as a
+valid target. Very amusing in a random game, since this increases the chance
+that a non team meber will be nearby...
+
+        The second command will reset the enemy lists, allowing the monsters to
+return to their primary objectives
+
+
+//------------------------------------------------------------------------------
+
+
+    Complete Command index
+
+    // player items
+
+    use_target
+    use_torch
+    use_guidance
+    use_inventory
+    use_axe
+    use_shotgun
+    use_supershot
+    use_nailgun
+    use_supernail
+    use_grenade
+    use_rocket
+    use_bolt
+    use_next
+    use_prev
+    use_suit
+    use_quad
+    use_ring 
+    use_protect
+
+    throw_grenade    : throw a grenade by hand
+    inventory
+    drop
+
+    release_grap
+    extend_grap
+    shorten_grap
+    hang_grap
+
+    // player setup
+
+    cycle_hands      : cycles handedness settings
+    skin_next
+    skin_prev
+    skin_lastset
+    ion_next
+    ion_prev 
+    togglesex
+    show_messages
+    show_names    
+
+    // player camera
+
+    use_camera
+    camera_up
+    camera_down
+    camera_in 
+    camera_out
+
+    // single player cheats - immediate
+
+    give_quad
+    give_ring
+    give_pent
+    give_rune
+    give_suit
+    give_all
+  
+    // server effects
+
+    cycle_lights
+    toggle_flash
+    toggle_glow
+    toggle_static
+    cycle_explode
+    explodefast
+    explodemulti
+    explodesmart
+    toggle_gamma
+    toggle_con_fl
+    toggle_fov
+    toggle_snd_limit
+    toggle_snd_enhance
+    cycle_violence
+    toggle_blood
+    toggle_gibs
+    toggle_corpse
+
+    // server gameplay
+
+    shrapnel
+    mikerules
+    randomize
+
+    // server security
+
+    adminmessages
+    show_key
+    check_key
+
+    // team commands - all except last two need "developer" set non-zero
+
+    teams
+    army1
+    army2
+    army3
+    knight1
+    knight2
+    knight3
+    undead1
+    undead2
+    undead3
+    ogre1  
+    ogre2  
+    ogre3  
+    teams_hate
+    teams_norm
+
+    // general stuff
+
+    info
+    free_game 
+

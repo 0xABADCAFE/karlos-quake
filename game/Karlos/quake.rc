@@ -1,0 +1,143 @@
+// set default aliases
+
+   // camera
+   alias use_camera   "impulse 50"
+   alias camera_up    "impulse 51"
+   alias camera_down  "impulse 52"
+   alias camera_in    "impulse 53"
+   alias camera_out   "impulse 54"
+
+   // target
+   alias use_target   "impulse 55"
+   alias use_torch    "impulse 56"
+   alias use_guidance "impulse 57" 
+
+   // cheats
+   alias give_quad    "impulse 255"
+   alias give_ring    "impulse 254"
+   alias give_pent    "impulse 253"
+   alias give_rune    "impulse 252"
+   alias give_suit    "impulse 251"
+   alias give_all     "impulse 250"
+
+   // weapon use
+   alias use_axe       "impulse 1"
+   alias use_shotgun   "impulse 2"
+   alias use_supershot "impulse 3"
+   alias use_nailgun   "impulse 4"
+   alias use_supernail "impulse 5"
+   alias use_grenade   "impulse 6"
+   alias use_rocket    "impulse 7"
+   alias use_bolt      "impulse 8"
+   alias use_next      "impulse 9"
+   alias use_prev      "impulse 10"
+   alias drop          "impulse 11"
+   
+   alias use_grapple   "impulse 12"
+   alias release_grap  "impulse 13"
+   alias extend_grap   "impulse 14"
+   alias shorten_grap  "impulse 15"
+   alias hang_grap     "impulse 16"
+
+   alias throw_grenade "impulse 17"
+
+   // inventory
+   alias use_inventory "impulse 20"
+   alias use_suit      "impulse 21"
+   alias use_quad      "impulse 22"
+   alias use_ring      "impulse 23"
+   alias use_protect   "impulse 24"
+   alias inventory     "impulse 39"
+
+   // player extras
+   alias skin_next     "impulse 40"
+   alias skin_prev     "impulse 41"
+   alias skin_lastset  "impulse 42"
+   alias ion_next      "impulse 43"
+   alias ion_prev      "impulse 44"
+   alias togglesex     "impulse 49"
+   alias show_messages "impulse 59"
+   alias show_names    "impulse 60"
+
+   alias cycle_hands   "impulse 48"
+
+   // effect toggles - server access only
+   alias cycle_lights  "impulse 100"
+   alias toggle_flash  "impulse 101"
+   alias toggle_glow   "impulse 102"
+   alias toggle_static "impulse 103"
+
+   alias cycle_explode      "impulse 104"
+   alias explodefast        "impulse 105"
+   alias explodemulti       "impulse 106"
+   alias explodesmart       "impulse 107"
+
+   alias toggle_gamma       "impulse 108"
+   alias toggle_con_fl      "impulse 109"
+   alias toggle_fov         "impulse 110"
+
+   alias toggle_snd_limit   "impulse 111"
+   alias toggle_snd_enhance "impulse 112"
+
+   alias cycle_violence "impulse 113"
+   alias toggle_blood   "impulse 114"
+   alias toggle_gibs    "impulse 115"
+   alias toggle_corpse  "impulse 116"
+
+   // gameplay options - server access only
+   alias shrapnel      "impulse 148"
+   alias mikerules     "impulse 149"
+   alias randomize     "impulse 147"
+
+   // administration options
+   alias adminmessages "impulse 150"
+   alias show_key      "impulse 151"
+   alias check_key     "impulse 152"
+
+   // program information
+   alias info          "impulse 99;wait"
+
+   // debug
+
+   alias teams         "impulse 80;wait"
+
+   alias army1       "impulse 81;wait"
+   alias army2       "impulse 82;wait"
+   alias army3       "impulse 83;wait"
+
+   alias knight1     "impulse 84;wait"
+   alias knight2     "impulse 85;wait"
+   alias knight3     "impulse 86;wait"
+
+   alias undead1     "impulse 87;wait"
+   alias undead2     "impulse 88;wait"
+   alias undead3     "impulse 89;wait"
+
+   alias ogre1     "impulse 90;wait"
+   alias ogre2     "impulse 91;wait"
+   alias ogre3     "impulse 92;wait"
+   alias teams_hate  "impulse 93;wait"
+   alias teams_norm  "impulse 94;wait"
+
+   alias free_game  "disconnect;flush"
+
+// load the base configuration
+exec default.cfg
+
+// load the last saved configuration
+exec config.cfg
+
+// load a preference file if present
+
+exec prefs.cfg
+
+// run a user script file if present
+exec autoexec.cfg
+
+// stuff command line statements
+
+stuffcmds
+
+echo "Server running Karlos Quake"
+
+menu_main
