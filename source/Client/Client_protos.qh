@@ -1,16 +1,16 @@
-// Header table for directory 'Client' created at 18:04:55 on 23 Aug 2024
+// Header table for directory 'Client' created at 13:54:24 on 25 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : Client/player.qc, 22530 bytes
-// sourcefile : Client/inventory.qc, 10650 bytes
-// sourcefile : Client/weapons.qc, 49184 bytes
-// sourcefile : Client/grapple.qc, 19725 bytes
-// sourcefile : Client/skins.qc, 5230 bytes
-// sourcefile : Client/target.qc, 5822 bytes
-// sourcefile : Client/camera.qc, 14810 bytes
-// sourcefile : Client/client_extra.qc, 31355 bytes
-// sourcefile : Client/client.qc, 39023 bytes
+// sourcefile : Client/player.qc, 23676 bytes
+// sourcefile : Client/inventory.qc, 11190 bytes
+// sourcefile : Client/weapons.qc, 51756 bytes
+// sourcefile : Client/grapple.qc, 20602 bytes
+// sourcefile : Client/skins.qc, 5278 bytes
+// sourcefile : Client/target.qc, 6066 bytes
+// sourcefile : Client/camera.qc, 15822 bytes
+// sourcefile : Client/client_extra.qc, 31769 bytes
+// sourcefile : Client/client.qc, 41676 bytes
 //=========================================================================================
 
 
@@ -51,22 +51,22 @@ void() precache_female;
 // Client/inventory.qc...
 
 /*---public---*/
-// $VER: inventory.qc 1.53 ï¿½ Karlos (22/09/1999)
+// $VER: inventory.qc 1.53 Karlos (22/09/1999)
 
 // public function prototypes
 // highlevel
-void() inv_toggle;
-void() inv_list_items;
-void(float use_item) inv_equip_item;
+void()                   inv_toggle;
+void()                   inv_list_items;
+void(float use_item)     inv_equip_item;
 void(float item_dropped) inv_drop_item;
-void() inv_prefetch;
+void()                   inv_prefetch;
 /*---private---*/
 
 
 // Client/weapons.qc...
 
 /*---public---*/
-// $VER: weapons.qc 2.18 ï¿½ Karlos '00 (22/1/2000)
+// $VER: weapons.qc 2.18 Karlos '00 (22/1/2000)
 
 // public function protoypes
 // highlevel
@@ -106,7 +106,7 @@ void() superspike_touch;
 // Client/grapple.qc...
 
 /*---public---*/
-// $VER: grapple.qc 1.12 ï¿½ Karlos (08/10/1999) based on code by Perceli Manole
+// $VER: grapple.qc 1.12 Karlos (08/10/1999) based on code by Perceli Manole
 
 // public functions provided
 // highlevel
@@ -124,7 +124,7 @@ void(vector shot_dir, float shot_impulse) grapple_weapon_kick; // weaponkick eff
 // Client/skins.qc...
 
 /*---public---*/
-// $VER: skins.qc 1.20 ï¿½ Karlos '99 (13/09/1999)
+// $VER: skins.qc 1.20 © Karlos '99 (13/09/1999)
 
 // public function prototypes
 // highlevel
@@ -136,12 +136,12 @@ void (float opt) change_client_skin;
 // Client/target.qc...
 
 /*---public---*/
-// $VER: target.qc 1.97 ï¿½ Karlos (10/3/2000)
+// $VER: target.qc 1.97 © Karlos (10/3/2000)
 
 // public function prototypes
 // highlevel
-void(entity target_owner)             inv_toggle_target;
-void(entity torch_owner)              inv_toggle_torch;
+void(entity target_owner) inv_toggle_target;
+void(entity torch_owner)  inv_toggle_torch;
 
 // public structure extensions
 .entity     laser_target_spot;        // player's laser target
@@ -152,13 +152,13 @@ void(entity torch_owner)              inv_toggle_torch;
 // Client/camera.qc...
 
 /*---public---*/
-// $VER: camera.qc 1.74 ï¿½ Karlos '00 (22/1/2000)
+// $VER: camera.qc 1.74 Karlos '00 (22/1/2000)
 
 // public function prototypes
 // highlevel
-void()                                camera_toggle;
-void(float opt)                       camera_change_zmult;
-void(float opt)                       camera_change_dist;
+void()           camera_toggle;
+void(float opt)  camera_change_zmult;
+void(float opt)  camera_change_dist;
 
 // lowlevel
 void() initialise_camera;
@@ -170,7 +170,7 @@ void(entity msg_ent, entity view_ent) set_viewport;
 // Client/client_extra.qc...
 
 /*---public---*/
-// $VER: client_extra.qc 1.97 ï¿½ Karlos '99 (17/10/1999)
+// $VER: client_extra.qc 1.97 © Karlos '99 (17/10/1999)
 
 // public function prototypes
 // highlevel
@@ -193,7 +193,7 @@ void (entity targ, entity attacker) ClientObituary;
 // Client/client.qc...
 
 /*---public---*/
-// $VER: client.qc 1.85 ï¿½ Karlos (11/10/1999)
+// $VER: client.qc 1.85 Karlos (11/10/1999)
 
 // public function prototypes
 // highlevel
@@ -214,5 +214,7 @@ void()   PlayerJump;
 void()   WaterMove;
 void()   CheckWaterJump;
 void()   CheckPowerups;
+
+void()   player_set_weapon_view;
 
 /*---private---*/

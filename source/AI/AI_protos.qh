@@ -1,20 +1,20 @@
-// Header table for directory 'AI' created at 18:04:56 on 23 Aug 2024
+// Header table for directory 'AI' created at 13:54:21 on 25 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : AI/ai_team.qc, 5582 bytes
-// sourcefile : AI/ai_team_manage.qc, 38996 bytes
-// sourcefile : AI/smart.qc, 10022 bytes
-// sourcefile : AI/combat.qc, 10288 bytes
-// sourcefile : AI/ai.qc, 19182 bytes
-// sourcefile : AI/fight.qc, 8038 bytes
+// sourcefile : AI/ai_team.qc, 6134 bytes
+// sourcefile : AI/ai_team_manage.qc, 38841 bytes
+// sourcefile : AI/smart.qc, 10488 bytes
+// sourcefile : AI/combat.qc, 11290 bytes
+// sourcefile : AI/ai.qc, 18357 bytes
+// sourcefile : AI/fight.qc, 7331 bytes
 //=========================================================================================
 
 
 // AI/ai_team.qc...
 
 /*---public---*/
-// $VER: ai_team.qc 1.00 � Karlos'99 (23/1/2000)
+// $VER: ai_team.qc 1.00 Karlos'99 (23/1/2000)
 
 // public function prototypes
 float (entity observer, entity observed) is_enemy_member;
@@ -28,7 +28,7 @@ void() set_enemy_none;
 // AI/ai_team_manage.qc...
 
 /*---public---*/
-// $VER: ai_team_manage.qc 1.10 � Karlos (05/02/2000)
+// $VER: ai_team_manage.qc 1.10 Karlos (05/02/2000)
 
 // public function prototypes
 
@@ -49,7 +49,7 @@ void(float team_id) list_enemy_teams;
 // AI/smart.qc...
 
 /*---public---*/
-// $VER: smart.qc 2.02 � Karlos (24/1/2000)
+// $VER: smart.qc 2.02 Karlos (24/1/2000)
 
 // public function prototypes
 
@@ -72,7 +72,7 @@ float(entity thing, entity to) is_audible;
 // AI/combat.qc...
 
 /*---public---*/
-// $VER: combat.qc 1.82 � Karlos '99 (02/10/1999)
+// $VER: combat.qc 1.82 Karlos '99 (02/10/1999)
 // public function prototypes
 float(entity targ, entity inflictor) CanDamage;
 void(entity targ, entity attacker) Killed;
@@ -85,7 +85,7 @@ void(entity attacker, float damage) T_BeamDamage;
 // AI/ai.qc...
 
 /*---public---*/
-// $VER: ai.qc 2.21 � Karlos (10/02/2000)
+// $VER: ai.qc 2.21 Karlos (10/02/2000)
 
 // public function prototypes
 float(float v) anglemod;
@@ -94,9 +94,7 @@ float(entity targ) infront;
 float() FindTarget;
 float() FacingIdeal;
 float(entity targ) visible;
-
 float() ai_test_jump;
-
 void() movetarget_f;
 void() path_corner;
 void() t_movetarget;
@@ -121,11 +119,10 @@ void(float dist) ai_run;
 // AI/fight.qc...
 
 /*---public---*/
-// $VER: fight.qc 1.06 � id software
+// $VER: fight.qc 1.06 id software
 
 // public function prototypes
 float() CheckAttack;
-float() army_check_attack;
 float() ShamCheckAttack;
 float() OgreCheckAttack;
 void() knight_attack;
