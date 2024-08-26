@@ -162,7 +162,6 @@ void() ImpulseCommands = {
 
     ImpulseCommands_2();
     ImpulseCommands_3();
-    self.impulse = 0;
 };
 
 void() ImpulseCommands_2 = {
