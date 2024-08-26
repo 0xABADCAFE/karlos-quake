@@ -1792,6 +1792,7 @@ void() W_WeaponFrame =
     }
 
     ImpulseCommands();
+    self.impulse = 0;
 
     // check for attack
     if (self.button0) {
