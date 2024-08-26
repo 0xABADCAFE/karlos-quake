@@ -1,0 +1,77 @@
+// Header table for directory 'System' created at 18:04:57 on 23 Aug 2024
+//
+//========================================================================================
+//
+// sourcefile : System/version.qc, 697 bytes
+// sourcefile : System/utilities.qc, 9539 bytes
+// sourcefile : System/subs.qc, 7489 bytes
+//=========================================================================================
+
+
+// System/version.qc...
+
+/*---public---*/
+// $VER: version.qc 1.82 ® Karlos (14/10/1999)
+// public functions defined
+
+void() version_info;
+
+// defined elsewhere
+
+void() version_AI;
+void() version_World;
+void() version_Client;
+void() version_Misc;
+void() version_System;
+void() version_Monsters;
+void() version_Server;
+void() version_Base;
+
+/*---private---*/
+
+
+// System/utilities.qc...
+
+/*---public---*/
+// $VER: utilities.qc 1.52 © Karlos (04/10/1999)
+// contains some handy maths and other functions not defined in QuakeC
+
+// public function prototypes
+float(vector from, vector onto) vdotprod;
+float()                         crandom;
+vector()                        wall_velocity;
+string (float thing)            name_of_thing;
+vector(float length)            vrandom;
+void()                          entity_push;
+
+// sound que stuff
+void(entity e, float e_chan, string e_sound, float e_vol, float e_attn, float used, float max) sound_autolimit;
+float sound1_used;
+float sound2_used;
+float sound3_used;
+float sound4_used;
+
+/*---private---*/
+
+
+// System/subs.qc...
+
+/*---public---*/
+// $VER: subs.qc 1.06 © id software
+
+// public function prototypes
+void() SUB_Null;
+void() SUB_Remove;
+void() SUB_regen;
+void(void() thinkst) SUB_CheckRefire;
+void()  SUB_CalcMoveDone;
+void() DelayThink;
+void() InitTrigger;
+void() SUB_CalcAngleMoveDone;
+void() SUB_UseTargets;
+void(entity ent, vector destangle, float tspeed, void() func) SUB_CalcAngleMoveEnt;
+void(entity ent, vector tdest, float tspeed, void() func) SUB_CalcMoveEnt;
+void(float normal) SUB_AttackFinished;
+void(vector destangle, float tspeed, void() func) SUB_CalcAngleMove;
+void(vector tdest, float tspeed, void() func) SUB_CalcMove;
+/*---private---*/

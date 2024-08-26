@@ -1,0 +1,18 @@
+/**/
+
+parse arg pak
+
+if ~open(PAK_IN, pak, r) then exit
+
+call open(PAK_OUT, pak||".pre",w)
+
+do until eof(PAK_IN)
+
+    x = c2d(readch(PAK_IN,1))
+    x = x - 128
+    if x < 0 then x = x + 256
+    call writech(PAK_OUT, d2c(x))
+end
+
+call close(PAK_IN)
+call close(PAK_OUT)

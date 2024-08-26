@@ -1,0 +1,47 @@
+/**/
+
+parse arg dirname
+
+headerinfo = "// Header table for directory '"dirname"' created at "time()" on "date()||'a'x
+
+call open(VER, "T:protos_ver.tmp", w)
+writech(VER, headerinfo)
+writech(VER, "//"||'a'x||"//========================================================================================"||'a'x||'//'||'a'x)
+call close(VER)
+
+call open(SOURCELIST, 'T:protos_dir.tmp', r)
+call open(OUT, 'T:protos_body.tmp',w)
+writeln(OUT, "//=========================================================================================")
+
+do until eof(SOURCELIST)
+   file = readln(SOURCELIST)
+   if file ~= "" then call scanfile(file);
+end
+call close(SOURCELIST)
+
+Exit
+
+scanfile:
+   procedure
+   say "      "arg(1)
+   call open(SOURCE, arg(1), r)
+
+   call writech(OUT,'0a0a'x||"// "||arg(1)||"..."||'0a0a'x)
+
+   pubstart = 0
+   do until pubstart
+      dummy = strip(readln(SOURCE))
+      pubstart = eof(SOURCE)
+      if dummy == "/*---public---*/" then pubstart = 1
+   end
+   call writech(OUT, dummy||'a'x)
+
+   pubend = 0
+   do until pubend
+      pubend = eof(SOURCE)
+      line = strip(readln(SOURCE))
+      if line == "/*---private---*/" then pubend = 1
+      call writech(OUT, line||'a'x)
+   end
+      call close(SOURCE)
+   return

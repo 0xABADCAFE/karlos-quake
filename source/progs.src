@@ -1,0 +1,92 @@
+progs.dat
+
+// id      - original and untouched
+// modifed - features added, moved, replaced or optimised
+// Karlos  - completely new module
+
+// base defs, engine functions
+Base/defs.qc           // modified - contains structure defs, constants protos etc.
+Base/engine.qh         // Karlos   - Quake Engine function library
+Base/subs.qc           // Modified
+
+// prototypes
+System/System_protos.qh
+System/defaults.qh
+AI/AI_protos.qh
+AI/defaults.qh
+Server/Server_protos.qh
+Server/defaults.qh
+World/World_protos.qh
+World/defaults.qh
+Misc/Misc_protos.qh
+Misc/defaults.qh
+Client/Client_protos.qh
+Client/defaults.qh
+Monsters/Monsters_protos.qh
+Monsters/defaults.qh
+
+// system stuff
+System/utilities.qc    // Karlos   - mostly calc functions not defined in engine
+System/version.qc      // Karlos   - keep track of those extensions
+
+// Server stuff
+Server/server.qc       // Karlos   - contains server specific functions / toggles
+Server/cheats.qc       // Karlos   - developer module ;)
+Server/impulse.qc      // Karlos   - impulse command interface module
+Server/mikerules.qc    // Karlos   - contains mikerules specific functions
+Server/randomgame.qc   // Karlos   - contains code to handle game randomisation
+
+// World stuff
+World/world.qc         // modified - speaks for itself ;)
+World/doors.qc         // id
+World/buttons.qc       // id
+World/triggers.qc      // modified - support for teleportable objects aded
+World/plats.qc         // id
+World/traps.qc         // Karlos   - traps modified and brought together
+World/ambient.qc       // Karlos   - lights, sounds, wind tunnels etc.
+World/items.qc         // modified - pickups of all kinds
+
+// Client stuff
+Client/client.qc       // modified - client rooutines
+Client/client_extra.qc // Karlos   - additional routines to support new features
+Client/camera.qc       // Karlos   - chasecam module
+Client/target.qc       // Karlos   - targeter / torch module
+Client/skins.qc        // Karlos   - contains client skin handling
+Client/grapple.qc      // Karlos   - grappling hook module
+Client/weapons.qc      // modified - weapons/ammo handling + general shooting routines
+Client/inventory.qc    // Karlos   - player inventory functions
+Client/player.qc       // modified - player model
+
+Misc/Effects.qc        // Karlos   - various special effect routines gathered together
+Misc/fx_manager.qc     // Karlos   - New fx_manager entity code for world and clients
+Misc/corpse.qc         // Karlos   - gore module, solid, damagable corpses
+
+AI/fight.qc            // id
+AI/ai.qc               // modified - enemy ai routines
+AI/combat.qc           // modified - attack / damage / kill handling
+AI/smart.qc            // Karlos   - ai module, smart routines for shoot ahead etc.
+AI/ai_team_manage.qc   // Karlos   - ai setup functions for monster teamwork...
+AI/ai_team.qc          // Karlos   - ai functions for monster teamwork...
+
+// NB : all monsters modified to cope with new corpse, skill adjustment etc..
+// specific points of interest mentioned only
+
+Monsters/monsters.qc   // modified - monster handling code
+Monsters/ogre.qc       // modified - enabled chainsaw check anim
+Monsters/fiend.qc      // modified
+Monsters/shambler.qc   // modified
+Monsters/knight.qc     // modified - armour damage sounds and armour drop added
+Monsters/grunt.qc      // modified - random and context sensitive radio, walking
+                       //            sounds, enabled weapon check anim
+Monsters/scragg.qc   // modified
+Monsters/dog.qc        // modified
+Monsters/zombie.qc     // modified - deadflag trick to fool attacker when lying down
+Monsters/chthon.qc     // modified
+
+Monsters/spawn.qc      // modified
+Monsters/hellknight.qc // modified - armour damage sounds and armour drop added
+Monsters/rotfish.qc    // modified
+Monsters/vore.qc       // modified
+Monsters/enforcer.qc   // modified - radio/footsteps as for soldier, added support
+                       //            for smart routines in smart.qc
+Monsters/shub.qc       // id

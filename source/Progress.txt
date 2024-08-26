@@ -1,0 +1,69 @@
+    KQ WIP 2024
+
+    - Rework functions depending on .classname check chains to methods
+
+    KQ1.8r4 Work in Progress 10.2.2000
+    TO DO
+
+    FIX : Locate bug in moster ai that causes some monsters not to attack on activation
+
+    ADD : Monster bored function - allow monster to grow weary of impossible
+          to reach (attack) enemy and seek new enemy.
+    ADD : Monster friend team support
+
+    ADD : Monster team regroup code
+
+    ADD : New player sub entity, charged with modifying gamma / fov for client
+
+    Use to implement new special FX
+
+        Glare from 'bright' objects at close range
+        Lighting fx on medieval style worlds
+
+    ADD : World soundfx module - use for spot fx etc..
+
+
+
+    KQ1.8r4 Work in Progress 8.2.2000
+
+
+
+  ADDED : look for new enemy function for monsters which have killed their
+          current enemies and cannot see their previous (old) enemies
+
+          A bug exists somewhere that caused an ogre to launch a totally
+          unprovoked attack on a zombie
+
+          The feature causes too much chaos in random games. Might have to
+          see about a special team assignment algorithm for random games
+          - ie small diffusion + monsters are put into teams sequentially by
+          looking for a same class monster within a given radius.
+          The algorithm would need to be called once all of the monsters
+          have been spawned (tricky)
+
+          This, with some refinements may prove to be an ideal distribution
+          technique, keeping teams localised terratorially...
+
+
+  ADDED : Monster seek new enemy function for monsters activated by distress
+          calls - at least stop monster from just stopping dead
+          Perhaps implement a 'memory' such that monster can return to his
+          previous place
+
+
+
+    KQ1.8r4 Work in Progress 6.2.2000
+
+    FIXED : Located bug in monster activation that lead to occasional invulnerable enemy.
+
+    ADDED : Allow monster to switch enemies of a team member calls and
+current enemy is not visible
+
+    ADDED : Allow enemy teams to respond to help calls with intention
+of killing caller
+
+    FIXED : minor bug in enemy detection code that forced team_ogre_3 never
+to attack team_undead_1
+
+
+

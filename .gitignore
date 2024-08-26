@@ -1,1 +1,7 @@
 **/_UAEFSDB.___
+*.kdev4
+game/id1/*
+game/AmiQuake*
+game/Karlos/amiprefs.cfg
+game/RTG_default.mode
+assets/PakMan/*

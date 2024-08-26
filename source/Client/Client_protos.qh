@@ -1,0 +1,218 @@
+// Header table for directory 'Client' created at 18:04:55 on 23 Aug 2024
+//
+//========================================================================================
+//
+// sourcefile : Client/player.qc, 22530 bytes
+// sourcefile : Client/inventory.qc, 10650 bytes
+// sourcefile : Client/weapons.qc, 49184 bytes
+// sourcefile : Client/grapple.qc, 19725 bytes
+// sourcefile : Client/skins.qc, 5230 bytes
+// sourcefile : Client/target.qc, 5822 bytes
+// sourcefile : Client/camera.qc, 14810 bytes
+// sourcefile : Client/client_extra.qc, 31355 bytes
+// sourcefile : Client/client.qc, 39023 bytes
+//=========================================================================================
+
+
+// Client/player.qc...
+
+/*---public---*/
+// $VER: player.qc 1.72 � Karlos (11/09/1999)
+
+// public function prototypes
+// highlevel
+void() PainSound;
+void() DeathSound;
+void() PlayerDead;
+void() GibPlayer;
+void() PlayerDie;
+void() set_suicide_frame;
+
+// lowlevel
+void() player_pain;
+void() player_run;
+void() player_axe1;
+void() player_axeb1;
+void() player_axec1;
+void() player_axed1;
+void() player_shot1;
+void() player_nail1;
+void() player_light1;
+void() player_rocket1;
+void() player_ion1;
+void() player_gren_rt1;
+void() player_gren_lf1;
+void() player_stand1;
+void() precache_male;
+void() precache_female;
+/*---private---*/
+
+
+// Client/inventory.qc...
+
+/*---public---*/
+// $VER: inventory.qc 1.53 � Karlos (22/09/1999)
+
+// public function prototypes
+// highlevel
+void() inv_toggle;
+void() inv_list_items;
+void(float use_item) inv_equip_item;
+void(float item_dropped) inv_drop_item;
+void() inv_prefetch;
+/*---private---*/
+
+
+// Client/weapons.qc...
+
+/*---public---*/
+// $VER: weapons.qc 2.18 � Karlos '00 (22/1/2000)
+
+// public function protoypes
+// highlevel
+void() W_Precache;
+void() W_WeaponFrame;
+void() W_SetCurrentAmmo;
+void() W_Attack;
+void() W_FireAxe;
+void() W_FireShotgun;
+void() W_FireSuperShotgun;
+void(float ox) W_FireSpikes;
+void() W_FireSuperSpikes;
+void() W_FireGrenade;
+void() W_ThrowGrenade;
+void() W_FireRocket;
+void() W_FireLightning;
+void() W_Fire_Ion;
+void() W_ChangeWeapon;
+float() W_BestWeapon;
+void() CycleWeaponCommand;
+void() CycleWeaponReverseCommand;
+void() toggle_guidedmissiles;
+
+// lowlevel
+void(float shotcount, vector dir, vector spread) FireBullets;
+void(vector dir, vector spread) fire_machine_bullet;
+void(float beam_energy, vector org, vector direction, entity whofired) ion_stream;
+void() T_MissileTouch;
+void(vector org, float dovisuals) missile_enginekick_fx;
+void(vector p1, vector p2, entity from, float damage) LightningDamage;
+void(vector org, vector dir) launch_spike;
+void() spike_touch;
+void() superspike_touch;
+/*---private---*/
+
+
+// Client/grapple.qc...
+
+/*---public---*/
+// $VER: grapple.qc 1.12 � Karlos (08/10/1999) based on code by Perceli Manole
+
+// public functions provided
+// highlevel
+void() inv_grapple_fire;          // launches hook
+void() inv_grapple_release;          // releases hook
+void() inv_grapple_retract;   // begin winching up
+void() inv_grapple_extend;    // allow to drop
+void() inv_grapple_lock;      // locks chain at current length
+void(vector shot_dir, float shot_impulse) grapple_weapon_kick; // weaponkick effect
+// public structure extensions
+.float      grapple;             // grappling hook flags
+/*---private---*/
+
+
+// Client/skins.qc...
+
+/*---public---*/
+// $VER: skins.qc 1.20 � Karlos '99 (13/09/1999)
+
+// public function prototypes
+// highlevel
+void () load_client_skin;
+void (float opt) change_client_skin;
+/*---private---*/
+
+
+// Client/target.qc...
+
+/*---public---*/
+// $VER: target.qc 1.97 � Karlos (10/3/2000)
+
+// public function prototypes
+// highlevel
+void(entity target_owner)             inv_toggle_target;
+void(entity torch_owner)              inv_toggle_torch;
+
+// public structure extensions
+.entity     laser_target_spot;        // player's laser target
+
+/*---private---*/
+
+
+// Client/camera.qc...
+
+/*---public---*/
+// $VER: camera.qc 1.74 � Karlos '00 (22/1/2000)
+
+// public function prototypes
+// highlevel
+void()                                camera_toggle;
+void(float opt)                       camera_change_zmult;
+void(float opt)                       camera_change_dist;
+
+// lowlevel
+void() initialise_camera;
+void(entity msg_ent, entity view_ent) set_viewport;
+
+/*---private---*/
+
+
+// Client/client_extra.qc...
+
+/*---public---*/
+// $VER: client_extra.qc 1.97 � Karlos '99 (17/10/1999)
+
+// public function prototypes
+// highlevel
+void () toggle_screenmessages;
+void () toggle_gender;
+void () toggle_show_netnames;
+void (float opt) cycle_ion_colour;
+void () cycle_handedness;
+void () toggle_smooth_subents;
+
+// lowlevel
+void (entity sendto, string msg_string, float msg_type, float override) screen_message;
+void () save_client_extraparms;
+void () default_client_extraparms;
+void () set_client_extraparms;
+void (entity targ, entity attacker) ClientObituary;
+/*---private---*/
+
+
+// Client/client.qc...
+
+/*---public---*/
+// $VER: client.qc 1.85 � Karlos (11/10/1999)
+
+// public function prototypes
+// highlevel
+entity() FindIntermission;
+void()   GotoNextMap;
+void()   ExitIntermission;
+void()   IntermissionThink;
+void()   execute_changelevel;
+void()   changelevel_touch;
+void()   trigger_changelevel;
+void()   respawn;
+float(vector v) CheckSpawnPoint;
+entity() SelectSpawnPoint;
+void()   NextLevel;
+void()   CheckRules;
+void()   PlayerDeathThink;
+void()   PlayerJump;
+void()   WaterMove;
+void()   CheckWaterJump;
+void()   CheckPowerups;
+
+/*---private---*/

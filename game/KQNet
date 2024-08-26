@@ -1,0 +1,17 @@
+.key SERVER/S
+
+stack 600000; nice big stacksize
+
+skip main_<SERVER>
+
+lab main_
+    ; client
+    warpquake -aga -game karlos2 -mouse -nosound -mem 16 -zone 2048
+    skip end
+
+lab main_SERVER
+    ; server
+    warpquake -aga -game karlos -mouse -nosound -mem 16 -listen 2 -zone 2048
+
+lab end
+    stack 8192

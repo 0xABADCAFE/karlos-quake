@@ -1,0 +1,238 @@
+/*
+$VER: fixfreq 1.0 ® Karlos '99 (15/09/1999)
+*/
+
+parse arg user_args
+
+main:
+   init()
+
+   audio.header = left(source.header, 24)
+
+   if force ~= 0 then,
+      do
+         select
+            when force = 11 then call force11khz()
+            when force = 22 then call force22khz()
+            when force = 44 then call force44khz()
+         otherwise
+            prexit(0)
+         end
+         if writewav() then,
+            say "   Wave file "source.name" written successfully."
+         prexit(0)
+      end
+
+   select
+      when source.frqmsb = '20'x then call fix8khz() /*assume dodgy 8khz was 11*/
+      when source.frqmsb = '2B'x then call fix11khz()
+      when source.frqmsb = '56'x then call fix22khz()
+      when source.frqmsb = 'AC'x then call fix44khz()
+   otherwise
+      do
+         say "   File not recognised as approx 11/22/44kHz : please choose"
+         options prompt "[11 / 22 / 44] >"
+         parse pull freq
+
+         select
+            when freq = '11' then call fix11khz()
+            when freq = '22' then call fix22khz()
+            when freq = '44' then call fix44khz()
+         otherwise
+            do
+               say "   invalid option - defaulting to 11kHz"
+               call fix11khz()
+            end
+         end
+      end
+   end
+
+   if writewav() then,
+      say "   Wave file "source.name" written successfully."
+
+   prexit(0)
+
+/*---------------------------------------------------------------------------------------*/
+
+fix8khz:
+   say "   File frequency unspecified - looks like 'C-2' (8kHz min), setting to 11025 Hz"
+   call force11khz()
+   return
+
+/*---------------------------------------------------------------------------------------*/
+
+fix11khz:
+   if source.frqlsb = '11'x then,
+      prexit(5, "File exactly 11025 Hz - skipping.")
+   say "   File approx 11 kHz, setting to 11025 Hz"
+   force11khz:
+   audio.header = audio.header||'112B0000112B0000'x
+   return
+
+/*---------------------------------------------------------------------------------------*/
+
+fix22khz:
+   if source.frqlsb = '22'x then,
+      prexit(5, "File exactly 22050 Hz - skipping.")
+   say "   File approx 22 kHz, setting to 22050 Hz"
+   force22khz:
+   audio.header = audio.header||'2256000022560000'x
+   return
+
+/*---------------------------------------------------------------------------------------*/
+
+fix44khz:
+   if source.frqlsb = '44'x then,
+      prexit(5, "File exactly 44100 Hz - skipping.")
+   say "   File approx 44 kHz, setting to 44100 Hz"
+   force44khz:
+   audio.header = audio.header||'44AC000044AC0000'x
+   return
+
+/*---------------------------------------------------------------------------------------*/
+
+writewav:
+   /* check for out of date backup */
+   if ~exists(source.name||'.bak') then,
+      do
+         /* nope, better make backup */
+         address command 'rename >nil: 'source.name' 'source.name'.bak'
+         say "   made a fresh backup"
+      end
+   else 
+      do
+         /* kill obsolete backup */
+         address command 'delete > nil: 'source.name'.bak force'
+         /* make fresh backup*/
+         address command 'rename >nil: 'source.name' 'source.name'.bak'
+         say "   replaced a stale backup"
+      end
+
+   if ~open(OLD_WAV, source.name||'.bak') then,
+      prexit(20, "Couldn't read from a backup I just made [eh ?]...")
+   else
+      do
+         dummy = readch(OLD_WAV, 32) /* don't need old header */
+
+         if open(NEW_WAV, source.name, w) then,
+            do
+               writech(NEW_WAV, audio.header)
+               do until eof(OLD_WAV)
+                  buffer = readch(OLD_WAV, 16384)
+                  writech(NEW_WAV, buffer)
+               end
+               call close(OLD_WAV)
+               call close(NEW_WAV)
+               return 1
+            end
+         else,
+            close(OLD_WAV)
+            prexit(20, "Couldn't write '"source.name"'.")
+      end
+   end
+
+   prexit(20, "Couldn't write '"source.name"'.")
+
+/*---------------------------------------------------------------------------------------*/
+
+prexit:
+   if arg(1) ~= 0 then,
+      say "   Error : "||arg(2)
+   exit arg(1)
+
+/*---------------------------------------------------------------------------------------*/
+
+init:
+   force = 0
+   wavname = init.args(user_args,"FORCE/N,SOUND:")
+   if wavname = '' then,
+      do
+         say "No new sound effects to fix today then, eh ?"
+         prexit(0)
+      end
+   if init.srcfile(wavname) then,
+      do
+         say "   Wave file header info loaded correctly"
+         return 1
+      end
+   prexit(10, "Couldn't load audio file.")
+
+/*---------------------------------------------------------------------------------------*/
+
+init.args:
+   procedure expose force
+   args = arg(1)
+   if right(args,1) = '?' then,
+      do
+         call showhelp()
+         options prompt Arg(2)
+         parse pull c_line
+         args = strip(c_line, B, ' ')
+      end
+
+   if upper(word(args, 1)) = "FORCE" then,
+      do
+         force = strip(word(args, 2), B, ' "')
+         if ~(force = 11 | force = 22 | force = 44) then,
+            do
+               say "***invalid FORCE value - ignoring."
+               force = 0
+            end
+            args2 = strip(substr(args, 6), B, ' "')
+         return strip(substr(args2, 3), B, ' "')
+      end
+   return (strip(args, B, ' "'))
+
+/*---------------------------------------------------------------------------------------*/
+
+init.srcfile:
+   say "File : '"arg(1)"'..."
+   if open(WAVFILE,arg(1),R) then,
+      do
+         /* read header info */
+         source.header = readch(WAVFILE, 32)
+         close(WAVFILE)
+
+         source.check = left(source.header, 4)||substr(source.header, 9, 7)
+
+         say "   testing file..."
+
+         if source.check ~= "RIFFWAVEfmt" then,
+            do
+               say "   file does not seem to be a valid RIFF Wave audio file."
+               return 0
+            end
+
+         source.frqmsb = substr(source.header, 26, 1) /* most sig byte */
+         source.frqlsb = substr(source.header, 25, 1) /* least sig byte */
+         source.name   = arg(1)
+
+         return 1
+      end
+   return 0
+
+/*---------------------------------------------------------------------------------------*/
+
+showhelp:
+   say '1b63'x||"fixfreq 1.0 © Karlos '99"||'0a0a'x,
+      "   Use me to fix the frequency data in 8-bit RIFF Wave audio files for use in Quake."||'a'x,
+      "This should only be necessary if you have created your own sound files in a package such"||'a'x,
+      "as OctaMED (any version), since the frequency of the saved file will be set to that of"||'a'x,
+      "the 'default pitch' of the instrument, and not a standard value such as 11025 Hz."
+   say,
+      "    In practice, a default pitch of 'F-2', for example, is about 11200 Hz. Due to the"||'a'x,
+      "nature of Quake's sound mixing routines, sounds at non-integer multiples of the mixing"||'a'x,
+      "frequency can cause the sound engine to slow down (uses on-the-fly resampling, which"||'a'x,
+      "can also cause extra noise) eating CPU cycles better spent the 3D engine ;^)."
+   say,
+      "    I will scan your selected RIFF Wave file for the frequency data, and if needed, set"||'a'x,
+      "it to the closest rational frequency (either 11025, 22050 or 44100 Hz). If I can't see"||'a'x,
+      "a sensible value, I'll ask you which of the three looks best..."
+   say,
+      "    Additionally, if you wish, you may use the FORCE option to set a new frequency for"||'a'x,
+      "any Wave file, regardless of its current setting. This can come in handy if you select"||'a'x,
+      "the wrong frequency for a sound. Valid values for FORCE are 11, 22 and 44."||'a'x
+   say,
+      "    Lastly, due to the fix-in-place nature of this program, I'll back up any file whose"||'a'x,
+      "header I modify (adding '.bak'). Here's to faster, (better sounding ?), Quake."||'a'x
+   return

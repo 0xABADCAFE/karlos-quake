@@ -1,0 +1,16 @@
+CD Van:Development/Projects/QuakeTools/Source_QC/KarlosSrc
+Echo "*ec"
+
+if "$shellpaths" not eq "*$shellpaths"
+   Path >nil: $shellpaths
+   EndIf
+Prompt "*n%N/%R.%S> "
+Alias CLS "Echo *"*E[0;0H*E[J*""
+Alias Help Run >nil: multiview locale/help/english/AmigaDOS/AmigaDOS.guide
+Alias RxHelp Run >nil: multiview sys:locale/help/english/Arexx/Arexxguide.guide
+
+Alias qed run >nil: editpad fixfont
+
+Echo "Karlos Quake IDE"
+Echo "*nMemory statistics*n"
+Avail

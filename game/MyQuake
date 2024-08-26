@@ -1,0 +1,31 @@
+; $VER: Quake Amiga startup script
+
+; WARPQUAKE ONLY !
+
+failat 100
+echo "*ecQuake startup..."
+
+; free up all available memory
+avail flush >nil:
+
+eval >env:quakeheapsize (`c:avail fast`/1024)-16384
+eval >env:quakemem $quakeheapsize/1024
+
+if val $quakeheapsize not ge 10240
+   echo "Error : Couldn't allocate minimum 10 megs..."
+   quit 10
+   endif
+
+; start game
+
+echo "   Memory allocation*n*n   Data : $quakeheapsize kB"
+
+stack 600000
+changetaskpri -128 >nil:
+WarpQuake -bat -aga -game karlos -mem $quakemem -zone 2048 -mouse -nolan -particles 20000
+
+
+; pool all memory
+
+avail flush >nil:
+endcli >nil:

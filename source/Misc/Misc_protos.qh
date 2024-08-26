@@ -1,0 +1,86 @@
+// Header table for directory 'Misc' created at 18:04:52 on 23 Aug 2024
+//
+//========================================================================================
+//
+// sourcefile : Misc/effects.qc, 27266 bytes
+// sourcefile : Misc/corpse.qc, 3634 bytes
+// sourcefile : Misc/fx_manager.qc, 7501 bytes
+// sourcefile : Misc/sprites.qc, 484 bytes
+// sourcefile : Misc/models.qc, 8996 bytes
+//=========================================================================================
+
+
+// Misc/effects.qc...
+
+/*---public---*/
+// $VER: effects.qc 1.90 © Karlos (03/04/2000)
+
+// public function prototypes
+// gore effects
+void(vector org, vector vel)               SpawnChunk;
+void(vector org, vector vel, float damage) SpawnBlood;
+void(float damage)                         spawn_touchblood;
+void(vector org, vector vel)               SpawnMeatSpray;
+void(string headmdl, float damage)         giblet;
+void(string gibname, float damage)         throw_gib;
+void(string gibname, float damage)         throw_head;
+
+// bubble stuff
+void() air_bubbles;
+void(float num_bubbles) DeathBubbles;
+
+// explosions
+void() BecomeExplosion;
+void(entity source) radius_glare;
+
+// sound effects
+void(float walkvol, float atten) footfall_normal;
+void()                           SuperDamageSound;
+void(entity src, float msgnum)   radio_message;
+void(entity src)                 random_radio;
+void(entity src)                 armour_clang;
+
+// other fx
+void(entity who, float steps) warp_fov;
+void(vector fx_org, float min_gamma) radius_flash;
+
+/*---private---*/
+
+
+// Misc/corpse.qc...
+
+/*---public---*/
+// $VER: corpse.qc 2.00 © Karlos '99 (14.7.99)
+// public function prototypes
+void(string headmdl, float bodyinertia, float mindamage) corpse;
+/*---private---*/
+
+
+// Misc/fx_manager.qc...
+
+/*---public---*/
+// $VER: fx_manager.qc 1.02 © Karlos (28/03/2000)
+
+// public function prototypes
+// highlevel
+
+// lowlevel
+void () spawn_world_fx_manager;
+void () world_fx_manager_think;
+void (entity for_whom) spawn_fx_manager;
+void () fx_manager_remove;
+void () fx_manager_think;
+
+/*---private---*/
+
+
+// Misc/sprites.qc...
+
+
+
+
+
+// Misc/models.qc...
+
+
+

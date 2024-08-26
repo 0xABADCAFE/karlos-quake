@@ -1,0 +1,9 @@
+// misc/defaults.qh
+
+.float radio_inhibit_rand;
+
+void() version_Misc =
+{
+   sprint(self, "KQ/Misc 3.12 02:05:2000\n");
+};
+

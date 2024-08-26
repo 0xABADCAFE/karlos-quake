@@ -1,0 +1,1174 @@
+@hyperguide KQuake_18r3docs
+@$VER: KQuake 1.8 release 3 © Karl Churchill (19/10/1999)
+@Author Karl Churchill
+@macro H1 "@{font times,24}"
+@path pics/
+@wordwrap
+@background back.iff
+@index INDEX
+-----------------------------------------------------------------------------
+@Node Main "Karlos' Amiga Quake Patch 1.8r3"
+
+@{H1}
+@{jcenter}@{fgrgb white}K  a  r  l  o  s'    Q  u  a  k  e     P  a  t  c  h@{jcenter}
+@{font helvetica, 15}
+@{jcenter}Version 1.8 : release 3@{jcenter}
+@{font times, 18}
+@{jcenter}@{fgrgb blue}@{i}The enhancement add-on for Classic Quake @{ui}@{jcenter}
+@{font times, 15}@{jleft}@{fgrgb black}
+  @{object "q.iff"}
+@{tab}@{"  >> " link INTRO    }@{tab}Introduction@{tab}@{tab}What is this patch about ?
+
+  @{object "legal.iff"}
+@{tab}@{"  >>  " link LEGAL    }@{tab}Legalites@{tab}@{tab}@{tab}Disclaimer, copyrights and stuff
+
+  @{object "require.iff"}
+@{tab}@{"  >>  " link REQUIRE  }@{tab}Requirements@{tab}@{tab}What you need to start
+
+  @{object "comp.iff"}
+@{tab}@{"  >>  " link STARTUP  }@{tab}Starting up@{tab}@{tab}How to get it running
+
+  @{object "q.iff"}
+@{tab}@{"  >>  " link FEATURES }@{tab}Features@{tab}@{tab}@{tab}What's in the patch ?
+
+  @{object "q.iff"}
+@{tab}@{"  >>  " link SETTINGS }@{tab}Server settings@{tab}@{tab}Adjusting to your needs
+
+  @{object "q.iff"}
+@{tab}@{"  >>  " link SETTINGS2}@{tab}Client settings@{tab}@{tab}Additional client features
+
+  @{object "single.iff"}
+@{tab}@{"  >>  " link SINGLE   }@{tab}Single player@{tab}@{tab}Gameplay settings and enhancements
+
+  @{object "multi.iff"}
+@{tab}@{"  >>  " link MULTI    }@{tab}Multiplayer@{tab}@{tab}Mayhem with mates
+
+  @{object "FAQ.iff"}
+@{tab}@{"  >>  " link FAQ      }@{tab}FAQs@{tab}@{tab}@{tab}Your queries sorted
+
+  @{object "q.iff"}
+@{tab}@{"  >>  " link HISTORY  }@{tab}Patch history@{tab}@{tab}What's new, what's old
+
+  @{object "q.iff"}
+@{tab}@{"  >>  " link CREDITS  }@{tab}Credits@{tab}@{tab}@{tab}Seriously funky people
+
+  @{object "index.iff"}
+@{tab}@{"  >>  " link INDEX    }@{tab}Index@{tab}@{tab}@{tab}A - Z
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node INTRO "Introduction"
+@{jleft}@{object "q.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Introduction to Karlos Quake @{ui}
+
+@{font helvetica, 18}@{i}Background @{ui}
+@{font times, 15}@{jleft}
+@{tab}In 1998, Amiga gaming was dragged kicking and screaming into the late nineties with the release of the most anticipated port of the decade. Id software, who had effectively defined the accepted first person genre with Wolfenstien 3D, and more notably DOOM, unleashed Quake on an unsuspecting world of gamers. Quake, like DOOM before it, set a new standard in 3D technology, giving the player a true 3D universe to explore, and more importantly, kill things in.
+@{tab}But, this new standard had a price. Performance. Machines which could pump out DOOM at a fluid 30 fps were struggling with the new, light-sourced, polygon-based, feature-laden engine. 75 MHz Pentium machines, state-of-the-art at the time, were soon replaced in a mad rush to get higher framerates. Despite this, the 'technologically' inferior Amiga, a machine deemed by id themselves as unsuitable for DOOM, finally got a port of this game, and before any other platform (except Macintosh).
+@{tab}In order to make the game playable, months were spent optimizing the engine. AmigaQuake was, on release (and probably still is), the fastest implementation of the Quake I engine on any platform (based on a framerate per MHz basis). However, the idea that you can't have enough power to get the most from the game @{"  >>  " link REQUIRE} still applies. Quake wasn't the first game on the Amiga to need serious horsepower (recall TKG ?). However, even on the fastest 68060 powered systems, AmigaQuake can struggle. On anything less, the game is nothing short of a very pretty 3D slideshow.
+
+@{font helvetica, 18}
+@{i}The birth of Karlos Quake @{ui}
+@{font times, 15}@{jleft}
+@{tab}Initially, it was the performance issue that led to the development of the first internal versions of Karlos Quake. Having found the full game source (QuakeC , not engine ;), one or two 'bugs' were fixed, which led to an immediate improvement in speed. However, it soon became apparent that QuakeC offered the flexibility to do so much more.
+@{tab}I began playing with some of the game features, and pretty soon the whole driving motivation behind the patch changed. Karlos Quake focuses on enhancing the gameplay, customisability and appearance of Quake.@{b} If you want the fastest possible game of Quake this is not the patch for you ! @{ub} Go and download QBoost4 or TheMod from AmiNET instead. They might not look so nice, but boy, they are damn fast !
+@{tab}Having said that, the initial drive to improve the performance of the game was not abandoned entirely, and it is possible to toggle most of the features to balance speed / appearance.
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node Legal "Disclaimer"
+@{jleft}@{object "legal.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Legalities @{ui}
+
+@{font helvetica, 18}@{i}Disclaimer @{ui}
+@{font courier, 13}
+@{jcenter}********************************************************************************@{jcenter}
+@{jcenter}*                                                                              *@{jcenter}
+@{jcenter}*   This patch is provided as-is, with no implication of suitability for a     *@{jcenter}
+@{jcenter}*   particular purpose. I cannot be held responsible for any damage that       *@{jcenter}
+@{jcenter}*   arises from the (mis)use of this patch, including but not limited to       *@{jcenter}
+@{jcenter}*      damage to software / hardware / environment / political stability..     *@{jcenter}
+@{jcenter}*      personal injury, injury to friend, family member, workmate, playmate,   *@{jcenter}
+@{jcenter}*      cultural or religious leader, herds of wildebeest sweeping.....         *@{jcenter}
+@{jcenter}*      loss of sleep, earnings, hair, or desire to do anything else but play   *@{jcenter}
+@{jcenter}*                                                                              *@{jcenter}
+@{jcenter}********************************************************************************@{jcenter}
+
+@{font helvetica, 18}@{jleft}@{i}Terms of use @{ui}
+@{font times, 15}@{jleft}
+@{tab}This product is 'Halalware'. If you like it and use it, you can show your appreciation by sending the author @{"  >>  " link AUTHOR} a small donation of Halal (or any alcohol-free vegetarian) confectionary (preferably nothing containing desiccated coconut [cold shiver] - cheers ;^).
+
+@{font helvetica, 18}@{jleft}@{i}Distribution @{ui}
+@{font times, 15}@{jleft}
+@{tab}This product may be distributed at will, provided no alterations are made to the archive without the consent of the author.
+
+@{font helvetica, 18}@{jleft}@{i}Copyright notices @{ui}
+@{font times, 15}@{jleft}
+@{tab}Quake I, II and III, WinQuake, GLQuake and QuakeC © 1996-1999 id software
+@{tab}AmigaQuake © 1998 Clickboom / PXL Computers
+@{tab}PowerPC © IBM/Motorola
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node AUTHOR "About the Author"
+@background authorback.iff
+@{jleft}@{object "q.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 18}@{fgrgb white}
+@{jcenter}@{i}About the Author @{ui}@{jcenter}
+@{font times, 15}@{jleft}
+@{tab}Who@{tab}:@{tab}Karl D. Churchill
+
+@{tab}What@{tab}:@{tab}Postgraduate student, dept. Chemistry, Manchester
+
+@{tab}Email #1@{tab}:@{tab}karlos_mendoza@hotmail.com
+@{tab}Email #2@{tab}:@{tab}MBDXIKDC@stud.man.ac.uk
+
+@{tab}Fact@{tab}:@{tab}Reverted to Islam in February 1994
+
+@{tab}Fiction@{tab}:@{tab}Once drank a liquefied frog at a party...
+
+@{tab}Fact@{tab}:@{tab}Believes brussels sprouts are "not one of God's vegetables"
+
+@{tab}Fiction@{tab}:@{tab}Has proven he can function without access to his A1200 for over a month...
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node REQUIRE "Requirements"
+@{jleft}@{object "require.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Requirements @{ui}@{jright}@{object "spec.iff"}
+@{font times, 15}@{jleft}
+@{tab}In order to use this patch, you need a fully compatible implementation of Quake 1.06 or better. At the time of writing, this covers AmigaQuake, MacQuake, Quake (DOS/Linux), WinQuake, GLQuake (Win9x/NT) and the forthcoming version for RiscOS. Sorry console users, the N64 / PSX versions of Quake do not support modified games. Exact machine requirements vary according to platform, but in all cases, the following minimum specifications are needed.
+
+@{font helvetica, 18}@{jleft}@{i}Base hardware requirements @{ui}
+@{font times, 15}
+@{tab}CPU with hardware floating point (FPU)
+@{tab}8 Mb minimum free memory
+@{tab}3 Mb of hard drive space (not including Quake itself)*
+@{tab}256 colour video display at a minimum resolution of 320 x 200
+
+@{font helvetica, 18}@{jleft}@{i}Recommended hardware specification (Amiga 68K) @{ui}
+@{font times, 15}
+@{tab}CPU 68060RC @ 66 MHz (or faster)
+@{tab}32 Mb (or more) free memory, preferably with 64 bit buswidth (eg Cyberstorm MKIII/PPC)
+@{tab}High performance CyberGfx or Picasso96 compatible video card
+@{tab}Fast Ethernet card for LAN gaming
+@{tab}V90 / K56 modem, or ISDN, for internet gaming
+
+@{font helvetica, 18}@{jleft}@{i}Recommended hardware specification (Amiga PPC) @{ui}
+@{font times, 15}
+@{tab}Add the following to the above requirements for the (unofficial) AmigaPPC (fastquake5) port.
+@{tab}CPU 603e @ 200 MHz (or better)
+@{tab}AHI compatible sound board (or Paula)
+
+@{font helvetica, 18}@{jleft}@{i}Compatibility @{ui}
+@{font times, 15}
+@{tab}Every effort has been made during the design and coding of this patch to ensure that it works on all version 1.06 compatible implementations of Quake. Additionally, care has been taken to ensure that any third party maps or replacement models should work with this patch at least as well as they do in the unmodified game. Karlos Quake has been tested on the following systems.
+
+@{tab}AmigaQuake 1.08, official 68K version
+
+@{tab}A1200, Apollo 1260 Turbo 68060 66 MHz, 32 Mb RAM, AGA, Paula
+@{tab}A1200, BlizzardPPC 603e+ 68040 25 MHz, 64 Mb RAM, AGA, Paula
+@{tab}A4000, Cyberstorm MK-III 68060 75 MHz, 128 Mb RAM, CybervisionPPC, Delfina/AHI
+
+@{tab}AmigaQuake 1.06, unofficial PPC version
+
+@{tab}A1200, BlizzardPPC 603e+ @ 240 MHz, 64 Mb RAM, AGA, Paula/AHI
+@{tab}A1200T Z-III, CyberstormPPC604e @ 233 MHz, 48 Mb RAM, PicassoIV, Prelude/AHI
+
+@{tab}Quake 1.06 (MS-DOS)
+
+@{tab}Win95 : Pentium 166 MHz, 32 Mb RAM, 2 Mb S3 video, 2Mb Gravis Ultrasound
+@{tab}Win95 : AMD K6 233 MHz, 96 Mb RAM, 4 Mb ATI video, Soundblaster16 
+@{tab}Win98 : AMD K6 II 350 MHz, 64 Mb RAM, 12 Mb Voodoo Banshee, Soundblaster64
+
+@{tab}WinQuake 1.09 (Win9x/DirectX 6.1)
+
+@{tab}Win95 : AMD K6 233 MHz, 96 Mb RAM, 4 Mb ATI video, Soundblaster16 
+@{tab}Win98 : AMD K6 II 350 MHz, 64 Mb RAM, 12 Mb Voodoo Banshee, Soundblaster64
+
+@{tab} GLQuake 1.09, GL 0.97
+
+@{tab}Win98 : AMD K6 II 350 MHz, 64 Mb RAM, 12 Mb Voodoo Banshee, Soundblaster64
+@{tab}Win95 : Pentium II 300 MHz, 128 Mb RAM, 16 Mb RivaTNT 2, Soundblaster64
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node STARTUP "Getting started"
+@{jleft}@{object "comp.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Getting Started @{ui}
+
+@{font times, 15}
+@{tab}This section details both how to run Karlos Quake and the directory tree of the Karlos patch.
+@{font helvetica, 18}
+@{i}Running Karlos Quake @{ui}
+@{font times, 15}
+@{tab}Amiga users may run Karlos Quake in one of two ways. Firstly, one can start the game from Workbench, by double clicking the start-up icon. This will start the Quake executable and tell it to look in the Karlos directory for the game files.
+@{tab}Alternatively, Karlos Quake can be ran from the shell. This method is required for users running the MS-DOS version of Quake. To run the patch from the shell, firstly ensure that the shell is in the main Quake directory. Then enter the following line
+@{font courier, 15}
+@{jcenter}quake -game karlos <options>@{jcenter}
+@{font times, 15}@{jleft}
+@{tab}where '<options>' are any additional parameters you may wish to use.
+
+@{font helvetica, 18}
+@{i}Subdirectories @{ui}
+@{font times, 15}
+@{tab}The following subdirectories should exist within your '..Quake/Karlos' ditectory
+
+@{tab}Karlos/gfx/
+
+@{tab}This directory is used to store any custom console backdrops you create using the included 'convconback' tool and any modified palettes you create with the 'convpal' tool. This directory will be empty by default.
+
+@{tab}Karlos/maps/
+
+@{tab}This directory is used to hold both any third party maps you may want to use with Karlos Quake along with any custom map configuration files you create.
+
+@{tab}Karlos/progs/
+
+@{tab}This directory contains any custom models you may want to use with Karlos Quake. Intended primarily for custom player models, other replacement models may also be put here, for example the 'fastqprogs' models created by QBoost author, @{" Christian Michael " link CREDITS} . This directory will contain the included 'f_player.mdl' file by default.
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node Features "Features of Karlos Quake"
+@{jleft}@{object "q.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Features of Karlos Quake @{ui}
+
+@{font times, 15}
+@{tab}This section covers the fundamental changes to the game engine. Changes to the gameplay are covered in the Single Player / Multiplayer sections. Nearly all options discussed here can be changed at any point during play, and all are remembered between levels/during saved games. Whilst it is not possible to make Quake remember these settings permanently (like it does for control keys etc.), a mechanism has been provided to allow permanent setting of preferred options @{"  >>  " link SETTINGS3}.
+@{font helvetica, 18}
+@{i}Performance enhancements @{ui}
+@{jleft}
+@{font helvetica, 15}@{tab}Classic makestatic() function bug fixed.
+
+@{font times, 15}@{tab}This bug was responsible for some of the worst slow-down when lots of flames are visible. Not quite as fast as QBoost, which removes flame models completely, but looks nicer (INMO).
+
+@{font helvetica, 15}@{tab}Dynamic lights adjustable
+
+@{font times, 15}@{tab}It is possible to individually switch the flash, glow and world lighting effects at any point during play. Turning these effects off can result in considerably smoother gameplay. Though all effects are individually adjustable, a 'cycle effects' command allows quick selection of the most useful combinations.
+
+@{font helvetica, 15}@{tab}Explosion effects adjustable
+
+@{font times, 15}@{tab}It is possible to adjust several explosion parameters, again at any point, to obtain faster (or better looking and sounding) explosions. A 'cycle effects' is also provided.
+
+@{font helvetica, 15}@{tab}Automatic removal of passive entities
+
+@{font times, 15}@{tab}Dead bodies and giblets are automatically removed after 30 seconds have passed. This helps keep things zipping along by reducing the number of objects that need to be kept track of.
+
+@{font helvetica, 15}@{tab}Adjustable violence settings
+
+@{font times, 15}@{tab}The level of gore can be set, using a 'cycle effects' command. Whilst this may appeal to those of good moral stature, the principal motivation behind this speed. In minimum violence mode, there is no blood and no giblets, reducing the number of particles and objects to draw. For those who like a bit of gratuitous violence, the maximum violence setting allows even the corpses to be maimed. For those who are too picky, blood, giblets and damageable corpses are individually switchable.
+
+@{font helvetica, 18}
+@{i}Visual enhancements @{ui}
+
+@{font helvetica, 15}@{tab}Chase camera mode
+
+@{font times, 15}@{tab}Ever wanted to see your character ? Not a problem any more. A chase camera mode is provided to give Tomb Raider fanatics a more comfortable 3rd person view. The distance from, and height relative to the player can be changed at will. The camera automatically deactivates on entering into a liquid to prevent losing the player under Quake's 'solid' water surfaces, and reactivates on exiting the liquid. Chase camera mode can be set as a default.
+
+@{font helvetica, 15}@{tab}Improved explosion effects
+
+@{font times, 15}@{tab}It is now possible to have multiframe, environment-sensitive explosions. Submarine explosions can even produce bubbles ;^)
+
+@{font helvetica, 15}@{tab}Gamma effects
+
+@{font times, 15}@{tab}An entirely new effect class allows fades and flashes by direct manipulation of the screen colours, which is much faster than globally adjusting light levels. Will be used for future effects, currently used only in an improved teleport effect. Gamma effects are switchable.
+
+@{font helvetica, 15}@{tab}Field of View effects
+
+@{font times, 15}@{tab}An entirely new effect class allows mind-bending view effects by direct manipulation of the client's 'fov' parameter. Currently used in an improved teleport effect, will allow for features such as infinitely variable zoom. FOV effects are switchable.
+
+@{font helvetica, 18}
+@{i}Sound enhancements @{ui}
+
+@{font helvetica, 15}@{tab}Better sound effects
+
+@{font times, 15}@{tab}Despite having possibly the best sound engine of any game on the Amiga, it is sadly true that some of Quake's standard sounds are, well, naff. There are now new effects for most, weapons and a greater variety of effects for any given event. There are new sound effects to improve the realism of the game, with sounds for walking, swimming, submarine explosions, breathing apparatus etc. Finally, there are some sounds which serve only to improve the atmosphere of the game, such as radios carried by soldiers etc. The messages you hear aren't just random either - get spotted and you will know about it. Get killed and hear the report radio in...
+
+@{font helvetica, 15}@{tab}Intelligent noise limiter
+
+@{font times, 15}@{tab}During play, it is often the case that you absent mindedly wander into a room choc-full of spike shooters. Ever noticed just how damn loud it gets if they happen to be firing in sync ? In order to prevent damage to your speakers, not to mention your ears, it is possible to enable a noise limiting mode. This keeps track of the number of identical sounds starting on any given frame, limits the number to a pre-defined amount, and lastly reduces the overall volume of each sound source by an amount proportional to the number of sources. The effect of several sound sources is thus retained, but he volume is kept within tolerable limits.
+
+@{font helvetica, 15}@{tab}Spacial sound enhancement system
+
+@{font times, 15}@{tab}Wait for it...
+@{font helvetica, 18}
+@{i}Client enhancements @{ui}
+
+@{font helvetica, 15}@{tab}Character gender
+
+@{font times, 15}@{tab}It is now possible to set your character's gender. Two separate models and sound sets are used for the male and female characters. Note that due to size restrictions, no models are provided with this patch (the included female model is a copy of the standard male model needed to prevent Quake from crashing at start-up); suitable replacement male and female models can be found on many of the Quake sites. A complete female sound set is included, however.
+
+@{font helvetica, 15}@{tab}Player skin support
+
+@{font times, 15}@{tab}To complement the use of custom player models, it is possible to set the skin (textures) of the player. Up to 32 skins per model are supported. If the model has less than this number, higher skin numbers will just result in the first skin being used. Depending on the model, some skins work in tandem with the player colour scheme, but others may not.
+
+@{font helvetica, 15}@{tab}Extra equipment
+
+@{font times, 15}@{tab}Your average Quake hero / heroine has been kitted out with one or two little extras to make things more interesting. Firstly, a laser target is provided, which accurately depicts where a shot will hit. Far more accurate than the standard crosshair, it has the drawback that it is hard to see if it gets too far away. Judicious use of zoom with the target allows for some nice sniping. Secondly, the rocket launcher can be used in tandem with the laser as a target designator. You can thus 'paint' your target with the laser, and launch a guided rocket to it. Next up is the torch. One of the problems with Quake at times is the tendency for things to get too dark. The torch can be used to check out the dodgy darkness up ahead, but don't over use it since it consumes cells.
+@{tab}The rocket launcher and thunderbolt have both gained 'secondary' modes. Selecting the rocket launcher twice switches it to 'grappling hook' mode. This provides a high speed, rocket-assisted grappling hook, which can be used to get out of trouble fast. The hook system has an intelligent auto-winch that is used to pull your character from trouble. But, as with all powered things, the winch also uses cells. The secondary mode for the thunderbolt is an all-new weapon : the 'ion cannon'. This is an absolutely devastating weapon, with unique advantages and disadvantages. Inspired by Quake II's near-perfect railgun, it is the multiplayer weapon of choice (IMHO).
+
+@{font helvetica, 18}
+@{i}Enemy AI enhancements @{ui}
+
+@{font helvetica, 15}@{tab}New senses
+
+@{font times, 15}@{tab}Your typical Quake foes of old were pretty stupid really. Though they could act on sight, the implementation was limited to being able to see only their enemy. Even then, most traps relied on you hitting an invisible trigger coded into the map, that activated certain monsters when touched. New to 1.8r3 is a completely reworked vision and hearing system which works in parallel to the existing mechanisms (to retain compatibility). Monsters can now 'see' events occur, and can 'hear' events which make enough noise. These senses are integrated by the new abilities of monsters to associate the event they see or hear (or both) with an activator. 
+@{tab}Imagine you lob a grenade into a room. A monster might hear or see it bounce and become active, without having to be hit by it. It will immediately begin hunting for the originator of the grenade. A monster in the next room might hear the explosion and come looking for a fight. Hearing is particularly advanced, working in cases where sight can not (round corners, through liquid boundaries / walls etc.), though the chances of hearing an event are reduced considerably by walls etc.
+
+@{font helvetica, 15}@{tab}Predictive shooting
+
+@{font times, 15}@{tab}Some monsters which use projectile methods of attack can now aim for the future position of their current enemy. Several methods are available, depending on the nature of the projectile (typically fixed speed or variable initial speed). In harder skill modes, the accuracy of the predictions improves, as does the typical speed of the projectiles...
+
+@{font helvetica, 15}@{tab}Improved tracking
+
+@{font times, 15}@{tab}A fair amount of work has been put into improving the ways in which a monster can follow you. For example, jump AI has been improved, allowing monsters which jump to better judge obstacles etc., and to make better guesses at jump angles. For example, the Fiend will track you more quickly by making several long jumps since it knows that it is faster than running. If it decides to go for an all out melee attack, it will run and jump at the moment that will produce the maximum contact with its enemy, resulting in more lethal initial strikes. Watch out for that one...
+
+@{font helvetica, 18}
+@{i}More customisable @{ui}
+
+@{font helvetica, 15}@{tab}Level by level configuration
+
+@{font times, 15}@{tab}Any level, internal or third-party can have a unique configuration file, in which preferences (eg skill, gravity etc.) unique to that level may be specified. Configuration files are named after the map they meant to configure. For example, a configuration for the fifth level of episode 2 (e2m5.bsp) would be called 'e2m5.bsp.cfg'. Of all of the levels included in Quake itself, only 'Ziggurat Vertigo' (e1m8.bsp) uses a unique configuration, setting the gravity to 1/8 the normal value.
+
+@{font helvetica, 15}@{tab}Unique console backdrops
+
+@{font times, 15}@{tab}It is now possible to create custom console backdrops for the game. The CLI based utility 'convconback' will convert any 320 × 200 8-bit image to the format used internally by Quake. Note that the program assumes that the image is already using the palette used by Quake itself.
+
+
+@{font helvetica, 15}@{tab}Redefinable game palette
+
+@{font times, 15}@{tab}It is also possible to change the global palette used by Quake internally. The CLI based utility 'convpal' will convert any 256 colour IFF palette to the format used by Quake. This is of most use to people who wish to adjust the palette's brightness/colour balance etc. to better suit their monitor.
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node SETTINGS "Settings"
+@{jleft}@{object "q.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Changing Settings 1 : Server Effects @{ui}
+
+@{font helvetica, 18}
+@{i}Overview @{ui}
+@{font times, 15}
+@{tab}This section deals with the various server effect settings and how to change. Note that gameplay settings are also server level, but are discussed in the Single Player @{"  >>  " link SINGLE} section.
+@{tab}Server settings are global and thus affect all clients in the game. Clients require server access to modify these settings. All options are implemented via Quake's rather unfriendly 'impulse' codes. Luckily, the user is insulated from having to remember these by the implementation of command aliases. These attach meaningful names to the impulse codes, which are both easier to remember, and allow codes to be changed in future versions with no change to the command names themselves. In common with normal Quake commands, these command aliases have to be entered at the console, or be bound to keys. 
+@{font helvetica, 18}
+@{i}Visual effect settings @{ui}
+@{font times, 15}
+@{tab}The following commands adjust the various visual effect settings. All effects in this section are server access only, but can be changed at any time.
+
+@{font helvetica, 15}
+@{tab}Explosion settings
+
+@{font courier, 15}@{tab}cycle_explode
+
+@{font times, 15}@{tab}Cycles through the most useful combinations of the individual explosion settings detailed below. Currently, only two options exist, 'cool' and 'turbo'. Cool explosions enable all of the enhancements to give the most pleasing effect. Turbo explosions disable all of the extra effects and uses a single, fast explosion for maximum speed.
+
+@{font courier, 15}@{tab}explodefast
+
+@{font times, 15}@{tab}Toggles whether or not explosions are 'fast' or 'normal'. Fast explosions forego the usual particle spray and light pulse in an attempt to speed up the drawing slightly. In fast mode, only the explosion animation is drawn, along with a simple 'flash' lighting effect. The lighting effects of both types of explosion depend upon the lighting settings. Fast mode can prevent slow-down of the game when there is a lot of action.
+
+@{font courier, 15}@{tab}explodemulti
+
+@{font times, 15}@{tab}Toggles whether or not explosions use 'multiframe' animation. Multiframe explosions use several impact animations about the impact site, each with a slight randomisation in the frame rate and an upward velocity, resulting in a 'mushrooming' effect for explosion animations. Using multiframe explosions causes little observable slow-down in the game and looks a good deal better.
+
+@{font courier, 15}@{tab}explodesmart
+
+@{font times, 15}@{tab}Toggles whether or not explosions are 'smart'. Smart explosions are environment sensitive, insofar as they behave differently depending where they occur. Airborne explosions behave in the usual fashion, with the added embellishment of an aftershock effect. This remains audible irrespective of the distance from the explosion. Submarine explosions produce a deeper, more muffled sound, and result in a surge of bubbles from the point of impact. Explosions occurring close to the surface of a liquid will produce a long lived splash effect in addition to the other effects described.
+
+@{font helvetica, 15}
+@{tab}Lighting settings
+
+@{font courier, 15}@{tab}cycle_lights
+
+@{font times, 15}@{tab}Cycles through the various dynamic light combinations. Disabling dynamic light effects can result in a significant performance increase in situations where a large number of lightsources would otherwise be active.
+
+@{font courier, 15}@{tab}toggle_flash
+
+@{font times, 15}@{tab}Toggles the use of flash effects, used for weapon shots and fast explosions.
+
+@{font courier, 15}@{tab}toggle_glow
+
+@{font times, 15}@{tab}Toggles the use of glow effects, used for the Quad Damage and Pentagram effects as well as for some projectiles.
+
+@{font courier, 15}@{tab}toggle_static
+
+@{font times, 15}@{tab}Toggles the use of ambient lighting effects, used for the various flicker and pulsating effects observed around any typical Quake map. Disabling ambient lighting effects has no where near as much effect on performance as for the other settings, hence it is not included in the 'cycle_lights' command. Note that this option does not affect switchable lights.
+
+@{font helvetica, 15}
+@{tab}Other effect settings
+
+@{font courier, 15}@{tab}toggle_con_fl
+
+@{font times, 15}@{tab}Toggles the use of console flash effects, used when objects are collected etc.
+
+@{font courier, 15}@{tab}toggle_fov
+
+@{font times, 15}@{tab}Toggles the use of field of view effects, used for things like warping the display during teleport, or variable zoom etc.
+
+@{font courier, 15}@{tab}toggle_gamma
+
+@{font times, 15}@{tab}Toggles the use of gamma effects, used for flash and fade effects, which work by directly manipulating the screen palette's gamma correction settings. These effects may slow down considerably on 16-bit colour displays, since each pixel has to be recalculated rather than simply modifying a palette register. 
+
+@{font helvetica, 15}
+@{tab}Gore settings
+
+@{font courier, 15}@{tab}cycle_violence
+
+@{font times, 15}@{tab}Cycles through the most useful combinations of the gore settings detailed below. Minimum gore effectively disables all gore options and is aimed at imrpoving the performance of the game. Normal mode is essentially the same as standard Quake, with blood and giblets enabled. Maximum mode enables all options and is aimed at effect quality rather than performance.
+
+@{font courier, 15}@{tab}toggle_blood
+
+@{font times, 15}@{tab}Toggles the use of blood effects when a player or monster is hurt. Disabling blood reduces the number of particles to draw and can thus help to speed up the game.
+
+@{font courier, 15}@{tab}toggle_corpse
+
+@{font times, 15}@{tab}Toggles the use of solid corpses. Solid corpses, remain active in the sense that they physically obstruct other objects and can still be damaged by weapons etc. An option for real sickos, it allows the deceased to be pushed around, assaulted and fragged to your hearts content. Solid corpses do not have much impact on game performance, but is switchable for those who do not like having to jump over piles of bodies...
+
+@{font courier, 15}@{tab}toggle_gibs
+
+@{font times, 15}@{tab}Toggles the use of giblets. When disabled, 'gibleting' of monsters, corpses or other players is forbidden and all deaths result in normal death animations. This can help speed up the game by reducing the number of objects and particles to draw. Zombies and solid corpses, which can only be destroyed by gibleting are simply removed instead. In situations where large amounts of damage are being inflicted, e.g. use of rockets / ion cannon with Quad Damage, disabling of giblets can improve the game performance considerably.
+
+@{font helvetica, 18}
+@{i}Audio effect settings @{ui}
+@{font times, 15}
+@{tab}The following commands adjust the various audio effect settings. All effects in this section are server access only, but can be changed at any time.
+
+@{font courier, 15}@{tab}toggle_snd_limit
+
+@{font times, 15}@{tab}Toggles the use of sound limiting. Sound limiting keeps track of the number of equivalent sounds due to be played on a frame, and blocks more than a certian number, thus reducing sound engine overhead. Furthermore, the volumes of the sounds are attenuated by an amount proportional to the number to play, thus keeping the volume within tolerable limits. Aside from reducing the risk of ear damage, this has the added benefit of preventing over saturation of the sound engine, thus improving the overall sound quality.
+
+@{font courier, 15}@{tab}toggle_snd_enhance
+
+@{font times, 15}@{tab}Toggles the use of spacial sound enhancement. (Watch this space)
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node SETTINGS2 "Settings"
+@{jleft}@{object "q.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Changing Settings 2 : Client Settings @{ui}
+
+@{font helvetica, 18}
+@{i}Overview @{ui}
+@{font times, 15}
+@{tab}This section deals with those options which are client specific. As the term implies, these settings are unique to each client in a game and can only be changed by that client.
+@{font helvetica, 18}
+@{i}Character appearance @{ui}
+@{font times, 15}
+@{tab}The following commands adjust the appearance of a clients player character. These options can be used alongside the existing player setup (shirt/pants colours), but require custom player models for optimum effect. Karlos Quake allows the player character to be either male or female, and to use up to 32 custom textures. To use these features properly, you will need to obtain a pair of male and female models, which can be found on many Quake websites.
+@{font helvetica, 15}
+@{tab}Installation of custom player models
+@{font times, 15}
+@{tab}Before you attempt to use custom models, you must be sure that they are fully compatible with Quake 1.06. Most models are designed as simple 'drop-in' replacements for the normal player model, and as such are fine for use in Karlos Quake. There are some models, however, which have been designed with particular game conversions in mind, and as such may not have the expected animation frames. Though this should have no major ill effect, it will look very strange if your character is falling over sideways etc. as you walk forwards :).
+@{tab}Once you have chosen your male and female models, they must be installed. To use them, you must place them in the ..Quake/Karlos/progs/ drawer as follows..
+
+@{font courier, 15}@{tab}..Quake/Karlos/progs/player.mdl  @{font times, 15}@{tab}For the male player
+@{font courier, 15}@{tab}..Quake/Karlos/progs/f_player.mdl@{font times, 15}@{tab}For the female player
+
+@{tab}@{fgrgb white}IMPORTANT NOTE : You must ensure that you at least have some 'f_player.mdl' file installed. If Quake cannot precache this file it will crash !! The provided model is simply a copy of the normal player model. Do not run Karlos Quake without at least having the included f_player.mdl un the ..Quake/Karlos/progs drawer.
+@{font helvetica, 15}@{fgrgb black}
+@{tab}Character Skin
+@{font times, 15}
+@{tab}The following commands adjust the appearance of your character by changing the 'skin' of the player model. Skins are simply sets of alternative textures which can be applied to the model to give it a different appearance. Some skins are designed to work in tandem with the existing colour scheme (shorts/pants), others are entirely independent of these settings. Using skins can help add a touch of uniqueness to your character in multiplayer games and is thus encouraged. Note, however, that the standard Quake player model (and thus the included female model) do not have alternative skin sets, and as such will not be affected by these settings.
+
+@{font courier, 15}@{tab}skin_lastset
+
+@{font times, 15}@{tab}Resets the player skin to the last set value (that currently defined in the 'temp1' console variable)
+
+@{font courier, 15}@{tab}skin_next
+
+@{font times, 15}@{tab}Cycles forwards through the available player skins. If there are less than 32 skins defined for the player model in use, the base skin is used for all skin numbers higher than tha last defined.
+
+@{font courier, 15}@{tab}skin_prev
+
+@{font times, 15}@{tab}Cycles backwards through the available player skins. If there are less than 32 skins defined for the player model in use, the base skin is used for all skin numbers higher than the last defined.
+@{font helvetica, 15}
+@{tab}Character Gender
+@{font times, 15}
+@{tab}As detailed above, it is possible to set the your characters gender. This works by switching between the player.mdl and f_player.mdl models and uses two full sound sets. Unlike other client options, gender changes only take place after your character respawns (either on changing a level or being killed).
+
+@{font courier, 15}@{tab}togglesex
+
+@{font times, 15}@{tab}Changes your characters gender. On using this command, you will be informed as to which gender your character will be next time you respawn.
+@{font helvetica, 18}
+@{i}Chase Camera @{ui}
+@{font times, 15}
+@{tab}The following commands control the optional chase camera mode. The chase camera is an external view which centres on your character and follows him/her around the level. Popularised by games such as 'Tomb Raider', this 3rd person perspective approach offers an interesting variation to the normal 'weapon infront of you' view.
+@{font helvetica, 15}
+@{tab}Features of the chase camera
+@{font times, 15}
+@{tab}The chase camera is an invisible entity which tracks your character as he/she moves around the level. It operates at a user definable distance behind of, and user definable height relative to your character. The cameras motion is smoothed relative to your character (by continuously averaging its velocity). It responds to your characters view angle by pulling in and tracing your characters viewing direction.
+@{tab}The camera avoids losing your character around corners, through doors by checking that your character is not obscured by another object, and if needed, moving closer to your character. Furthermore, the camera view is deactivated temporarily when entering liquids, principally to avoid losing sight of your character through liquid boundaries.
+
+@{font courier, 15}@{tab}use_camera
+
+@{font times, 15}@{tab}Switches between normal view and chase camera mode.
+
+@{font courier, 15}@{tab}camera_in
+
+@{font times, 15}@{tab}Decreases the followup distance of the camera from the player.
+
+@{font courier, 15}@{tab}camera_out
+
+@{font times, 15}@{tab}Increases the follow-up distance of the camera from the player.
+
+@{font courier, 15}@{tab}camera_up
+
+@{font times, 15}@{tab}Increases the vertical offset of the camera relative to the player.
+
+@{font courier, 15}@{tab}camera_down
+
+@{font times, 15}@{tab}Decreases the vertical offset of the camera relative to the player.
+@{font helvetica, 18}
+@{i}Miscellaneous client options @{ui}
+@{font helvetica, 15}
+@{tab}Fullscreen messaging system 
+@{font times, 15}
+@{tab}If, like me, you like to play Quake fullscreen, it can be a real pain having to reduce the screensize to see what your statistics are. The fullscreen messaging system displays important messages to make up for not being able to see the status bar. It displays what weapon is selected when changing weapons, how much ammo it has, what its operational efficiency is (during mikerules and skill < 2). It also prints other information that would otherwise be displayed in the console, and warning messages such as low ammunition, critical hits etc.
+
+@{font courier, 15}@{tab}show_messages
+
+@{font times, 15}@{tab}Toggles whether or not fullscreen messages are used.
+
+@{font helvetica, 15}
+@{tab}Laser targeting system
+@{font times, 15}
+@{tab}Karlos Quake provides an in-game target for use by players. This differs from the normal crosshair in that the target spot is actually an object in the game. It is projected along your characters line of sight, and accurately depicts the direction that he/she is facing, and thus where a particular weapon shot will hit. The target itself is invisible to monsters, but remains visible to players, unless it is trained on their back. It is advisable to bind a key to switch the target on and off if you intend to do a bit of sniping in multiplayer. Being able to see the spot itself is unlikely to give your position away, but it will make other players wary that someone is lurking around somewhere...
+
+@{font courier, 15}@{tab}use_target
+
+@{font times, 15}@{tab}Switches the laser target on and off.
+
+@{font courier, 15}@{tab}name_targets
+
+@{font times, 15}@{tab}Toggles whether or not monsters / players under your target are named. When active, the name of the player or monster is displayed on screen. Opens up lots of possibilities for deliberate vicimisation ;^)
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node SETTINGS3 "Default settings"
+@{jleft}@{object "q.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Permanently setting options @{ui}
+
+@{font times, 15}
+@{tab}It is possible to permanently specify which client and server options you wish to have enabled when the game starts. This is achieved by using two codes, one for the server options and one for the client options. These codes are loaded into the game via a pair of console variables, 'registered' and 'temp1'. On start-up, Karlos Quake looks for a configuration file called 'prefs.cfg', in which the codes are set.
+
+@{tab}For the more technically minded, each code is really a combination of bit flags; wherever a bit is set to 1, it signifies that an option is enabled. Conversely, if a bit is set to 0, that option is disabled. Quake uses a signed, 32-bit floating point format for numbers. Thus, positive integer values can be stored precisely up to 2^31. Karlos Quake exploits this fact, using the above console variables as a pair of 31-bit flags.
+@{font helvetica, 18}
+@{i}Server settings @{ui}
+@{font times, 15}
+@{tab}Server option codes are set in the console variable 'registered', henceforth called the server flag. Normally this variable will have the value 1, signifying that the game is registered (not a shareware version). However, provided that the value of 'registered' is at least 1, the game engine understands the game to be registered. Thus Karlos Quake uses values greater than 1 to signify various combinations of server options.
+@{tab}The first 8 bits of the server flag represent the gameplay settings, the rest are for effect switches. 
+
+@{font helvetica, 15}@{tab}Structure of the server flag
+@{font times, 15}
+@{tab}The server flag has the following layout : 1 = set always, 0 = unset and reserved, x = set according to option
+@{font courier, 13}
+
+
+@{font helvetica, 18}
+@{i}Client settings @{ui}
+@{font times, 15}
+@{tab}Client option setting codes are set in the console variable 'temp1', henceforth called the client flag. Normally unused, this variable was left for developers to use for loading values directly into their game code.
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node SINGLE "Single player"
+@{jleft}@{object "single.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Single Player Games @{ui}
+
+@{font times, 15}
+@{tab}This section deals with the differences in gameplay between standard Quake and Karlos Quake. These differences arise mostly from the equipment additions and AI improvements mentioned in the @{" features " link FEATURES} section, though there are some deliberate variations to make things more interesting.
+
+@{font helvetica, 18}
+@{i}Player Inventory @{ui}
+
+@{font times, 15}@{tab}Your character has an inventory, which technically holds your equipment, ammo and allows you to store items for later use. This is especially useful in situations where you find a nice powerup having already laid waste to your foes. Using the inventory, you can collect the item and keep it for later. For those of you thinking about stockpiling a load of gear, forget it. Your backpack only has a finite size, and the inventory reflects this.
+
+@{font helvetica, 15}@{tab}Inventory Rules
+@{font times, 15}
+@{tab}1. On collecting an item, it is stored for later use. If you already have the item, the second item is activated immediately, just as in normal Quake.
+@{tab}2. Stored items are activated by pressing a user-defined activation key for the item.
+@{tab}3. Items can not be activated if an identical item is currently in use
+@{tab}4. Once activated, the space to store an equivalent item is freed.
+@{tab}5. In (rare) situations where an item is stored, an equivalent item already in use and a third is discovered, the latter remains uncollectable until the one in use expires.
+
+@{font helvetica, 15}@{tab}Inventory Commands
+@{font courier, 15}
+@{tab}Command        Key    Description
+
+@{tab}use_inventory  ---    Toggle usage of inventory
+@{tab}use_suit       b      Activate the biosuit
+@{tab}use_quad       q      Activate Quad Damage
+@{tab}use_ring       r      Activate the Ring of Shadows
+@{tab}use_protect    p      Activate the Pentagram of Protection 
+@{tab}inventory      i      List inventory contents 
+
+@{tab}Technical
+@{tab}   Command level    : client
+@{tab}   Change effective : immediate
+@{tab}   Remembered/Saved : yes
+@{tab}   Defaultable      : yes 
+
+@{font helvetica, 18}
+@{i}Shrapnel @{ui}
+
+@{font times, 15}@{tab}Shrapnel is a feature of Karlos Quake which can make the game extremely nasty. If enabled, it creates a spray of metallic shards from any explosion, which travel at incredible speeds. Each shard can impart as much as 8 points of damage, so direct hits tend to be immediately lethal. Use with care - this option is known to make the game unstable.
+
+@{font helvetica, 15}@{tab}Shrapnel commands
+@{font courier, 15}
+@{tab}Command        Key    Description
+
+@{tab}shrapnel       ---    Toggle usage of shrapnel
+
+@{tab}Technical
+@{tab}   Command level    : server
+@{tab}   Change effective : immediate (single player)
+@{tab}   Remembered/Saved : yes
+@{tab}   Defaultable      : yes 
+
+
+@{font helvetica, 18}
+@{i}Mikerules @{ui}
+
+@{font times, 15}@{tab}Mikerules is an extremely challenging new element to Quake (or indeed any 1st person action game I have seen). Named after the originator of the idea, @{" Mike Childs " link CREDITS} , Mikerules introduces the concepts of weapon damage and reliability. When enabled, your current weapon takes damage as you yourself are hurt. This in turn affects the reliability of the weapon, causing misfires and jams. These get worse as the damage piles up, and unlike your injuries, aren't fixed by simply collecting health.
+@{tab}Mikerules requires a far more tactical approach to the game than normal, and as such will appeal to those looking for a bit more than the simple hunt and shoot approach. Expect to become expert in weapon management if you want to survive in harder skills...
+
+@{font helvetica, 15}@{tab}Implementation
+@{font times, 15}
+@{tab}Weapons receive a small fraction of the damage inflicted on you. The exact amount depends on skill, luck (a slight randomisation) and the direction of the damage - frontal damage is worse, since your weapon blocks some of the damage in this case.
+@{tab}Unfortunately, weapons can't be healed in the same way you can, so the damage is always cumulative. Once a weapon totals 15 points of damage (the allowed maximum), it will, on average, jam 3 out of every four times you attempt to use it. This can change an ordinary confrontation into a life-threatening situation quickly, so management is a key issue.
+@{tab}Only your axe is inviolate. It has no moving parts, and is resistant to corrosion by acids or damage by heat or fire. Other than this, all other weapons are vulnerable, so care should be taken to avoid accidental damage. e.g., if you intend to take a short-cut through some acid and don't have the biosuit / pentagram handy, be sure to select your axe before taking the dip. Weapons are safe, so long as they remain in your backpack.
+@{tab}Additionally, you receive a new shotgun at the start of each level. This was implemented to ensure that you have at least one functional distance weapon at the start of each level, and also because they can't be found anywhere in the game.
+@{tab}When a weapon becomes a liability, it is time to throw it away, For this, you need to use the 'drop' command. You can only collect a weapon that you don't already have, so you don't need to worry about accidentally collecting a weapon which you may need to pick up later as a replacement.
+@{tab}It is possible to repair some damage to your current weapon. The large megahealth boxes that occur from time to time contain a few replacement parts which can patch up your weapon. The effectiveness of this depends on the weapon complexity. Your basic shotgun can be almost entirely repaired, but the thunderbolt or rocket launcher will only be slightly improved.
+
+@{font helvetica, 15}@{tab}Mikerules Rules (and it does, too ;)
+@{font times, 15}
+@{tab}1. Only the active weapon receives damage.
+@{tab}2. Weapons take between 2 - 6 % of inflicted damage, depending on skill and direction
+@{tab}3. Weapon damages saturate at 15. Once at this level, reliability is only 25 %
+@{tab}4. Only the axe is invulnerable to damage
+@{tab}5. The shotgun is replaced at the start of each level
+@{tab}6. Damage is always cumulative.
+@{tab}7. Current weapon damage can be reduced by collecting a Megahealth bonus
+@{tab}8. Weapons are not collectable whilst carrying one of the same type
+@{tab}9. Damage statistics for each weapon can be displayed in skill < 2
+
+@{font helvetica, 15}@{tab}Mikerules commands
+@{font courier, 15}
+@{tab}Command        Key    Description
+
+@{tab}mikerules      ---    Toggle Mikerules gameplay
+@{tab}drop           d      Drops the current weapon
+
+@{tab}Technical
+@{tab}   Command level    : server ('drop' is client level)
+@{tab}   Change effective : immediate (single player)
+@{tab}   Remembered/Saved : yes
+@{tab}   Defaultable      : yes 
+
+@{font helvetica, 18}
+@{i}Random game@{ui}
+
+@{font times, 15}@{tab}An entirely new gameplay feature, random gaming, as the name suggests, removes the predictability of standard Quake by reassigning the monster types during the start of a level. This, in turn, can have a pronounced effect on the difficulty of any given level.  This option is useful for resurrecting tired old levels that have been exhaustively played and optimised.
+@{tab}In order to preserve some sanity, the existing monsters have been assigned to classes. During a random game, a monster is switched for a monster in the same class. Thus, a Rottweiler won't be switched for a Shambler, but it may be switched for a Grunt. An important point to note is that the definition of what monsters are equivalent to any given monster is unique to that monster. For example, a Zombie sees a Grunt as an equivalent class to itself, but not an Enforcer. However, the Grunt sees both the Zombie and Enforcer as an equivalent classes to itself. From this, we can see that a Zombie may be swapped for a Grunt, but not an Enforcer, whereas a Grunt may be swapped for either.
+
+@{font helvetica, 18}
+@{i}Miscellaneous changes @{ui}
+
+@{font times, 15}@{tab}There are a number of smaller changes to the standard game which are worth noting. Almost all of these features are in some way affected by the skill setting, since all have implications for the overall difficulty of the game. These changes are not configurable under this release, but this may change in future versions.
+
+@{font helvetica, 15}
+@{i}@{tab}Monster statistics @{ui}
+
+@{font times, 15}@{tab}Since version 1.1 (internal), all monster statistics have been randomised slightly with respect to those defined in normal Quake. For example, a monsters initial health now has a random value within a preset range defined for that type of monster. Additonally, the range itself is adjusted according to the skill setting. Similarly the amount of ammunition dropped in a monsters backpack (for those monsters which drop them) varies.
+
+@{font helvetica, 15}
+@{i}@{tab}Additonal monster features @{ui}
+
+@{font times, 15}@{tab}As mentioned in the features section, all monsters now have improved senses. In addition, some can use predictive targeting, improved jumping and even straifing to enhance their combat effectiveness. The current version also adds additional attackmodes for some foes. For example, the basic Grunt also carries a light machinegun which makes for a more effective long range weapon than his shotgun. He can then select between the two when attacking his enemy, depending on which should be the most effective.
+@{tab}An additional feature since version 1.3 is that of armour dropping. Knights and Hellknights occasionally drop armour when killed. The type dropped depends both on skill and the type of knight; Knights drop either the light or medium armour whilst Hellknights drop either the medium or heavy armour. The lighter/heavier bias depends on skill - the harder the skill the less likely the armour will be the heavier type.
+
+@{font helvetica, 15}
+@{i}@{tab}Additional hazards @{ui}
+
+@{font times, 15}@{tab}All flames are now dangerous to touch. Damage is inflicted continuously whilst in contact with a flame, the actual rate of damage being dependent on skill, armour type etc.
+@{tab}Backpacks containing rockets, dropped either by monsters or other players, are now explosive in hard or nightmare skills. The explosive potential is (to a limit) proportional to the number of rockets contained. Similarly, the amount of damage needed to detonate the backpack is (again, to a limit) inversely proportional to the number of rockets contained.
+
+@{font helvetica, 15}
+@{i}@{tab}Other changes @{ui}
+
+@{font times, 15}@{tab}All projectiles, either launched by a player or monster, are immediately incinerated by lava without inflicting any damage. This is intended as neither a good or bad thing, just different.
+@{tab}The Ring of Shadows now renders the player totally invisible to monsters in that they can not attack an invisible player, even when attacked by that player. 
+@endnode
+
+------------------------------------------------------------------------------
+
+@node MULTI "Multiplayer"
+@{jleft}@{object "multi.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Multiplayer Games @{ui}
+
+@{font helvetica, 18}
+@{i}The Server / Client system @{ui}
+@{font helvetica, 15}
+@{tab}Overview
+@{font times, 15}
+@{tab}Quake implements a server / client model at the engine level. Under this model, certain variables and options can only be changed on the machine running the server, either dedicated (not actually playing a game, just hosting it for the benefit of connecting clients), or a client creating a new network game. This protects the various settings and gameplay options from change by remote access.
+@{tab}Unfortunately, Quake only protects the options that were built into the standard game. In order to offer similar security for the extra options built into Karlos Quake, a similar server / client model was implemented at the QuakeC level.
+@{font helvetica, 15}
+@{tab}The Administrator
+@{font times, 15}
+@{tab}Under multiplayer Karlos Quake, the client running a server, or the first to connect to a dedicated server, is automatically flagged as being the game Administrator. He or she will initially have sole access to the extended effects and gameplay options available. It is thus up to the administrator to decide what options are used; the settings that he/she decides upon cannot (initially) be changed by other clients.
+@{tab}It is possible to set the server to automatically signal the administrator when certain things occur by using the 'adminmessages' toggle. For example, when a client connects, leaves etc., the state of readiness of each client when a level changes (e.g.. someone may be in a console or has a slow connection). Other information, such as attempted cheats etc. are also sent to the administrator, who may deal with such clients as he/she sees fit.
+@{font helvetica, 15}
+@{tab}Server Key and remote server access
+@{font times, 15}
+@{tab}It is possible for remote clients to be granted server access via a server key mechanism. At the start of each multiplayer game, a random key is generated. The Administrator can find out what the key is by using the 'show_key' command. If he/she decides to relay the key to another client, that client can gain access by first setting his/her '_cl_color' variable to the value of the key, then using the 'check_key' command. The initial value of their '_cl_color' variable is restored immediately, irrespective of whether or not the key was valid. If the key was valid, then that client is granted access to the server options just as if he/she is the administrator.
+
+@{font helvetica, 18}
+@{i}Changes from single player @{ui}
+@{font times, 15}
+@{tab}It would be an unfair advantage if those with server access could change the gameplay options whenever thy wished. In order to ensure that the games remain as fair as possible, gameplay settings do not take immediate effect in multiplayer games. Instead, when a gameplay option is changed, a message is broadcast to all players stating that the particular change will be in effect as of the next game. Non gameplay options, such as lighting effects etc. continue to work as for single player games.
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node FAQ "Frequently Asked Questions"
+@{jleft}@{object "FAQ.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Frequently Asked Questions @{ui}
+
+@{font helvetica, 18}@{i}Specific to Karlos Quake @{ui}
+@{font times, 15}
+@{tab}@{fgrgb white}Q. When will you get off your lazy arse and write some decent documentation ?
+
+@{tab}@{fgrgb black}@{fgrgb black}A. Pass ;)
+
+
+@{tab}@{fgrgb white}Q. Quake loads up fine, but hangs when I start a new game or try to load a saved one. What's wrong ?
+
+@{tab}@{fgrgb black}A. The chances are that Quake was unable to find a model that is required by Karlos Quake. This should only happen if you accidentally remove the file '..Quake/Karlos/progs/f_player.mdl', since any other extra models needed by Karlos Quake are stored inside the flie '..Quake/Karlos/pak0.pak'.
+
+
+@{tab}@{fgrgb white}Q. I'm using the MS-DOS version of Quake and Karlos Quake refuses to start a game, giving cache allocation errors left right and centre. Being a typical PC user, I've got loads of RAM, and have checked that I have all of the requisite external models, but still no joy. What is going wrong ?
+
+@{tab}@{fgrgb black}A. Karlos Quake is rather more memory hungry than unmodified Quake due to the extra models and sound effects it needs. Problems can be caused by the fact that the MS-DOS version of Quake will normally only allocates 8 Mb of RAM when running under Windows9x and there often isn't enough memory available to Quake to precache the needed data when starting a game. Here are a few possible solutions to this problem
+
+@{tab}1. Run the game from MS-DOS mode (not from Windows DOS prompt). Quake will then be able to allocate as much memory as is available.
+@{tab}2. Tinker with your DOS prompt properties to allow Quake to allocate more memory when running from Windows.
+@{tab}3. For users with limited memory, use only the supplied female model, which has a smaller filesize than those available on the internet.
+@{tab}4. Windows9x users should try using WinQuake instead, or GLQuake if they have supported 3D hardware.
+
+
+@{tab}@{fgrgb white}Q. I have less than 16 Mb of RAM in my Amiga, and have similar problems to the MS-DOS user above. What can I do ?
+
+@{tab}@{fgrgb black}A. As stated above, Karlos Quake pushes the memory requirements of Quake a bit further. To avoid problems on low memory configurations, try one of the following
+
+@{tab}1. Run Quake from a no-start-up boot (consult your AmigaOS documentation on booting without start-up). This will ensure you have the maximum free memory.
+@{tab}2. Treat yourself to some more RAM. Aim to have at least 32 Mb.
+
+@{tab}Personally I favour the latter approach. Users with less than 32 Mb of RAM are at a disadvantage these days. Go on, I'm certain you won't regret it ;^)
+
+
+@{tab}@{fgrgb white}Q. I'm using GLQuake and don't see the gamma or fov effects when I teleport, irrespective of the settings. What's up ?
+
+@{tab}@{fgrgb black}A. Sorry. GLQuake doesn't seem to understand these parameters and just ignores them. Given that you have a 3D accelerated PC system, what the hell are you doing playing Quake I anyway ? Go and buy Half-life immediately. It's fantastic !
+
+
+@{tab}@{fgrgb white}Q. Oi ! I'm not a bloody programmer and don't follow your so-called 'simple' method of permanently setting the client and server options. Is there an easier way ?
+
+@{tab}@{fgrgb black}A. Sure there is. Start a new game, and set all the various options you wish to use. Now go and select your episode. Once the level has loaded, open your console and type the following
+
+@{font courier, 15}@{tab}registered
+@{font times, 15}
+@{tab}Make a note of the reported value. This number represents the server settings. To obtain the code for the current client settings, enter the following at the console
+
+@{font courier, 15}@{tab}temp1
+@{font times, 15}
+@{tab}Make a note of this value also. Now create or edit the file '..Quake/Karlos/prefs.cfg' and add / overwrite the following lines
+@{font courier, 15}
+@{tab}registered "@{fgrgb red}<registered value>@{fgrgb black}"
+@{tab}temp1      "@{fgrgb red}<temp1 value>@{fgrgb black}"
+@{font times, 15}
+@{tab}Until I get off my lazy arse and write a prefs program for Karlos Quake (any takers for that duty, just email me ;), this is the easiest method.
+
+@{separator}
+
+@{font helvetica, 18}@{i}General @{ui}
+@{font times, 15}
+@{tab}@{fgrgb white}Q. I use the 68060 specific engine upgrade from Clickboom and the game crashes when I go into liquids. What gives ?
+
+@{tab}@{fgrgb black}A. On some 68060 systems, the water warp effect can crash the engine. This can be fixed by disabling the effect. To do this permanently, create or edit the file '..Quake/id1/autoexec.cfg' and add the following line
+
+@{font courier, 15}@{tab}r_waterwarp 0
+@{font times, 15}
+
+@{tab}@{fgrgb white}Q. Why are you offering support to PC / Mac Quake users. They are the enemy. You are a traitor...
+
+@{tab}@{fgrgb black}A. Go away and die you sad loser ;). I'm sick to death of tiresome Windows vs Amiga vs Macintosh arguments. Get online and sort it out with your Ion Cannon....
+
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node HISTORY "Patch History"
+@{jleft}@{object "q.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Patch history @{ui}
+
+@{font times, 15}
+@{tab}1.8 r 3@{tab}Fixed several bugs from 1.8 r 2. Implemented ion cannon and enemy sight/sound association
+@{tab}1.8 r 2@{tab}Grappling hook fully operational. Implemented QuakeC server/client model for multiplayer
+@{tab}1.83@{tab}Grappling hook working, several bugs with swing physics
+@{tab}1.82
+@{tab}1.81
+@{tab}1.8
+@{tab}1.7
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node CREDITS "People to thank"
+@{jleft}@{object "q.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jcenter}@{i}Credits @{ui}@{jcenter}
+
+@{font helvetica, 18}@{jleft}
+@{i}Thanks must go to the following people... @{ui}
+
+@{font helvetica, 15}@{tab}@{i}Mike Allan & Fazni Abdul Ghani @{ui}
+
+@{font times, 15}@{tab}Food, shelter, coffee, cheap RAM, more coffee, mathematical asistance, even more coffee...
+
+@{font helvetica, 15}@{tab}@{i}Mike Childs @{ui}
+
+@{font times, 15}@{tab}Betatesting (Amiga 68K), ideas (esp weapon damage idea), Xenium Core ;)
+
+@{font helvetica, 15}@{tab}@{i}Andy Cullington @{ui}
+
+@{font times, 15}@{tab}Betatesting (DOSQuake, GLQuake), suggestions, coffee, cigars, more coffee...
+
+@{font helvetica, 15}@{tab}@{i}Christian Michael @{ui}
+
+@{font times, 15}@{tab}Created the fastest possible Quake modifications, namely QBoost (v1-4) and TheMod, not to mention a port of FrogBot. People looking for the ultimate Quake performance should check his work.
+
+@{font helvetica, 15}@{tab}@{i}Id Software @{ui}
+
+@{font times, 15}@{tab}Quake, QuakeC, technical support (I wish ;)
+
+@{font helvetica, 15}@{tab}@{i}Clickboom Software / PXL Computers @{ui}
+
+@{font times, 15}@{tab}For their fabby conversion. How about an OS 3.5 WarpOS/Warp3D port of GLQuake ?
+
+@{font helvetica, 15}@{tab}@{i}' Max ' @{ui}
+
+@{font times, 15}@{tab}The man (?) who proved AmigaQuake was possible. You know who you are ;)
+
+@{font helvetica, 15}@{tab}@{i}<Whoever ported qcc / faqcc>@{ui}
+
+@{font times, 15}@{tab}A quick, no nonsense QuakeC compiler
+
+@{font helvetica, 15}@{tab}@{i}' The Anonymous Author ' @{ui}
+
+@{font times, 15}@{tab}For giving me something to do with my BlizzPPC card. You know who you are ;)
+
+@{font helvetica, 15}@{tab}@{i}Stefan Ruppert @{ui}
+
+@{font times, 15}@{tab}For creating the ultimate Amigaguide enhancement, the Hypertext-Datatype-System, without which this documentation would not have been possible.
+
+
+@endnode
+
+-----------------------------------------------------------------------------
+
+@node INDEX "Index"
+@{jleft}@{object "index.iff"}@{jright}@{object "version.iff"}
+@{separator}
+@{font helvetica, 24}@{jleft}@{i}Index @{ui}
+
+@{font times, 15}
+@{tab}Command notes
+@{tab}@{tab}1) Server access only
+@{tab}@{tab}2) Immediate in single player, change next level in deathmatch/coop
+@{tab}@{tab}3) Not available in multiplayer
+
+@{font helvetica, 18}@{tab}@{i}A @{ui}
+@{font courier, 15}@{tab}@{tab}adminmessages¹
+@{font times, 15}@{tab}@{tab}Toggles the use server messages to the administrator
+
+@{font helvetica, 18}@{tab}@{i}B @{ui}
+
+@{font helvetica, 18}@{tab}@{i}C @{ui}
+@{font courier, 15}@{tab}@{tab}camera_down
+@{font times, 15}@{tab}@{tab}Reduces chase camera vertical offset
+
+@{font courier, 15}@{tab}@{tab}camera_in
+@{font times, 15}@{tab}@{tab}Decreases chase camera chase distance
+
+@{font courier, 15}@{tab}@{tab}camera_out
+@{font times, 15}@{tab}@{tab}Increases chase camera chase distance
+
+@{font courier, 15}@{tab}@{tab}camera_up
+@{font times, 15}@{tab}@{tab}Increases chase camera vertical offset
+
+@{font courier, 15}@{tab}@{tab}check_key
+@{font times, 15}@{tab}@{tab}Verifies a client key for server access
+
+@{font courier, 15}@{tab}@{tab}cycle_explode¹
+@{font times, 15}@{tab}@{tab}Cycles through most useful explosion settings
+
+@{font courier, 15}@{tab}@{tab}cycle_lights¹
+@{font times, 15}@{tab}@{tab}Cycles through most useful lighting settings
+
+@{font courier, 15}@{tab}@{tab}cycle_violence¹
+@{font times, 15}@{tab}@{tab}Cycles through most useful gore settings
+
+@{font helvetica, 18}@{tab}@{i}D @{ui}
+@{font courier, 15}@{tab}@{tab}drop
+@{font times, 15}@{tab}@{tab}Drops the current weapon
+
+@{font helvetica, 18}@{tab}@{i}E @{ui}
+@{font courier, 15}@{tab}@{tab}explodefast¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not explosions are fast (no particles and simpified lighting)
+
+@{font courier, 15}@{tab}@{tab}explodemulti¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not explosions use single or multiple impact animations
+
+@{font courier, 15}@{tab}@{tab}explodesmart¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not explosions are environment sensitive
+
+@{font courier, 15}@{tab}@{tab}extend_grap
+@{font times, 15}@{tab}@{tab}Starts grapple chain lengthening
+
+@{font helvetica, 18}@{tab}@{i}F @{ui}
+
+@{font helvetica, 18}@{tab}@{i}G @{ui}
+@{font courier, 15}@{tab}@{tab}give_all³
+@{font times, 15}@{tab}@{tab}Cheat command giving all weapons, ammo and inventory items
+
+@{font courier, 15}@{tab}@{tab}give_pent³
+@{font times, 15}@{tab}@{tab}Cheat command giving Pentagram of Protection (immediate)
+
+@{font courier, 15}@{tab}@{tab}give_quad³
+@{font times, 15}@{tab}@{tab}Cheat command giving Quad Damage (immediate)
+
+@{font courier, 15}@{tab}@{tab}give_ring³
+@{font times, 15}@{tab}@{tab}Cheat command giving Ring of Shadows (immediate)
+
+@{font courier, 15}@{tab}@{tab}give_rune³
+@{font times, 15}@{tab}@{tab}Cheat command giving an end of episode Rune
+
+@{font courier, 15}@{tab}@{tab}give_suit³
+@{font times, 15}@{tab}@{tab}Cheat command, giving Biosuit (immediate)
+
+@{font helvetica, 18}@{tab}@{i}H @{ui}
+
+@{font courier, 15}@{tab}@{tab}hang_grap
+@{font times, 15}@{tab}@{tab}Locks grappling hook chain at current length
+
+@{font helvetica, 18}@{tab}@{i}I @{ui}
+@{font courier, 15}@{tab}@{tab}info
+@{font times, 15}@{tab}@{tab}Prints patch version information
+
+@{font courier, 15}@{tab}@{tab}inventory
+@{font times, 15}@{tab}@{tab}Lists player inventory contents
+
+@{font courier, 15}@{tab}@{tab}ion_next
+@{font times, 15}@{tab}@{tab}Cycles player ion trail colour forwards
+
+@{font courier, 15}@{tab}@{tab}ion_prev
+@{font times, 15}@{tab}@{tab}Cycles player ion trail colour backwards
+
+@{font helvetica, 18}@{tab}@{i}J @{ui}
+
+@{font helvetica, 18}@{tab}@{i}K @{ui}
+
+@{font helvetica, 18}@{tab}@{i}L @{ui}
+
+@{font helvetica, 18}@{tab}@{i}M @{ui}
+@{font courier, 15}@{tab}@{tab}mikerules¹²
+@{font times, 15}@{tab}@{tab}Toggles whether or not Mikerules gameplay is used.
+
+@{font helvetica, 18}@{tab}@{i}N @{ui}
+
+@{font helvetica, 18}@{tab}@{i}O @{ui}
+
+@{font helvetica, 18}@{tab}@{i}P @{ui}
+
+@{font helvetica, 18}@{tab}@{i}Q @{ui}
+@{font times, 15}@{tab}@{tab}QBoost. A series of Quake speedup modifications by Christian Michael.
+
+
+@{font helvetica, 18}@{tab}@{i}R @{ui}
+@{font courier, 15}@{tab}@{tab}release_grap
+@{font times, 15}@{tab}@{tab}Releases the grappling hook
+
+@{font helvetica, 18}@{tab}@{i}S @{ui}
+@{font courier, 15}@{tab}@{tab}shorten_grap
+@{font times, 15}@{tab}@{tab}Begins shortening the grappling hook chain (starts winch)
+
+@{font courier, 15}@{tab}@{tab}show_key¹
+@{font times, 15}@{tab}@{tab}Prints the current server key (server access only)
+
+@{font courier, 15}@{tab}@{tab}show_messages
+@{font times, 15}@{tab}@{tab}Toggles whether or not fullscreen messaging is used
+
+@{font courier, 15}@{tab}@{tab}show_names
+@{font times, 15}@{tab}@{tab}Toggles whether or not target naming is used
+
+@{font courier, 15}@{tab}@{tab}shrapnel¹²
+@{font times, 15}@{tab}@{tab}Toggles whether or not shrapnel game rules are used
+
+@{font courier, 15}@{tab}@{tab}skin_lastset
+@{font times, 15}@{tab}@{tab}Sets the player skin to the last set value
+
+@{font courier, 15}@{tab}@{tab}skin_next
+@{font times, 15}@{tab}@{tab}Cycles player skin forwards
+
+@{font courier, 15}@{tab}@{tab}skin_prev
+@{font times, 15}@{tab}@{tab}Cycles player skin backwards
+
+@{font helvetica, 18}@{tab}@{i}T @{ui}
+@{font times, 15}@{tab}@{tab}TheMod. Extremely fast Quake Multiplayer modification by Christian Michael.
+
+@{font courier, 15}@{tab}@{tab}togglesex
+@{font times, 15}@{tab}@{tab}Toggles player gender
+
+@{font courier, 15}@{tab}@{tab}toggle_blood¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not blood effects are enabled
+
+@{font courier, 15}@{tab}@{tab}toggle_con_fl¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not console flash effects are enabled
+
+@{font courier, 15}@{tab}@{tab}toggle_corpse¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not corpses are solid
+
+@{font courier, 15}@{tab}@{tab}toggle_flash¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not flash lighting effects are enabled
+
+@{font courier, 15}@{tab}@{tab}toggle_fov¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not console field of view  effects are enabled
+
+@{font courier, 15}@{tab}@{tab}toggle_gamma¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not console gamma effects are enabled
+
+@{font courier, 15}@{tab}@{tab}toggle_gibs¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not giblets are enabled
+
+@{font courier, 15}@{tab}@{tab}toggle_glow¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not glow lighting effects are enabled
+
+@{font courier, 15}@{tab}@{tab}toggle_snd_enhance¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not spacial sound is enabled
+
+@{font courier, 15}@{tab}@{tab}toggle_snd_limit¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not sound limiting is enabled
+
+@{font courier, 15}@{tab}@{tab}toggle_static¹
+@{font times, 15}@{tab}@{tab}Toggles whether or not ambient lighting effects are enabled
+
+@{font helvetica, 18}@{tab}@{i}U @{ui}
+@{font courier, 15}@{tab}@{tab}use_axe
+@{font times, 15}@{tab}@{tab}Selects the Axe
+
+@{font courier, 15}@{tab}@{tab}use_bolt
+@{font times, 15}@{tab}@{tab}Selects the Thunderbold / Ion Cannon
+
+@{font courier, 15}@{tab}@{tab}use_camera
+@{font times, 15}@{tab}@{tab}Toggles whether or not player chase camera is used
+
+@{font courier, 15}@{tab}@{tab}use_grenade
+@{font times, 15}@{tab}@{tab}Selects the Grenade Launcher
+
+@{font courier, 15}@{tab}@{tab}use_guidance
+@{font times, 15}@{tab}@{tab}Toggles whether or not rockets are user guided
+
+@{font courier, 15}@{tab}@{tab}use_inventory
+@{font times, 15}@{tab}@{tab}Toggles whether or not inventory is used
+
+@{font courier, 15}@{tab}@{tab}use_nailgun
+@{font times, 15}@{tab}@{tab}Selects the Nailgun
+
+@{font courier, 15}@{tab}@{tab}use_next
+@{font times, 15}@{tab}@{tab}Selects the next usable weapon
+
+@{font courier, 15}@{tab}@{tab}use_prev
+@{font times, 15}@{tab}@{tab}Selects the previous usable weapon
+
+@{font courier, 15}@{tab}@{tab}use_protect
+@{font times, 15}@{tab}@{tab}Activates the Pentagram of Protection, if available
+
+@{font courier, 15}@{tab}@{tab}use_quad
+@{font times, 15}@{tab}@{tab}Activates the Quad Damage, if available
+
+@{font courier, 15}@{tab}@{tab}use_ring
+@{font times, 15}@{tab}@{tab}Activates the Ring of Shadows, if available
+
+@{font courier, 15}@{tab}@{tab}use_rocket
+@{font times, 15}@{tab}@{tab}Selects the Rocket Launcher
+
+@{font courier, 15}@{tab}@{tab}use_shotgun
+@{font times, 15}@{tab}@{tab}Selects the Shotgun
+
+@{font courier, 15}@{tab}@{tab}use_suit
+@{font times, 15}@{tab}@{tab}Activates the Biosuit, if available
+
+@{font courier, 15}@{tab}@{tab}use_supernail
+@{font times, 15}@{tab}@{tab}Selects the Super Nailgun
+
+@{font courier, 15}@{tab}@{tab}use_supershot
+@{font times, 15}@{tab}@{tab}Selects the Super Shotgun
+
+@{font courier, 15}@{tab}@{tab}use_target
+@{font times, 15}@{tab}@{tab}Toggles whether or not the laser target is active
+
+@{font courier, 15}@{tab}@{tab}use_torch
+@{font times, 15}@{tab}@{tab}Toggles whether or not the torch is active
+
+@{font helvetica, 18}@{tab}@{i}V @{ui}
+
+@{font times, 15}@{tab}
+
+@{font helvetica, 18}@{tab}@{i}W @{ui}
+
+@{font times, 15}@{tab}
+
+@{font helvetica, 18}@{tab}@{i}X @{ui}
+@{font times, 15}@{tab}@{tab}Xenium Core. Top custom AlienBreed3D II game, by Mike Childs. Download it now.
+
+@{font helvetica, 18}@{tab}@{i}Y @{ui}
+
+@{font times, 15}@{tab}@{tab}Yak. Large furry moose-like thing.
+
+@{font helvetica, 18}@{tab}@{i}Z @{ui}
+
+@{font times, 15}@{tab}@{tab}Zanzibar.
+@endnode
+

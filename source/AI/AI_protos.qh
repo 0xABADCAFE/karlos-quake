@@ -1,0 +1,137 @@
+// Header table for directory 'AI' created at 18:04:56 on 23 Aug 2024
+//
+//========================================================================================
+//
+// sourcefile : AI/ai_team.qc, 5582 bytes
+// sourcefile : AI/ai_team_manage.qc, 38996 bytes
+// sourcefile : AI/smart.qc, 10022 bytes
+// sourcefile : AI/combat.qc, 10288 bytes
+// sourcefile : AI/ai.qc, 19182 bytes
+// sourcefile : AI/fight.qc, 8038 bytes
+//=========================================================================================
+
+
+// AI/ai_team.qc...
+
+/*---public---*/
+// $VER: ai_team.qc 1.00 � Karlos'99 (23/1/2000)
+
+// public function prototypes
+float (entity observer, entity observed) is_enemy_member;
+void(entity caller, float radius, float by_sight, float by_sound) team_call_for_backup;
+void() set_enemy_all;
+void() set_enemy_none;
+
+/*---private---*/
+
+
+// AI/ai_team_manage.qc...
+
+/*---public---*/
+// $VER: ai_team_manage.qc 1.10 � Karlos (05/02/2000)
+
+// public function prototypes
+
+void() ai_reset_teams;
+void(float can_be_leader) ai_join_team;
+
+void() dprint_team_stats;
+
+void(entity whosdead, entity whodunnit) ai_update_teams;
+
+string(float team_id) name_of_team;
+
+void(float team_id) list_enemy_teams;
+
+/*---private---*/
+
+
+// AI/smart.qc...
+
+/*---public---*/
+// $VER: smart.qc 2.02 � Karlos (24/1/2000)
+
+// public function prototypes
+
+vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void() too_far) ai_predict_aim;
+void(entity targ, entity projectile, float proj_speed) ai_shoot_ahead;
+
+
+float(entity what) ai_judge_hazard;
+entity (entity who, float viewdist) ai_pick_new_target;
+
+void(entity monster, entity startler) ai_alert;
+void(entity thing, entity initiator, float radius, float by_sight, float by_sound) ai_radius_alert;
+float(entity thing, entity to) is_visible;
+float(entity thing, entity to) is_audible;
+
+
+/*---private---*/
+
+
+// AI/combat.qc...
+
+/*---public---*/
+// $VER: combat.qc 1.82 � Karlos '99 (02/10/1999)
+// public function prototypes
+float(entity targ, entity inflictor) CanDamage;
+void(entity targ, entity attacker) Killed;
+void(entity targ, entity inflictor, entity attacker, float damage) T_Damage;
+void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDamage;
+void(entity attacker, float damage) T_BeamDamage;
+/*---private---*/
+
+
+// AI/ai.qc...
+
+/*---public---*/
+// $VER: ai.qc 2.21 � Karlos (10/02/2000)
+
+// public function prototypes
+float(float v) anglemod;
+float(entity targ) range;
+float(entity targ) infront;
+float() FindTarget;
+float() FacingIdeal;
+float(entity targ) visible;
+
+float() ai_test_jump;
+
+void() movetarget_f;
+void() path_corner;
+void() t_movetarget;
+void() HuntTarget;
+void() FoundTarget;
+void(float dist) ai_forward;
+void(float dist) ai_back;
+void(float dist) ai_pain;
+void(float dist) ai_painforward;
+void(float dist) ai_walk;
+void() ai_stand;
+void() ai_turn;
+void(vector dest3) ChooseTurn;
+void() ai_run_melee;
+void() ai_run_missile;
+void() ai_run_slide;
+void(float dist) ai_run;
+
+/*---private---*/
+
+
+// AI/fight.qc...
+
+/*---public---*/
+// $VER: fight.qc 1.06 � id software
+
+// public function prototypes
+float() CheckAttack;
+float() army_check_attack;
+float() ShamCheckAttack;
+float() OgreCheckAttack;
+void() knight_attack;
+void() ai_face;
+void(float d) ai_charge;
+void() ai_charge_side;
+void() ai_melee;
+void() ai_melee_side;
+/*---private---*/

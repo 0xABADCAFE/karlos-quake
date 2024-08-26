@@ -1,0 +1,255 @@
+// server globals
+float    skill_fact;             // Karlos - actual skill (may be non integer)
+float    effectflags;            // Karlos - used for general effects flag
+entity   administrator;          // client in charge of server
+float    adminmessages;          // toggle for admin messages
+float    clientcount;            // Karlos - number of clients connected
+
+float    shrapnel;               // shrapnel gameplay
+float    mikerules;              // mikerules gameplay
+float    randomgame;             // random gameplay
+
+float    server_change_next_game;// used for storing gameplay changes;
+
+float    GAME_REGISTERED   = 1;
+float    GAME_SHRAPNEL     = 2;
+float    GAME_MIKERULES    = 4;
+float    GAME_RANDOM       = 8;
+
+// 16
+// 32
+// 64
+// 128
+
+
+//  deathmatch flag options
+
+float    DM_GAME     = 1; // if set, assume game is DM
+float    DM_NOTARGET = 2; // if set, targret is forbidden in dm
+float    DM_NOTORCH  = 4; // if set, torch is forbidden in dm
+float    DM_NOHOOK   = 8; // if set, grapple is forbidden in dm
+
+//  developer flags
+
+float    developer;        // developer flags
+
+float    DV_DEFAULT     = 1;
+float    DV_NO_PICKUPS  = 2;  // no pickup entites
+float    DV_NO_MONSTERS = 4;  // no monsters
+
+float    DV_SHOW_MONSTER_INF = 256;
+float    DV_SHOW_MONSTER_ERR = 512;
+float    DV_SHOW_TEAM_AI     = 1024;
+
+// player impulses
+float IM_WEAPONNEXT        = 9;
+float IM_WEAPONPREV        = 10;
+float IM_DROPWEAPON        = 11; // used to drop the current weapon;
+
+float IM_RELEASE_GRAPPLE   = 13; // force grapple unhook
+float IM_GRAPPLE_EXTEND    = 14; // lengthen chain
+float IM_GRAPPLE_RETRACT   = 15; // shorten chain
+float IM_GRAPPLE_LOCK      = 16; // swing about
+float IM_THROW_GRENADE     = 17; // allow hand grenade
+
+float IM_USE_INVENTORY     = 20; // toggle inventory usage
+float IM_ACTIVATE_SUIT     = 21; // when active, player stores
+float IM_ACTIVATE_QUAD     = 22; // up to one of each item for
+float IM_ACTIVATE_RING     = 23; // later use.
+float IM_ACTIVATE_PENT     = 24;
+float IM_SHOW_INVENTORY    = 39; // list inventory contents
+
+float IM_SKIN_NEXT         = 40;
+float IM_SKIN_PREV         = 41;
+float IM_LOAD_SKIN         = 42;
+float IM_ION_NEXT          = 43;
+float IM_ION_PREV          = 44;
+float IM_HANDEDNESS        = 48;
+float IM_GENDER            = 49;
+
+float IM_TOGGLE_CAMERA     = 50;
+float IM_CAMERA_UP         = 51;
+float IM_CAMERA_DOWN       = 52;
+float IM_CAMERA_IN         = 53;
+float IM_CAMERA_OUT        = 54;
+
+float IM_TOGGLE_TARGET          = 55;
+float IM_TOGGLE_TORCH           = 56;
+float IM_TOGGLE_GUIDEDMISSILES  = 57;
+float IM_TOGGLE_SMOOTH_SUBENTS  = 58;
+float IM_TOGGLE_SCREENMSG       = 59;
+float IM_TOGGLE_NAME_TARGETS    = 60;
+
+// server only impulses 1 : effect switches
+float IM_CYCLE_LIGHTS          = 100; // old cycle through light opts
+float IM_TOGGLE_FLASH          = 101; // toggle flash fx
+float IM_TOGGLE_GLOW           = 102; // toggle glow fx
+float IM_TOGGLE_STATIC         = 103; // toggle world lights static
+
+float IM_CYCLE_EXPLODE         = 104; // cycle trough explode opts
+float IM_TOGGLE_FASTEXP        = 105; // fast explosions
+float IM_TOGGLE_MULTIEXP       = 106; // multiframe explosions
+float IM_TOGGLE_SMARTEXP       = 107; // env. sensitive explosions
+
+float IM_TOGGLE_GAMMA          = 108; // toggle if gamma changes allowed
+float IM_TOGGLE_CON_FLASH      = 109; // toggle screen 'bf' flashes
+float IM_TOGGLE_FOV            = 110; // toggle if fov effects are allowed
+
+float IM_TOGGLE_SOUND_LIMIT    = 111; // toggle sound limiting
+float IM_TOGGLE_SOUND_ENHANCE  = 112; //
+
+float IM_CYCLE_VIOLENCE        = 113; // cycle through violence options
+float IM_TOGGLE_BLOOD          = 114; // toggle blood effects
+float IM_TOGGLE_GIBS           = 115; // toggle giblets
+float IM_TOGGLE_CORPSE         = 116; // toggle corpse
+
+
+// server only impulses 2 : gameplay switches
+float IM_TOGGLE_RANDOMGAME     = 147; // enable / disable random game
+float IM_TOGGLE_SHRAPNEL       = 148; // enable / siable explosion shrapnel
+float IM_TOGGLE_MIKERULES      = 149; // enable / disable weapon damage, idea by Mike 'Xenium Core' Childs
+float IM_TOGGLE_ADMIN_MSG      = 150; // toggles display of admin specific messages
+
+// serverkey related stuff
+float IM_SHOW_KEY              = 151; // display the server key
+float IM_CHECK_KEY             = 152; // check a key
+
+//   float IM_BACKUPNAME        = 200;
+//   float IM_SKIN_BASE         = 201; // sets the base for skin name impulses
+//   float IM_RESTORENAME       = 233;
+
+float IM_QUADCHEAT         = 255;
+float IM_INVISCHEAT        = 254;
+float IM_PROTECTCHEAT      = 253;
+float IM_RUNECHEAT         = 252;
+float IM_BIOCHEAT          = 251;
+float IM_CHEATITEMS        = 250;
+
+float IM_VERSION_INFO      = 99;
+
+
+float IM_DPRINT_TEAMS          = 80; // dump team_ai info to console
+float IM_LIST_ARMY1_ENEMY      = 81; // list this team's enemy teams
+float IM_LIST_ARMY2_ENEMY      = 82;
+float IM_LIST_ARMY3_ENEMY      = 83;
+float IM_LIST_KNIGHT1_ENEMY    = 84;
+float IM_LIST_KNIGHT2_ENEMY    = 85;
+float IM_LIST_KNIGHT3_ENEMY    = 86;
+float IM_LIST_UNDEAD1_ENEMY    = 87;
+float IM_LIST_UNDEAD2_ENEMY    = 88;
+float IM_LIST_UNDEAD3_ENEMY    = 89;
+float IM_LIST_OGRE1_ENEMY      = 90;
+float IM_LIST_OGRE2_ENEMY      = 91;
+float IM_LIST_OGRE3_ENEMY      = 92;
+float IM_SET_ALL_ENEMY         = 93;
+float IM_SET_DEFAULT_ENEMY     = 94;
+
+float IM_A_SERVERMASTER     = 198;
+float IM_NOT_A_SERVERMASTER = 199;
+
+
+
+// effectflags bits
+// lighting engine
+float FX_BRIGHTFIELD = 1;    // unused ?
+float FX_FLASH       = 2;    // flash effects
+float FX_BRIGHTLIGHT = 4;    // unused ?
+float FX_GLOW        = 8;    // glow for laser/rocket/powerups
+float FX_WORLDSTATIC = 16;   // set if world lights are static
+
+// light masks (dynamic)
+float FX_NO_LIGHTS   = 5;     // all (known) dynamic lights off
+float FX_NO_FLASH    = 13;    // muzzleflash off only
+float FX_NO_GLOW     = 7;     // glow off only
+float FX_LIGHTS      = 15;    // all dynamic lights on
+
+// console effects
+float FX_CON_GAMMA   = 32;   // set if gamma fx are allowed
+float FX_CON_FLASH   = 64;   // set if pickup flashes etc. ara allowed
+float FX_CON_FOV     = 128;  // set if field of view effects allowed
+
+// explosions
+float FX_FAST_EXP    = 256;  // set if explosions are fast
+float FX_MULTI_EXP   = 512;  // set if explosions are multiframe
+float FX_SMART_EXP   = 1024; // set if explosions are env. sensitive
+
+// explode masks
+float FX_TURBO_EXP   = 256;  // explosions are as fast as poss
+float FX_NORM_EXP    = 0;    // normal explosions
+float FX_COOL_EXP    = 1536; // explosions are as cool as poss
+float FX_EXP_BITS    = 1792; // explosion bitmask
+
+// sound engine
+float FX_SOUND_LIMIT = 2048; // set if sound limiting enabled
+float FX_SOUND_PLUS  = 4096; // set if enhanced sound effects enabled
+
+// violence moderation
+float FX_GORE_BLOOD  = 8192; // set if blood allowed
+float FX_GORE_GIBS   = 16384; // set if giblets allowed
+float FX_GORE_CORPSE = 32768; // set if corpses allowed
+
+float FX_GORE_NONE   = 0;     // nothing
+float FX_GORE_NORMAL = 24576; // blood and gibs
+float FX_GORE_FULLON = 57344; // the works !
+
+float FX_SAVEBITS_OFFSET = 256;
+
+// Mike Rules stuff
+// Implement Mike Child's weapon damage idea
+// We allow weapon to recieve damage as well as player.
+// The 'health' of the weapon, relative to it's normal state, is used to
+// calculate a reliability factor. This in turn will be used to introduce weapon jams
+
+.float      weapon_00_damage;    // axe damage level
+.float      weapon_01_damage;    // shotgun damage level
+.float      weapon_02_damage;    // super shotgun damage level
+.float      weapon_03_damage;    // nailgun damage level
+.float      weapon_04_damage;    // super nailgun damage level
+.float      weapon_05_damage;    // grenade launcher damage level
+.float      weapon_06_damage;    // rocket launcher damage level
+.float      weapon_07_damage;    // thunderbolt damage level
+
+// bitmasks for damage - only integer damage part, 0-15
+float MR_SHOTGUN_DAMAGE       = 15;         //  0x00 00 00 0f - ssss
+float MR_SUPERSHOT_DAMAGE     = 240;        //  0x00 00 00 f0 - SSSS
+float MR_NAILGUN_DAMAGE       = 3840;       //  0x00 00 0f 00 - nnnn
+float MR_SUPERNAIL_DAMAGE     = 61440;      //  0x00 00 f0 00 - NNNN
+float MR_GRENADE_DAMAGE       = 983040;     //  0x00 0f 00 00 - gggg
+float MR_ROCKET_DAMAGE        = 15728640;   //  0x00 f0 00 00 - rrrr
+float MR_THUNDER_DAMAGE       = 251658240;  //  0x0f 00 00 00 - tttt
+// offsets for damage storage
+float MR_SHOTGUN_OFFSET       = 1;          //  0x00 00 00 01 - bit# 00
+float MR_SUPERSHOT_OFFSET     = 16;         //  0x00 00 00 10 - bit# 04
+float MR_NAILGUN_OFFSET       = 256;        //  0x00 00 01 00 - bit# 08
+float MR_SUPERNAIL_OFFSET     = 4096;       //  0x00 00 10 00 - bit# 12
+float MR_GRENADE_OFFSET       = 65536;      //  0x00 01 00 00 - bit# 16
+float MR_ROCKET_OFFSET        = 1048576;    //  0x00 10 00 00 - bit# 20
+float MR_THUNDER_OFFSET       = 16777216;   //  0x01 00 00 00 - bit# 24
+
+// Random game stuff
+.float switched; // zero if monster not switched yet in random game
+float monstertypes;
+float MAX_MONSTER_TYPES = 8;
+float dog_cached;
+float grunt_cached;
+float knight_cached;
+float zombie_cached;
+
+float ogre_cached;
+float wizard_cached;
+float fiend_cached;
+float shambler_cached;
+
+float hell_knight_cached;
+float enforcer_cached;
+float spawn_cached;
+float vore_cached;
+float fish_cached;
+
+//other stuff
+float world_cached;
+
+void() version_Server = {
+    sprint(self, "KQ/Server 4.02 09:05:2000\n");
+};
+

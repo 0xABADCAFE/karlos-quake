@@ -1,0 +1,27 @@
+
+default
+
+    ion>bolt  grap>rckt  guide  torch  targ  ccam  hand  ion   shw  i  m  g  skin 
+                                                        
+    19        18         17     16     15    14     12     9   8    7  6  5  4   
+    0         0          0      0      1     0     11    001   0    0  1  0  00000
+
+
+Character generation
+
+    skin (1-32)           = 0-31
+    gender (M/F)          = 0/32
+    scr_message (F/T)     = 0/64
+    inventory (F/T)       = 0/128
+    show_names (F/T)      = 0/256
+    ion_colour (0-7)      = 512*colour, colour = 0-7
+    handedness (N/R/L/C)  = 4096*hand, hand = 0-3
+    chase_cam (F/T)       = 0/16384
+    laser_targ (F/T)      = 0/32768
+    torch                 = 0/65536
+    laser_guide           = 0/131072
+    prefer grapple (F/T)  = 0/262144
+    prefer ion     (F/T)  = 0/524288
+
+
+    

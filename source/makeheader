@@ -1,0 +1,30 @@
+.key DIRECTORY
+.bra «
+.ket »
+failat 100
+
+echo "Make header v1.0"
+
+echo "*n   Searching directory '«DIRECTORY»/'..." noline
+   ; list of qc files
+   list «DIRECTORY»/#?.qc lformat "%p%n" > T:protos_dir.tmp
+
+echo "done*n   Building reference table"
+   ; scan through files
+   rx buildprotos.rx «DIRECTORY»
+   ; add file list
+   list >>t:protos_ver.tmp «DIRECTORY»/#?.qc lformat "// sourcefile : %p%n, %l bytes"
+
+if exists "«DIRECTORY»/«DIRECTORY»_protos.qh"
+   echo noline "*n   Removing obsolete «DIRECTORY»/«DIRECTORY»_protos.qh..."
+   delete quiet «DIRECTORY»/«DIRECTORY»_protos.qh
+   echo "done"
+endif
+
+echo noline "*n   Generating «DIRECTORY»/«DIRECTORY»_protos.qh..."
+join T:protos_ver.tmp T:protos_body.tmp as «DIRECTORY»/«DIRECTORY»_protos.qh
+echo "done"
+
+delete >nil: t:protos#?.tmp
+
+echo "*nMakeHeader : operation completed."

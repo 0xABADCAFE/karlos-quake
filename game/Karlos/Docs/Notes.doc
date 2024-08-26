@@ -1,0 +1,60 @@
+
+   Karlos Quake 1.8 release 3
+
+-------------------------------------------------------------------------
+
+   server options data structure, stored in "registered"
+
+   Bit(s)   Name                    Remarks
+
+   0        GAME_REGISTERED         Must be set to 1
+   1        GAME_SHRAPNEL
+   2        GAME_MIKERULES
+   3        GAME_RANDOM             Not yet implemented
+
+   4-7      FUTURE                  Game option expansion
+
+   8-11     FX_LIGHTS               Dynamic light switches
+               FX_BRIGHTFIELD          (unused ?)
+               FX_FLASH                Flash effects
+               FX_BRIGHTLIGHT          (unused ?)
+               FX_GLOW                 Glow effects
+
+   12       FX_WORLDSTATIC          Ambient light effects switch
+
+   13       FX_CON_GAMMA            New for 1.8r3 Gamma effects switch
+   14       FX_CON_FLASH            Not implemented yet
+   15       FX_CON_FOV              New for 1.8r3 Field of View effects switch
+
+   16       FX_FAST_EXP             Fast explosion switch
+   17       FX_MULTI_EXP            Multiframe explosion switch
+   18       FX_SMART_EXP            Smart explosion switch
+
+   19       FX_SOUND_LIMIT          New for 1.8r3 Sound limiting switch
+   20       FX_SOUND_PLUS           Not implemented yet
+
+   21       FX_GORE_BLOOD           New for 1.8r3 Blood effects switch
+   22       FX_GORE_GIBS            New for 1.8r3 Giblets effects switch
+   23       FX_GORE_CORPSE          New for 1.8r3 Solid corpse effects switch
+
+-------------------------------------------------------------------------
+
+   client options data structure, stored in "temp1"
+
+   Bit(s)   Name                    Remarks
+
+   0-4      <SKIN NUMBER>
+   5        CL_GENDERBIT
+   6        CL_MESSAGEBIT
+   7        CL_INVENTORYBIT
+   8        CL_SHOW_TARGETS         New for 1.8r3 Names player/monster under target
+   9-11     <ION COLOUR>            New for 1.8r3 Personalised Ion Cannon trail colour
+                                    Blue, Red, Magenta, Green, Cyan, Yellow or White ;)
+
+   14       FL_USING_CAMERA
+   15       FL_USING_TARGET
+   16       FL_USING_TORCH
+   17       FL_USING_GUIDE
+   18       FL_USING_GRAPPLE        New for 1.8r3 Use Rocket as grapple by default
+   19       FL_USING_ION            New for 1.8r3 Use thunderbolt as Ion Cannon by default
+
