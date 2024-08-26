@@ -116,29 +116,36 @@ void(string mdlname, vector bmin, vector bmax, float hbase, float hvar) monster_
     total_monsters = total_monsters + 1;
 };
 
-
 /*===========================================================================
    monster_use
 
       Using a monster makes it angry at the current activator
 ===========================================================================*/
-void() monster_use =
-{
-   if (self.enemy)
-      return;
-   if (self.health <= 0)
-      return;
-   if (activator.items & IT_INVISIBILITY)
-      return;
-   if (activator.flags & FL_NOTARGET)
-      return;
-   if (activator.classname != "player")
-      return;
+void() monster_use = {
+    if (self.enemy) {
+        return;
+    }
 
-   // delay reaction so if the monster is teleported, its sound is still heard
-   self.enemy = activator;
-   self.nextthink = time + 0.1;
-   self.think = FoundTarget;
+    if (self.health <= 0) {
+        return;
+    }
+
+    if (activator.items & IT_INVISIBILITY) {
+        return;
+    }
+
+    if (activator.flags & FL_NOTARGET) {
+        return;
+    }
+
+    if (activator.classname != "player") {
+        return;
+    }
+
+    // delay reaction so if the monster is teleported, its sound is still heard
+    self.enemy     = activator;
+    self.nextthink = time + 0.1;
+    self.think     = FoundTarget;
 };
 
 /*==========================================================================
@@ -147,185 +154,183 @@ void() monster_use =
    When a mosnter dies, it fires all of its targets with the current
    enemy as activator.
 ==========================================================================*/
-void() monster_death_use =
-{
-   local entity   ent, otemp, stemp;
+void() monster_death_use = {
+    local entity ent, otemp, stemp;
 
-// fall to ground
-   if (self.flags & FL_FLY)
-      self.flags = self.flags - FL_FLY;
-   if (self.flags & FL_SWIM)
-      self.flags = self.flags - FL_SWIM;
+    // fall to ground
+    if (self.flags & FL_FLY) {
+        self.flags = self.flags - FL_FLY;
+    }
 
-   if (!self.target)
-      return;
+    if (self.flags & FL_SWIM) {
+        self.flags = self.flags - FL_SWIM;
+    }
 
-   activator = self.enemy;
-   SUB_UseTargets ();
+    if (!self.target) {
+        return;
+    }
+
+    activator = self.enemy;
+    SUB_UseTargets();
 };
 
 
 //============================================================================
 
-void() monster_walk =
-{
-   self.origin_z = self.origin_z + 1;  // raise off floor a bit
-   droptofloor();
+void() monster_walk = {
+    self.origin_z = self.origin_z + 1;  // raise off floor a bit
+    droptofloor();
 
     if ((!walkmove(0,0)) && (developer & DV_SHOW_MONSTER_ERR))
     {
-       dprint3("walkmonster ",self.classname," in wall at: ");
-       dprint (vtos(self.origin));
-       dprint ("\n");
+        dprint3("walkmonster ",self.classname," in wall at: ");
+        dprint(vtos(self.origin));
+        dprint("\n");
     }
 
-   self.ideal_yaw = self.angles * '0 1 0';
-   if (!self.yaw_speed)
-      self.yaw_speed = 20;
-   self.view_ofs = '0 0 25';
-   self.use = monster_use;
-
-   if (self.target)
-   {
-      self.goalentity = self.movetarget = find(world, targetname, self.target);
-      self.ideal_yaw = vectoyaw(self.goalentity.origin - self.origin);
-
-      if ((!self.movetarget) && (developer & DV_SHOW_MONSTER_ERR))
-      {
-         dprint ("Monster can't find target at ");
-         dprint (vtos(self.origin));
-         dprint ("\n");
-      }
-
-      // this used to be an objerror
-      if (self.movetarget.classname == "path_corner")
-         self.th_walk ();
-      else
-         self.pausetime = 99999999;
-         self.th_stand ();
-   }
-   else
-   {
-      self.pausetime = 99999999;
-      self.th_stand ();
-   }
-
-// spread think times so they don't all happen at same time
-   self.nextthink = self.nextthink + random()*0.5;
-};
-
-
-void() walkmonster_start =
-{
-   self.think = monster_walk;
-};
-
-void() monster_fly =
-{
-   self.ideal_yaw = self.angles * '0 1 0';
-   if (!self.yaw_speed)
-      self.yaw_speed = 10;
-   self.view_ofs = '0 0 25';
-   self.use = monster_use;
-
-   self.flags = self.flags | FL_FLY;
-
-   if ((!walkmove(0,0)) && (developer & DV_SHOW_MONSTER_ERR))
-    {
-       dprint3("flymonster ",self.classname," in wall at: ");
-       dprint (vtos(self.origin));
-       dprint ("\n");
+    self.ideal_yaw = self.angles * '0 1 0';
+    if (!self.yaw_speed) {
+        self.yaw_speed = 20;
     }
 
-   if (self.target)
-   {
-      self.goalentity = self.movetarget = find(world, targetname, self.target);
+    self.view_ofs = '0 0 25';
+    self.use      = monster_use;
 
-      if ((!self.movetarget) && (developer & DV_SHOW_MONSTER_ERR))
-      {
-         dprint ("Monster can't find target at ");
-         dprint (vtos(self.origin));
-         dprint ("\n");
-      }
+    if (self.target) {
+        self.goalentity = self.movetarget = find(world, targetname, self.target);
+        self.ideal_yaw  = vectoyaw(self.goalentity.origin - self.origin);
 
-      // this used to be an objerror
-      if (self.movetarget.classname == "path_corner")
-         self.th_walk ();
-      else
-         self.pausetime = 99999999;
-         self.th_stand ();
-   }
-   else
-   {
-      self.pausetime = 99999999;
-      self.th_stand ();
-   }
+        if ((!self.movetarget) && (developer & DV_SHOW_MONSTER_ERR)) {
+            dprint("Monster can't find target at ");
+            dprint(vtos(self.origin));
+            dprint("\n");
+        }
+
+        // this used to be an objerror
+        if (self.movetarget.classname == "path_corner") {
+            self.th_walk();
+        }
+        else {
+            self.pausetime = 99999999;
+            self.th_stand();
+        }
+    }
+    else {
+        self.pausetime = 99999999;
+        self.th_stand();
+    }
+
+    // spread think times so they don't all happen at same time
+    self.nextthink = self.nextthink + random() * 0.5;
 };
 
-void() flymonster_start =
-{
-   self.think = monster_fly;
+
+void() walkmonster_start = {
+    self.think = monster_walk;
+};
+
+void() monster_fly = {
+    self.ideal_yaw = self.angles * '0 1 0';
+    if (!self.yaw_speed) {
+        self.yaw_speed = 10;
+    }
+
+    self.view_ofs = '0 0 25';
+    self.use      = monster_use;
+    self.flags    = self.flags | FL_FLY;
+
+    if (
+        (!walkmove(0,0)) &&
+        (developer & DV_SHOW_MONSTER_ERR)
+    ) {
+        dprint3("flymonster ",self.classname," in wall at: ");
+        dprint(vtos(self.origin));
+        dprint("\n");
+    }
+
+    if (self.target) {
+        self.goalentity = self.movetarget = find(world, targetname, self.target);
+
+        if (
+            (!self.movetarget) &&
+            (developer & DV_SHOW_MONSTER_ERR)
+        ) {
+            dprint("Monster can't find target at ");
+            dprint(vtos(self.origin));
+            dprint("\n");
+        }
+
+        // this used to be an objerror
+        if (self.movetarget.classname == "path_corner") {
+            self.th_walk();
+        }
+        else {
+            self.pausetime = 99999999;
+            self.th_stand();
+        }
+    }
+    else {
+        self.pausetime = 99999999;
+        self.th_stand();
+    }
+};
+
+void() flymonster_start = {
+    self.think = monster_fly;
 };
 
 
-void() monster_swim =
-{
-   self.ideal_yaw = self.angles * '0 1 0';
-   if (!self.yaw_speed)
-      self.yaw_speed = 10;
-   self.view_ofs = '0 0 10';
-   self.use = monster_use;
+void() monster_swim = {
+    self.ideal_yaw = self.angles * '0 1 0';
+    if (!self.yaw_speed) {
+        self.yaw_speed = 10;
+    }
 
-   self.flags = self.flags | FL_SWIM;
+    self.view_ofs = '0 0 10';
+    self.use      = monster_use;
 
-   if (self.target)
-   {
-      self.goalentity = self.movetarget = find(world, targetname, self.target);
+    self.flags = self.flags | FL_SWIM;
 
-      if ((!self.movetarget) && (developer & DV_SHOW_MONSTER_ERR))
-      {
-         dprint ("Monster can't find target at ");
-         dprint (vtos(self.origin));
-         dprint ("\n");
-      }
+    if (self.target) {
+        self.goalentity = self.movetarget = find(world, targetname, self.target);
 
-      // this used to be an objerror
-      self.ideal_yaw = vectoyaw(self.goalentity.origin - self.origin);
-      self.th_walk ();
-   }
-   else
-   {
-      self.pausetime = 99999999;
-      self.th_stand ();
-   }
+        if ((!self.movetarget) && (developer & DV_SHOW_MONSTER_ERR)) {
+            dprint("Monster can't find target at ");
+            dprint(vtos(self.origin));
+            dprint("\n");
+        }
 
-// spread think times so they don't all happen at same time
-   self.nextthink = self.nextthink + random()*0.5;
+        // this used to be an objerror
+        self.ideal_yaw = vectoyaw(self.goalentity.origin - self.origin);
+        self.th_walk();
+    }
+    else {
+        self.pausetime = 99999999;
+        self.th_stand();
+    }
+
+    // spread think times so they don't all happen at same time
+    self.nextthink = self.nextthink + random()*0.5;
 };
 
-void() swimmonster_start =
-{
-   self.think = monster_swim;
+void() swimmonster_start = {
+    self.think = monster_swim;
 };
 
-void() clear_monster_caches =
-{
-   // resets the monster cache flags on starting a level (needed in random game)
-   monstertypes = 0;
-
-   dog_cached = FALSE;
-   grunt_cached = FALSE;
-   knight_cached = FALSE;
-   zombie_cached = FALSE;
-
-   ogre_cached = FALSE;
-   wizard_cached = FALSE;
-   fiend_cached = FALSE;
-   shambler_cached = FALSE;
-
-   hell_knight_cached = FALSE;
-   enforcer_cached = FALSE;
-   spawn_cached = FALSE;
-   vore_cached = FALSE;
-   fish_cached = FALSE;
+void() clear_monster_caches = {
+    // resets the monster cache flags on starting a level (needed in random game)
+    monstertypes       = 0;
+    dog_cached         = FALSE;
+    grunt_cached       = FALSE;
+    knight_cached      = FALSE;
+    zombie_cached      = FALSE;
+    ogre_cached        = FALSE;
+    wizard_cached      = FALSE;
+    fiend_cached       = FALSE;
+    shambler_cached    = FALSE;
+    hell_knight_cached = FALSE;
+    enforcer_cached    = FALSE;
+    spawn_cached       = FALSE;
+    vore_cached        = FALSE;
+    fish_cached        = FALSE;
 };

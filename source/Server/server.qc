@@ -270,7 +270,7 @@ void() cycle_light_fx =
    effectflags = effectflags - (effectflags & FX_LIGHTS);
 
    // set new lighting bits
-   effectflags = effectflags | lights;  
+   effectflags = effectflags | lights;
 };
 
 void() toggle_flash_fx =
@@ -360,7 +360,7 @@ void() cycle_explode_fx =
    else if (exp_fx == 256)
    {
       // fast -> normal
-      broadcast ("explosions normal");      
+      broadcast ("explosions normal");
    }
 };
 
@@ -464,7 +464,7 @@ void() toggle_con_flash =
 
 void() toggle_con_fov =
 {
-   if(no_access(self))
+   if (no_access(self))
       return;
 
    if (effectflags & FX_CON_FOV)

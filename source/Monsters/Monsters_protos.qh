@@ -132,7 +132,7 @@ void() monster_knight ;
 // $VER: hellknight.qc 2.0 � Karlos '99 (24/08/1999)
 
 void() CheckForCharge ;
-void() CheckContinueCharge ;
+void() hknight_check_cont_charge ;
 void() monster_hell_knight ;
 /*---private---*/
 
