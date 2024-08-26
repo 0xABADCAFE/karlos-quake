@@ -33,7 +33,7 @@ float WEAPON_ROCKET = 2;
 float WEAPON_SHOTGUN = 1;
 float WEAPON_SPIKES = 4;
 
-entity   lastspawn;
+entity lastspawn;
 entity bodyque_head;
 entity stemp, otemp, s, old;
 
