@@ -1,13 +1,67 @@
-// Header table for directory 'Server' created at 18:04:55 on 23 Aug 2024
+// Header table for directory 'Server' created at 13:54:20 on 25 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : Server/server.qc, 14938 bytes
 // sourcefile : Server/randomgame.qc, 8605 bytes
-// sourcefile : Server/mikerules.qc, 10496 bytes
-// sourcefile : Server/impulse.qc, 7634 bytes
-// sourcefile : Server/cheats.qc, 3793 bytes
+// sourcefile : Server/mikerules.qc, 10506 bytes
+// sourcefile : Server/impulse.qc, 9831 bytes
+// sourcefile : Server/cheats.qc, 3677 bytes
+// sourcefile : Server/server.qc, 14931 bytes
 //=========================================================================================
+
+
+// Server/randomgame.qc...
+
+/*---public---*/
+// $VER: randomgame 0.01 © Karlos (08/11/1999)
+
+// public function prototypes
+// lowlevel
+void() swap_monster;
+
+float monstertypes;
+/*---private---*/
+
+
+// Server/mikerules.qc...
+
+/*---public---*/
+// $VER: mikerules 1.04 ï¿½ Mike 'XC' Childs, coded by Karlos (03/10/1999)
+
+// public function prototypes
+// lowlevel
+float (float unjamtime, float current_damage) check_weapon_jam;
+void (entity attacker, entity targ, float inflicted) apply_weapon_damage;
+void(float bitblock) decode_weapon_damagestats;
+float() encode_weapon_damagestats;
+/*---private---*/
+
+
+// Server/impulse.qc...
+
+/*---public---*/
+// $VER: impulse.qc 1.89 Karlos (14/04/2000)
+
+// public function prototypes
+void() ImpulseCommands;
+void() ImpulseCommands_2;
+void() ImpulseCommands_3;
+
+/*---private---*/
+
+
+// Server/cheats.qc...
+
+/*---public---*/
+// $VER: cheats.qc 1.00 © Karlos '99 (19/07/1999)
+// public function prototypes
+void() BiosuitCheat;
+void() CheatCommand;
+void() InvisibilityCheat;
+void() ProtectCheat;
+void() QuadCheat;
+void() RuneCheat;
+/*---private---*/
 
 
 // Server/server.qc...
@@ -60,58 +114,4 @@ void() default_server_opts;
 void() create_server_key;
 void(entity e) report_to_administrator;
 
-/*---private---*/
-
-
-// Server/randomgame.qc...
-
-/*---public---*/
-// $VER: randomgame 0.01 © Karlos (08/11/1999)
-
-// public function prototypes
-// lowlevel
-void() swap_monster;
-
-float monstertypes;
-/*---private---*/
-
-
-// Server/mikerules.qc...
-
-/*---public---*/
-// $VER: mikerules 1.04 © Mike 'XC' Childs, coded by Karlos (03/10/1999)
-
-// public function prototypes
-// lowlevel
-float (float unjamtime, float current_damage) check_weapon_jam;
-void (entity attacker, entity targ, float inflicted) apply_weapon_damage;
-void(float bitblock) decode_weapon_damagestats;
-float() encode_weapon_damagestats;
-/*---private---*/
-
-
-// Server/impulse.qc...
-
-/*---public---*/
-// $VER: impulse.qc 1.89 © Karlos (14/04/2000)
-
-// public function prototypes
-void() ImpulseCommands;
-void() ImpulseCommands_2;
-void() ImpulseCommands_3;
-
-/*---private---*/
-
-
-// Server/cheats.qc...
-
-/*---public---*/
-// $VER: cheats.qc 1.00 © Karlos '99 (19/07/1999)
-// public function prototypes
-void() BiosuitCheat;
-void() CheatCommand;
-void() InvisibilityCheat;
-void() ProtectCheat;
-void() QuadCheat;
-void() RuneCheat;
 /*---private---*/
