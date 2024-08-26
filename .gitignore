@@ -1,3 +1,5 @@
 **/_UAEFSDB.___
 *.kdev4
-game/*
+game/id1/*
+game/AmiQuake*
+assets/PakMan/*
