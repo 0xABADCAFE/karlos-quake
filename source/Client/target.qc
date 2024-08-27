@@ -1,7 +1,7 @@
 // target.qc
 
 /*---public---*/
-// $VER: target.qc 1.97 © Karlos (10/3/2000)
+// $VER: target.qc 1.97 ï¿½ Karlos (10/3/2000)
 
 // public function prototypes
 // highlevel
@@ -127,7 +127,7 @@ void() laser_track = {
                 (developer & DV_SHOW_TEAM_AI)
             ) {
                 local string t_name, t_mbmr;
-                t_name = name_of_team(trace_ent.teamgroup);
+                t_name = ai_team_name(trace_ent.teamgroup);
                 t_mbmr = ftos(trace_ent.teammember);
                 self.owner.netname_delay = time + 2;
                 dprint6 (trace_ent.netname, " [", t_name, "/", t_mbmr, "]\n");

@@ -21,7 +21,7 @@ void() dprint_team_stats;
 
 void(entity whosdead, entity whodunnit) ai_update_teams;
 
-string(float team_id) name_of_team;
+string(float team_id) ai_team_name;
 
 void(float team_id) list_enemy_teams;
 
@@ -30,8 +30,7 @@ void(float team_id) list_enemy_teams;
 //================================================================================
 
 
-void() ai_reset_teams =
-{
+void() ai_reset_teams = {
     // Clears the monster team database
     // Should be called before any monster initialisation (eg worldspawn)
 
@@ -50,13 +49,13 @@ void() ai_reset_teams =
     same_class_enemy_lim = (map_opts & TEAM_SAME_TOL_BITS)/32768;
     diff_class_enemy_lim = (map_opts & TEAM_DIFF_TOL_BITS)/1048576;
 
-    if (randomgame)
-    {
+    if (randomgame) {
         // Inc non-equiv tolerance 50% in random game, limit to equiv tolerance
         diff_class_enemy_lim = 1.5 * diff_class_enemy_lim;
 
-        if (diff_class_enemy_lim > same_class_enemy_lim)
+        if (diff_class_enemy_lim > same_class_enemy_lim) {
             diff_class_enemy_lim = same_class_enemy_lim;
+        }
     }
 
 
@@ -126,335 +125,248 @@ void() ai_reset_teams =
 
 //================================================================================
 
-void() dprint_team_stats =
-{
+/**
+ * This is a disgusting hack that uses the current temporary bodyque_head entity
+ * to return multiple properties about the enumerated team.
+ *
+ * .armortype  contains the enemy team bitmask
+ * .armorvalue contans the team size
+ * .team       contains the team id
+ * .netname    contains the team name
+ * .aiment     contains the team leader entity
+ *
+ * Use this method and immediately assign any fields you need to locals.
+ *
+ * The entity is returned because we might want to change this to a dedicated
+ * one later. Do not assume what the entity is.
+ */
+entity(float team_id) ai_team_properties = {
+
+    local entity e;
+    e = bodyque_head;
+
+    if (team_id == TEAM_NONE) {
+        e.team       = team_id;
+        e.armortype  = 0;
+        e.armorvalue = team_none_size;
+        e.netname    = "unteamed";
+        e.aiment     = world;
+    }
+    else if (team_id == TEAM_ARMY_1) {
+        e.team       = team_id;
+        e.armortype  = team_army_1_enemy;
+        e.armorvalue = team_army_1_size;
+        e.netname    = "army_1";
+        e.aiment     = team_army_1_leader;
+    }
+    else if (team_id == TEAM_ARMY_2) {
+        e.team       = team_id;
+        e.armortype  = team_army_2_enemy;
+        e.armorvalue = team_army_2_size;
+        e.netname    = "army_2";
+        e.aiment     = team_army_2_leader;
+    }
+    else if (team_id == TEAM_ARMY_3) {
+        e.team       = team_id;
+        e.armortype  = team_army_3_enemy;
+        e.armorvalue = team_army_3_size;
+        e.netname    = "army_3";
+        e.aiment     = team_army_3_leader;
+    }
+    else if (team_id == TEAM_KNIGHT_1) {
+        e.team       = team_id;
+        e.armortype  = team_knight_1_enemy;
+        e.armorvalue = team_knight_1_size;
+        e.netname    = "knight_1";
+        e.aiment     = team_knight_1_leader;
+    }
+    else if (team_id == TEAM_KNIGHT_2) {
+        e.team       = team_id;
+        e.armortype  = team_knight_2_enemy;
+        e.armorvalue = team_knight_2_size;
+        e.netname    = "knight_2";
+        e.aiment     = team_knight_2_leader;
+    }
+    else if (team_id == TEAM_KNIGHT_3) {
+        e.team       = team_id;
+        e.armortype  = team_knight_3_enemy;
+        e.armorvalue = team_knight_3_size;
+        e.netname    = "knight_3";
+        e.aiment     = team_knight_3_leader;
+    }
+    else if (team_id == TEAM_UNDEAD_1) {
+        e.team       = team_id;
+        e.armortype  = team_undead_1_enemy;
+        e.armorvalue = team_undead_1_size;
+        e.netname    = "undead_1";
+        e.aiment     = team_undead_1_leader;
+    }
+    else if (team_id == TEAM_UNDEAD_2) {
+        e.team       = team_id;
+        e.armortype  = team_undead_2_enemy;
+        e.armorvalue = team_undead_2_size;
+        e.netname    = "undead_2";
+        e.aiment     = team_undead_2_leader;
+    }
+    else if (team_id == TEAM_UNDEAD_3) {
+        e.team       = team_id;
+        e.armortype  = team_undead_3_enemy;
+        e.armorvalue = team_undead_3_size;
+        e.netname    = "undead_3";
+        e.aiment     = team_undead_3_leader;
+    }
+    else if (team_id == TEAM_OGRE_1) {
+        e.team       = team_id;
+        e.armortype  = team_ogre_1_enemy;
+        e.armorvalue = team_ogre_1_size;
+        e.netname    = "ogre_1";
+        e.aiment     = team_ogre_1_leader;
+    }
+    else if (team_id == TEAM_OGRE_2) {
+        e.team       = team_id;
+        e.armortype  = team_ogre_2_enemy;
+        e.armorvalue = team_ogre_2_size;
+        e.netname    = "ogre_2";
+        e.aiment     = team_ogre_2_leader;
+    }
+    else if (team_id == TEAM_OGRE_3) {
+        e.team       = team_id;
+        e.armortype  = team_ogre_3_enemy;
+        e.armorvalue = team_ogre_3_size;
+        e.netname    = "ogre_3";
+        e.aiment     = team_ogre_3_leader;
+    }
+    else if (team_id == TEAM_CLIENT) {
+        e.team       = team_id;
+        e.armortype  = 0;
+        e.armorvalue = 0;
+        e.netname    = "client";
+        e.aiment     = world;
+    }
+    else if (team_id == TEAM_WORLD) {
+        e.team       = team_id;
+        e.armortype  = 0;
+        e.armorvalue = 0;
+        e.netname    = "the environment";
+        e.aiment     = world;
+    } else {
+        e.team       = -1;
+        e.armortype  = 0;
+        e.armorvalue = 0;
+        e.netname    = "unknown";
+        e.aiment     = world;
+    }
+
+    return e;
+};
+
+string(float team_id) ai_team_name = {
+    // attatch meaningful names to teams
+
+    if (team_id == TEAM_NONE) {
+        return "unteamed";
+    }
+    else if (team_id == TEAM_ARMY_1) {
+        return "army_1";
+    }
+    else if (team_id == TEAM_ARMY_2) {
+        return "army_2";
+    }
+    else if (team_id == TEAM_ARMY_3) {
+        return "army_3";
+    }
+    else if (team_id == TEAM_KNIGHT_1) {
+        return "knight_1";
+    }
+    else if (team_id == TEAM_KNIGHT_2) {
+        return "knight_2";
+    }
+    else if (team_id == TEAM_KNIGHT_3) {
+        return "knight_3";
+    }
+    else if (team_id == TEAM_UNDEAD_1) {
+        return "undead_1";
+    }
+    else if (team_id == TEAM_UNDEAD_2) {
+        return "undead_2";
+    }
+    else if (team_id == TEAM_UNDEAD_3) {
+        return "undead_3";
+    }
+    else if (team_id == TEAM_OGRE_1) {
+        return "ogre_1";
+    }
+    else if (team_id == TEAM_OGRE_2) {
+        return "ogre_2";
+    }
+    else if (team_id == TEAM_OGRE_3) {
+        return "ogre_3";
+    }
+    else if (team_id == TEAM_CLIENT) {
+        return "client";
+    }
+    else if (team_id == TEAM_WORLD) {
+        return "the environment";
+    }
+
+    return "unknown team id";
+};
+
+
+void(float team_id) dprint_team = {
+    local entity eteam;
+    eteam = ai_team_properties(team_id);
+    if (eteam.armorvalue) {
+        local string t_size, t_enemy;
+        t_size  = ftos(eteam.armorvalue);
+        t_enemy = ftos(eteam.armortype);
+        dprint4(eteam.netname, " : ", t_size, ", ");
+        dprint4(t_enemy, ", ", eteam.aiment.netname, "\n");
+    }
+};
+
+void() dprint_team_stats = {
     // prints info on the teams
 
-    local string t_size, t_enemy, t_leader;
+    dprint_team(TEAM_ARMY_1);
+    dprint_team(TEAM_ARMY_2);
+    dprint_team(TEAM_ARMY_3);
+    dprint_team(TEAM_KNIGHT_1);
+    dprint_team(TEAM_KNIGHT_2);
+    dprint_team(TEAM_KNIGHT_3);
+    dprint_team(TEAM_UNDEAD_1);
+    dprint_team(TEAM_UNDEAD_2);
+    dprint_team(TEAM_UNDEAD_3);
+    dprint_team(TEAM_OGRE_1);
+    dprint_team(TEAM_OGRE_2);
+    dprint_team(TEAM_OGRE_3);
 
-    if (team_army_1_size)
-    {
-        dprint ("army_1 : ");
-        dprint (ftos(team_army_1_size));
-        dprint (", ");
-        dprint (ftos(team_army_1_enemy));
-        dprint (", ");
-        dprint (team_army_1_leader.netname);
-        dprint ("\n");
-    }
-    if (team_army_2_size)
-    {
-        dprint ("army_2 : ");
-        dprint (ftos(team_army_2_size));
-        dprint (", ");
-        dprint (ftos(team_army_2_enemy));
-        dprint (", ");
-        dprint (team_army_2_leader.netname);
-        dprint ("\n");
-    }
-    if (team_army_3_size)
-    {
-        dprint ("army_3 : ");
-        dprint (ftos(team_army_3_size));
-        dprint (", ");
-        dprint (ftos(team_army_3_enemy));
-        dprint (", ");
-        dprint (team_army_3_leader.netname);
-        dprint ("\n");
-    }
-    if (team_knight_1_size)
-    {
-        dprint ("knight_1 : ");
-        dprint (ftos(team_knight_1_size));
-        dprint (", ");
-        dprint (ftos(team_knight_1_enemy));
-        dprint (", ");
-        dprint (team_knight_1_leader.netname);
-        dprint ("\n");
-    }
-    if (team_knight_2_size)
-    {
-        dprint ("knight_2 : ");
-        dprint (ftos(team_knight_2_size));
-        dprint (", ");
-        dprint (ftos(team_knight_2_enemy));
-        dprint (", ");
-        dprint (team_knight_2_leader.netname);
-        dprint ("\n");
-    }
-    if (team_knight_3_size)
-    {
-        dprint ("knight_3 : ");
-        dprint (ftos(team_knight_3_size));
-        dprint (", ");
-        dprint (ftos(team_knight_3_enemy));
-        dprint (", ");
-        dprint (team_knight_3_leader.netname);
-        dprint ("\n");
-    }
-    if (team_undead_1_size)
-    {
-        dprint ("undead_1 : ");
-        dprint (ftos(team_undead_1_size));
-        dprint (", ");
-        dprint (ftos(team_undead_1_enemy));
-        dprint (", ");
-        dprint (team_undead_1_leader.netname);
-        dprint ("\n");
-    }
-    if (team_undead_2_size)
-    {
-        dprint ("undead_2 : ");
-        dprint (ftos(team_undead_2_size));
-        dprint (", ");
-        dprint (ftos(team_undead_2_enemy));
-        dprint (", ");
-        dprint (team_undead_2_leader.netname);
-        dprint ("\n");
-    }
-    if (team_undead_3_size)
-    {
-        dprint ("undead_3 : ");
-        dprint (ftos(team_undead_3_size));
-        dprint (", ");
-        dprint (ftos(team_undead_3_enemy));
-        dprint (", ");
-        dprint (team_undead_3_leader.netname);
-        dprint ("\n");
-    }
-    if (team_ogre_1_size)
-    {
-        dprint ("ogre_1 : ");
-        dprint (ftos(team_ogre_1_size));
-        dprint (", ");
-        dprint (ftos(team_ogre_1_enemy));
-        dprint (", ");
-        dprint (team_ogre_1_leader.netname);
-        dprint ("\n");
-    }
-    if (team_ogre_2_size)
-    {
-        dprint ("ogre_2 : ");
-        dprint (ftos(team_ogre_2_size));
-        dprint (", ");
-        dprint (ftos(team_ogre_2_enemy));
-        dprint (", ");
-        dprint (team_ogre_2_leader.netname);
-        dprint ("\n");
-    }
-    if (team_ogre_3_size)
-    {
-        dprint ("ogre_3 : ");
-        dprint (ftos(team_ogre_3_size));
-        dprint (", ");
-        dprint (ftos(team_ogre_3_enemy));
-        dprint (", ");
-        dprint (team_ogre_3_leader.netname);
-        dprint ("\n");
-    }
-    dprint ("Unteamed monsters : ");
-    dprint (ftos(team_none_size));
-    dprint ("\n");
+    dprint3("Unteamed monsters : ", ftos(team_none_size), "\n");
 };
 
 //================================================================================
 
-string(float team_id) name_of_team =
-{
-    // attatch meaningful names to teams
-
-    if (team_id == TEAM_NONE)
-        return "unteamed";
-    else if (team_id == TEAM_ARMY_1)
-        return "army(1)";
-    else if (team_id == TEAM_ARMY_2)
-        return "army(2)";
-    else if (team_id == TEAM_ARMY_3)
-        return "army(3)";
-    else if (team_id == TEAM_KNIGHT_1)
-        return "knight(1)";
-    else if (team_id == TEAM_KNIGHT_2)
-        return "knight(2)";
-    else if (team_id == TEAM_KNIGHT_3)
-        return "knight(3)";
-    else if (team_id == TEAM_UNDEAD_1)
-        return "undead(1)";
-    else if (team_id == TEAM_UNDEAD_2)
-        return "undead(2)";
-    else if (team_id == TEAM_UNDEAD_3)
-        return "undead(3)";
-    else if (team_id == TEAM_OGRE_1)
-        return "ogre(1)";
-    else if (team_id == TEAM_OGRE_2)
-        return "ogre(2)";
-    else if (team_id == TEAM_OGRE_3)
-        return "ogre(3)";
-    else if (team_id == TEAM_CLIENT)
-        return "client";
-    else if (team_id == TEAM_WORLD)
-        return "the environment";
-    else
-        return "unknown team id";
-};
-
-void(float team_id) list_enemy_teams =
-{
+void(float team_id) list_enemy_teams = {
     // lists all teams deemed hostile to team_id
+
+    if ((team_id == TEAM_NONE) || (team_id == TEAM_WORLD)) {
+        return;
+    }
 
     local float id_bit;
     id_bit = 1;
 
-    if ((team_id == TEAM_NONE) || (team_id == TEAM_WORLD))
-        return;
+    local entity eteam;
+    eteam  = ai_team_properties(team_id);
 
-    dprint(name_of_team(team_id));
-    dprint(" enemies : ");
+    dprint2(eteam.netname, " enemies : ");
+    while (id_bit <= TEAM_OGRE_3) {
+        if (eteam.armortype & id_bit) {
+            dprint2(ai_team_name(id_bit), "\n");
+        }
+        id_bit = id_bit * 2;
+    }
 
-    if (team_id == TEAM_ARMY_1)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_army_1_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_ARMY_2)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_army_2_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_ARMY_3)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_army_3_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_KNIGHT_1)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_knight_1_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_KNIGHT_2)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_knight_2_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_KNIGHT_3)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_knight_3_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_UNDEAD_1)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_undead_1_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_UNDEAD_2)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_undead_2_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_UNDEAD_3)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_undead_3_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_OGRE_1)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_ogre_1_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_OGRE_2)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_ogre_2_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    else if (team_id == TEAM_OGRE_3)
-    {
-        while (id_bit <= TEAM_OGRE_3)
-        {
-            id_bit = id_bit * 2;
-            if (team_ogre_3_enemy & id_bit)
-            {
-                dprint (name_of_team(id_bit));
-                dprint (", ");
-            }
-        }
-    }
-    dprint("\n");
 };
 
 
@@ -476,7 +388,7 @@ void(entity whosdead, entity whodunnit) ai_update_teams =
     // 3. if attacker is from same team as targ, do not set as enemy...
 
     local string t_name;
-    t_name = name_of_team(whodunnit.teamgroup);
+    t_name = ai_team_name(whodunnit.teamgroup);
 
     if (whosdead.teamgroup == TEAM_NONE)
     {

@@ -88,7 +88,7 @@ void(entity caller, float radius, float by_sight, float by_sound) team_call_for_
     local string t_name, t_mbmr;
 
     if (developer & DV_SHOW_TEAM_AI) {
-        t_name = name_of_team(caller.teamgroup);
+        t_name = ai_team_name(caller.teamgroup);
         t_mbmr = ftos(caller.teammember);
         dprint6 (caller.netname, " [",t_name, "/",t_mbmr,"] has called for assistance\n");
     }
@@ -109,7 +109,7 @@ void(entity caller, float radius, float by_sight, float by_sound) team_call_for_
                 // his current enemy....
 
                 if (!head.enemy || !is_visible(head.enemy, head)) {
-                    t_name = name_of_team(head.teamgroup);
+                    t_name = ai_team_name(head.teamgroup);
                     t_mbmr = ftos(head.teammember);
                     // if head is of same team, come to help
                     if (caller.teamgroup == head.teamgroup) {
@@ -161,7 +161,7 @@ void() set_enemy_all = {
     team_ogre_1_enemy   = TEAM_ANY;
     team_ogre_2_enemy   = TEAM_ANY;
     team_ogre_3_enemy   = TEAM_ANY;
-    bprint ("All teams enemy\n");
+    bprint("All teams enemy\n");
 };
 
 void() set_enemy_none = {
@@ -177,5 +177,5 @@ void() set_enemy_none = {
     team_ogre_1_enemy   = TEAM_CLIENT;
     team_ogre_2_enemy   = TEAM_CLIENT;
     team_ogre_3_enemy   = TEAM_CLIENT;
-    bprint ("No teams enemy\n");
+    bprint("No teams enemy\n");
 };

@@ -39,7 +39,7 @@ void() dprint_team_stats;
 
 void(entity whosdead, entity whodunnit) ai_update_teams;
 
-string(float team_id) name_of_team;
+string(float team_id) ai_team_name;
 
 void(float team_id) list_enemy_teams;
 
