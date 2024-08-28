@@ -8,6 +8,12 @@
 //    and updates the database about the friend / foe relationship of all
 //    the monster teams.
 //
+//    TODO - Each team should be an entity as this will dramatically simplify
+//           handling of state. However, 12 is a considerable number to
+//           reserve and depletes the pool of available entities.
+//
+//           makestatic
+//
 //============================================================================
 /*---public---*/
 // $VER: ai_team_manage.qc 1.10 Karlos (05/02/2000)
@@ -59,67 +65,55 @@ void() ai_reset_teams = {
     }
 
 
-    dprint ("Monster team parameters initialized\n");
-
-    dprint ("  maximum size: ");
-    dprint (ftos(team_maxmembers));
-    dprint ("\n");
-
-    dprint ("  dispersion  : ");
-    dprint (ftos(100*team_dispersion));
-    dprint (" %\n");
-
-    dprint ("  tolerance_sm: ");
-    dprint (ftos(100*same_class_enemy_lim));
-    dprint (" %\n");
-
-    dprint ("  tolerance_df: ");
-    dprint (ftos(100*diff_class_enemy_lim));
-    dprint (" %\n");
+    dprint("Monster team parameters initialized\n");
+    dprint3("  maximum size: ", ftos(team_maxmembers), "\n");
+    dprint3("  dispersion  : ", ftos(100 * team_dispersion), " %\n");
+    dprint3("  tolerance_sm: ", ftos(100 * same_class_enemy_lim), " %\n");
+    dprint3("  tolerance_df: ", ftos(100 * diff_class_enemy_lim), " %\n");
 
     team_none_size   = 0;
 
-    dprint ("Resetting team database\n");
+    dprint("Resetting team database\n");
 
-    team_army_1_size = 0;
-    team_army_2_size = 0;
-    team_army_3_size = 0;
-    team_army_1_enemy = TEAM_CLIENT;
-    team_army_2_enemy = TEAM_CLIENT;
-    team_army_3_enemy = TEAM_CLIENT;
+    team_army_1_size   = 0;
+    team_army_2_size   = 0;
+    team_army_3_size   = 0;
+    team_army_1_enemy  = TEAM_CLIENT;
+    team_army_2_enemy  = TEAM_CLIENT;
+    team_army_3_enemy  = TEAM_CLIENT;
     team_army_1_leader = world;
     team_army_2_leader = world;
     team_army_3_leader = world;
 
-    team_knight_1_size = 0;
-    team_knight_2_size = 0;
-    team_knight_3_size = 0;
-    team_knight_1_enemy = TEAM_CLIENT;
-    team_knight_2_enemy = TEAM_CLIENT;
-    team_knight_3_enemy = TEAM_CLIENT;
+    team_knight_1_size   = 0;
+    team_knight_2_size   = 0;
+    team_knight_3_size   = 0;
+    team_knight_1_enemy  = TEAM_CLIENT;
+    team_knight_2_enemy  = TEAM_CLIENT;
+    team_knight_3_enemy  = TEAM_CLIENT;
     team_knight_1_leader = world;
     team_knight_2_leader = world;
     team_knight_3_leader = world;
 
-    team_undead_1_size = 0;
-    team_undead_2_size = 0;
-    team_undead_3_size = 0;
-    team_undead_1_enemy = TEAM_CLIENT;
-    team_undead_2_enemy = TEAM_CLIENT;
-    team_undead_3_enemy = TEAM_CLIENT;
+    team_undead_1_size   = 0;
+    team_undead_2_size   = 0;
+    team_undead_3_size   = 0;
+    team_undead_1_enemy  = TEAM_CLIENT;
+    team_undead_2_enemy  = TEAM_CLIENT;
+    team_undead_3_enemy  = TEAM_CLIENT;
     team_undead_1_leader = world;
     team_undead_2_leader = world;
     team_undead_3_leader = world;
 
-    team_ogre_1_size = 0;
-    team_ogre_2_size = 0;
-    team_ogre_3_size = 0;
-    team_ogre_1_enemy = TEAM_CLIENT;
-    team_ogre_2_enemy = TEAM_CLIENT;
-    team_ogre_3_enemy = TEAM_CLIENT;
-    team_ogre_1_leader = world;
-    team_ogre_2_leader = world;
-    team_ogre_3_leader = world;
+    team_ogre_1_size     = 0;
+    team_ogre_2_size     = 0;
+    team_ogre_3_size     = 0;
+    team_ogre_1_enemy    = TEAM_CLIENT;
+    team_ogre_2_enemy    = TEAM_CLIENT;
+    team_ogre_3_enemy    = TEAM_CLIENT;
+    team_ogre_1_leader   = world;
+    team_ogre_2_leader   = world;
+    team_ogre_3_leader   = world;
 
 };
 
@@ -314,14 +308,14 @@ string(float team_id) ai_team_name = {
 
 
 void(float team_id) dprint_team = {
-    local entity eteam;
-    eteam = ai_team_properties(team_id);
-    if (eteam.armorvalue) {
+    local entity e_team;
+    e_team = ai_team_properties(team_id);
+    if (e_team.armorvalue) {
         local string t_size, t_enemy;
-        t_size  = ftos(eteam.armorvalue);
-        t_enemy = ftos(eteam.armortype);
-        dprint4(eteam.netname, " : ", t_size, ", ");
-        dprint4(t_enemy, ", ", eteam.aiment.netname, "\n");
+        t_size  = ftos(e_team.armorvalue);
+        t_enemy = ftos(e_team.armortype);
+        dprint4(e_team.netname, " : ", t_size, ", ");
+        dprint4(t_enemy, ", ", e_team.aiment.netname, "\n");
     }
 };
 
@@ -356,12 +350,12 @@ void(float team_id) list_enemy_teams = {
     local float id_bit;
     id_bit = 1;
 
-    local entity eteam;
-    eteam  = ai_team_properties(team_id);
+    local entity e_team;
+    e_team  = ai_team_properties(team_id);
 
-    dprint2(eteam.netname, " enemies : ");
+    dprint2(e_team.netname, " enemies : ");
     while (id_bit <= TEAM_OGRE_3) {
-        if (eteam.armortype & id_bit) {
+        if (e_team.armortype & id_bit) {
             dprint2(ai_team_name(id_bit), "\n");
         }
         id_bit = id_bit * 2;
@@ -370,8 +364,7 @@ void(float team_id) list_enemy_teams = {
 };
 
 
-void(entity whosdead, entity whodunnit) ai_update_teams =
-{
+void(entity whosdead, entity whodunnit) ai_update_teams = {
     // called when a monster is killed. We decrease the size of his team, figure
     // out which team was responsible for his death and flag them as an enemy team
     // with te exception of 'friendly' fire ;)
@@ -390,64 +383,63 @@ void(entity whosdead, entity whodunnit) ai_update_teams =
     local string t_name;
     t_name = ai_team_name(whodunnit.teamgroup);
 
-    if (whosdead.teamgroup == TEAM_NONE)
-    {
+    if (whosdead.teamgroup == TEAM_NONE) {
         // noone even cries....
         team_none_size = team_none_size - 1;
         return;
     }
-
-    else if (whosdead.teamgroup == TEAM_ARMY_1)
-    {
+    else if (whosdead.teamgroup == TEAM_ARMY_1) {
         team_army_1_size = team_army_1_size - 1;
-        if (team_army_1_leader == self)
-        {
-            if (developer & DV_SHOW_TEAM_AI)
-            {
-                dprint5 ("army 1 : team leader killed by ",
-                         whodunnit.netname,
-                         " [", t_name,"]\n");
+        if (team_army_1_leader == self) {
+            if (developer & DV_SHOW_TEAM_AI) {
+                dprint5(
+                    "army 1 : team leader killed by ",
+                    whodunnit.netname,
+                    " [", t_name,"]\n"
+                );
             }
 
             team_army_1_leader = world;
         }
         // blacklist whodunnit's team
-        if (whodunnit.teamgroup != TEAM_ARMY_1)
-        {
+        if (whodunnit.teamgroup != TEAM_ARMY_1) {
             // apply rules (note use of multiple 'if' to speed up descision)
-            if (whodunnit.teamclass != whosdead.teamclass && random() > diff_class_enemy_lim)
+            if (whodunnit.teamclass != whosdead.teamclass && random() > diff_class_enemy_lim) {
                 team_army_1_enemy = team_army_1_enemy | whodunnit.teamgroup;
-            else if (is_enemy_member(whodunnit, whosdead))
+            }
+            else if (is_enemy_member(whodunnit, whosdead)) {
                 team_army_1_enemy = team_army_1_enemy | whodunnit.teamgroup;
-            else if (random() > same_class_enemy_lim)
+            }
+            else if (random() > same_class_enemy_lim) {
                 team_army_1_enemy = team_army_1_enemy | whodunnit.teamgroup;
+            }
         }
     }
-
-    else if (whosdead.teamgroup == TEAM_ARMY_2)
-    {
+    else if (whosdead.teamgroup == TEAM_ARMY_2) {
         team_army_2_size = team_army_2_size - 1;
-        if (team_army_2_leader == self)
-        {
-            if (developer & DV_SHOW_TEAM_AI)
-            {
-                dprint5 ("army 2 : team leader killed by ",
-                         whodunnit.netname,
-                         " [", t_name,"]\n");
+        if (team_army_2_leader == self) {
+            if (developer & DV_SHOW_TEAM_AI) {
+                dprint5(
+                    "army 2 : team leader killed by ",
+                    whodunnit.netname,
+                    " [", t_name,"]\n"
+                );
             }
 
             team_army_2_leader = world;
         }
         // blacklist whodunnit's team
-        if (whodunnit.teamgroup != TEAM_ARMY_2)
-        {
+        if (whodunnit.teamgroup != TEAM_ARMY_2) {
             // apply rules (note use of multiple 'if' to speed up descision)
-            if (whodunnit.teamclass != whosdead.teamclass && random() > diff_class_enemy_lim)
+            if (whodunnit.teamclass != whosdead.teamclass && random() > diff_class_enemy_lim) {
                 team_army_2_enemy = team_army_2_enemy | whodunnit.teamgroup;
-            else if (is_enemy_member(whodunnit, whosdead))
+            }
+            else if (is_enemy_member(whodunnit, whosdead)) {
                 team_army_2_enemy = team_army_2_enemy | whodunnit.teamgroup;
-            else if (random() > same_class_enemy_lim)
+            }
+            else if (random() > same_class_enemy_lim) {
                 team_army_2_enemy = team_army_2_enemy | whodunnit.teamgroup;
+            }
         }
     }
 
@@ -458,7 +450,7 @@ void(entity whosdead, entity whodunnit) ai_update_teams =
         {
             if (developer & DV_SHOW_TEAM_AI)
             {
-                dprint5 ("army 3 : team leader killed by ",
+                dprint5("army 3 : team leader killed by ",
                          whodunnit.netname,
                          " [", t_name,"]\n");
             }
@@ -1042,53 +1034,51 @@ void(float can_be_leader) ai_join_team =
                 }
             }
 
-            if (trygroup == TEAM_OGRE_2 && numtries < 3)
-            {
-                if (team_ogre_2_size < team_maxmembers)
-                {
-                    if (can_be_leader &&
-                        (team_ogre_2_leader == world ||
-                         random() > 0.7))
+            if (trygroup == TEAM_OGRE_2 && numtries < 3) {
+                if (team_ogre_2_size < team_maxmembers) {
+                    if (
+                        can_be_leader &&
+                        (team_ogre_2_leader == world || random() > 0.7)
+                    ) {
                         team_ogre_2_leader = self;
-                    self.teamgroup = TEAM_OGRE_2;
+                    }
+                    self.teamgroup   = TEAM_OGRE_2;
                     team_ogre_2_size = team_ogre_2_size + 1;
-                    self.teammember = team_ogre_2_size;
-                    joined_ok = TRUE;
+                    self.teammember  = team_ogre_2_size;
+                    joined_ok        = TRUE;
                 }
-                else
-                {
+                else {
                     numtries = numtries + 1;
                     trygroup = TEAM_OGRE_3;
                 }
             }
 
-            if (trygroup == TEAM_OGRE_3 && numtries < 3)
-            {
-                if (team_ogre_3_size < team_maxmembers)
-                {
-                    if (can_be_leader &&
-                        (team_ogre_3_leader == world ||
-                         random() > 0.7))
+            if (trygroup == TEAM_OGRE_3 && numtries < 3) {
+                if (team_ogre_3_size < team_maxmembers) {
+                    if (
+                        can_be_leader &&
+                        (team_ogre_3_leader == world || random() > 0.7)
+                    ) {
                         team_ogre_3_leader = self;
-                    self.teamgroup = TEAM_OGRE_3;
+                    }
+                    self.teamgroup   = TEAM_OGRE_3;
                     team_ogre_3_size = team_ogre_3_size + 1;
-                    self.teammember = team_ogre_3_size;
-                    joined_ok = TRUE;
+                    self.teammember  = team_ogre_3_size;
+                    joined_ok        = TRUE;
                 }
-                else
-                {
+                else {
                     numtries = numtries + 1;
                     trygroup = TEAM_OGRE_1;
                 }
             }
 
-            if (numtries >= 3)
-            {
-                if (developer & DV_SHOW_TEAM_AI)
-                    dprint2 (self.netname," could not be teamed\n");
-                self.teamgroup = TEAM_NONE;
-                joined_ok = TRUE;
-                team_none_size = team_none_size+1;
+            if (numtries >= 3) {
+                if (developer & DV_SHOW_TEAM_AI) {
+                    dprint2(self.netname," could not be teamed\n");
+                }
+                self.teamgroup  = TEAM_NONE;
+                joined_ok       = TRUE;
+                team_none_size  = team_none_size+1;
                 self.teammember = team_none_size;
             }
         }
