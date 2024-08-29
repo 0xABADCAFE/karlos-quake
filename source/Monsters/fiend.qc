@@ -445,8 +445,8 @@ void() monster_demon1 = {
     self.th_pain    = demon1_pain;
     self.think      = monster_walk;
 
-    // fiends currently join TEAM_NONE
-    ai_join_team(FALSE); // cannot be a team leader
+    ai_team_join(TEAM_NONE, FALSE); // cannot be a team leader
+
 };
 
 

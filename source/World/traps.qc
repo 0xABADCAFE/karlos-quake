@@ -186,21 +186,25 @@ void() trap_shooter = {
     self.think     = shooter_think;
 };
 
-// makestatic() patch - flames are now dangerous (and faster, too)
+/**
+ * Flame initialisation
+ */
+void(entity e, string m) flame_init = {
+    precache_model(m);
+    setmodel(e, m);
+    precache_sound("ambience/fire1.wav");
+    ambientsound(e.origin, "ambience/fire1.wav", 0.5, ATTN_STATIC);
 
-void(entity e) makestatic = {
-    if ((e.model == "progs/flame.mdl") || (e.model == "progs/flame2.mdl")) {
-        e.teamgroup = TEAM_WORLD;
-        e.netname   = "fire";
-        e.deadflag  = DEAD_DEAD;
+    e.teamgroup = TEAM_WORLD;
+    e.netname   = "fire";
+    e.deadflag  = DEAD_DEAD;
 
-        // if a flame model, set a size and set attacker classname...
-        // otherwise do noting - ie static !
-        setsize(e, '-2 -2 0', '2 2 6');
-        e.solid     = SOLID_TRIGGER;
-        e.touch     = flame_burn;
-        e.classname = "flame";
-    }
+    // if a flame model, set a size and set attacker classname...
+    // otherwise do noting - ie static !
+    setsize(e, '-2 -2 0', '2 2 6');
+    e.solid     = SOLID_TRIGGER;
+    e.touch     = flame_burn;
+    e.classname = "flame";
 };
 
 // Flame damage - not harmful to monsters until avoidance code written

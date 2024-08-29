@@ -1,26 +1,13 @@
-// Header table for directory 'Server' created at 13:54:20 on 25 Aug 2024
+// Header table for directory 'Server' created at 15:25:42 on 28 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : Server/randomgame.qc, 8605 bytes
 // sourcefile : Server/mikerules.qc, 10506 bytes
-// sourcefile : Server/impulse.qc, 9831 bytes
+// sourcefile : Server/impulse.qc, 9809 bytes
 // sourcefile : Server/cheats.qc, 3677 bytes
 // sourcefile : Server/server.qc, 14931 bytes
+// sourcefile : Server/randomgame.qc, 8605 bytes
 //=========================================================================================
-
-
-// Server/randomgame.qc...
-
-/*---public---*/
-// $VER: randomgame 0.01 © Karlos (08/11/1999)
-
-// public function prototypes
-// lowlevel
-void() swap_monster;
-
-float monstertypes;
-/*---private---*/
 
 
 // Server/mikerules.qc...
@@ -114,4 +101,17 @@ void() default_server_opts;
 void() create_server_key;
 void(entity e) report_to_administrator;
 
+/*---private---*/
+
+
+// Server/randomgame.qc...
+
+/*---public---*/
+// $VER: randomgame 0.01 © Karlos (08/11/1999)
+
+// public function prototypes
+// lowlevel
+void() swap_monster;
+
+float monstertypes;
 /*---private---*/

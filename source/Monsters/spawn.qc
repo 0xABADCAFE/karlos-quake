@@ -227,5 +227,7 @@ void() monster_tarbaby = {
     self.th_pain    = tbaby_pain;
     self.th_die     = tbaby_die1;
     self.think      = monster_walk;
+
+    ai_team_join(TEAM_NONE, FALSE); // cannot be a team leader
 };
 

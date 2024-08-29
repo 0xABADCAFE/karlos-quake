@@ -65,7 +65,6 @@ AI/fight.qc            // id
 AI/ai.qc               // modified - enemy ai routines
 AI/combat.qc           // modified - attack / damage / kill handling
 AI/smart.qc            // Karlos   - ai module, smart routines for shoot ahead etc.
-AI/ai_team_manage.qc   // Karlos   - ai setup functions for monster teamwork...
 AI/ai_team.qc          // Karlos   - ai functions for monster teamwork...
 
 // NB : all monsters modified to cope with new corpse, skill adjustment etc..

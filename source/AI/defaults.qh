@@ -7,14 +7,14 @@
 // Team AI ----------------------------------------------------------------------
 
 //        Karlos Quake Monster Teams
-//      
+//
 //    We need to implement some nice system for having monster teams. Teams will
-// share info on location of enemies etc., and monsters within a team will be 
+// share info on location of enemies etc., and monsters within a team will be
 // able to call for assistance from their team mates. So, if a monster is in
 // real danger of being killed by an enemy, he can call for help. Any of his team
 // within a realistic range, who are not currently occupied will be able to
 // respond
-// 
+//
 //    Each monster will be able to have a unique enemy as per normal. However
 // the team will also have a group enemy, which will be either any client and / or
 // any member of any other team deemed hostile.
@@ -39,20 +39,22 @@
                       // used to recognise equivalent teams
 .float teammember;    // actual position within the team
 
+.entity ai_team;
+
 // team id's will be powers of 2 - that way, each team will have a unique bit
 // in a mask which can be used to recognise any combination of other teams
 
 // team bits in precache cvar (actually offset by 1 bit to allow normal precache setting)
 
 float TEAM_MAX_BITS        = 31;         // def teamsize (0-31)
-float TEAM_DISP_BITS       = 992;       // team dispersion 
+float TEAM_DISP_BITS       = 992;       // team dispersion
 float TEAM_SAME_TOL_BITS   = 31744;      // how tolerant of same team class
 float TEAM_DIFF_TOL_BITS   = 1015808;    // how tolerant of diff team class
 
 // default team_maxmembers      = 16
 // default team_dispersion      = 0.25
 // default same_class_enemy_lim = 0.75   -- higher == more tolerant
-// default diff_class_enemy_lim = 0.25 
+// default diff_class_enemy_lim = 0.25
 
 float team_maxmembers;       // maximum team size
 
@@ -64,29 +66,16 @@ float same_class_enemy_lim;  // how tolerant of equivalent teams
 float diff_class_enemy_lim;  // how tolerant of non-equivalent teams
 
 float TEAM_WORLD  = 0;    // world / traps have zero id to stop monsters getting
-                          // mad at them 
+                          // mad at them
 float TEAM_CLIENT = 4096; // all clients are regarded as a single team
 float TEAM_NONE   = 8192; // for loners
 float TEAM_ANY    = 16383;
-float team_none_size;     // number of loners
 
 // grunts / enforcers / dogs
 
 float TEAM_ARMY_1 = 1;  // group id for this team
 float TEAM_ARMY_2 = 2;  // all monsters in the same group id considered friendly
 float TEAM_ARMY_3 = 4;
-
-float team_army_1_size; // number in this team, used during selection
-float team_army_2_size; // 
-float team_army_3_size; //
-
-entity team_army_1_leader; // Only certian monsters can be selected for this
-entity team_army_2_leader; 
-entity team_army_3_leader; 
-
-float team_army_1_enemy; // team id mask which this team deems an enemy
-float team_army_2_enemy; //
-float team_army_3_enemy; //
 
 // knights / hell knights
 
@@ -98,13 +87,6 @@ float team_knight_1_size;
 float team_knight_2_size;
 float team_knight_3_size;
 
-float team_knight_1_enemy;
-float team_knight_2_enemy;
-float team_knight_3_enemy;
-
-entity team_knight_1_leader; // Only certian monsters can be selected for this
-entity team_knight_2_leader; 
-entity team_knight_3_leader;
 
 // fish / zombies / scraggs
 
@@ -112,35 +94,11 @@ float TEAM_UNDEAD_1 = 64;
 float TEAM_UNDEAD_2 = 128;
 float TEAM_UNDEAD_3 = 256;
 
-float team_undead_1_size;
-float team_undead_2_size;
-float team_undead_3_size;
-
-float team_undead_1_enemy;
-float team_undead_2_enemy;
-float team_undead_3_enemy;
-
-entity team_undead_1_leader; // Only certian monsters can be selected for this
-entity team_undead_2_leader; 
-entity team_undead_3_leader;
-
-// ogres / 
+// ogres
 
 float TEAM_OGRE_1 = 512;
 float TEAM_OGRE_2 = 1024;
 float TEAM_OGRE_3 = 2048;
-
-float team_ogre_1_size;
-float team_ogre_2_size;
-float team_ogre_3_size;
-
-float team_ogre_1_enemy;
-float team_ogre_2_enemy;
-float team_ogre_3_enemy;
-
-entity team_ogre_1_leader; // Only certian monsters can be selected for this
-entity team_ogre_2_leader; 
-entity team_ogre_3_leader;
 
 // misc stuff
 entity sight_entity;

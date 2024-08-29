@@ -8,8 +8,6 @@
 
    Modified by Karlos
 
-      Changed makestatic() function for flame models - added flame damage code
-
       Added EDICT_EXPIRE constant for timeout removable objects (ie corpses)
       Added dynamiclight global variable (bitmask for effects enable)
       Added CHAN_WALK, CHAN_AUX1 and CHAN_AUX2 sound channel definitions

@@ -88,7 +88,7 @@ void(entity targ, entity attacker) Killed = {
         WriteByte(MSG_ALL, SVC_KILLEDMONSTER);
         self.deadflag = DEAD_DYING;
         monster_death_use();
-        ai_update_teams(targ, attacker);
+        ai_team_update(targ, attacker);
     }
     else if (self.flags & FL_CLIENT) {
         ClientObituary(self, attacker);
@@ -264,7 +264,7 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage = {
         }
         // team assistance stuff
         if (ai_judge_hazard(attacker) > 25 * random() || self.health <= 25) {
-            team_call_for_backup(self, 700, TRUE, TRUE);
+            ai_team_call_for_help(self, 700, TRUE, TRUE);
         }
     }
 

@@ -195,6 +195,6 @@ void() monster_fish = {
     self.th_melee = f_attack1;
     self.think    = monster_swim;
 
-    ai_join_team(FALSE); // can't be a team leader
+    ai_team_join(TEAM_UNDEAD_1, FALSE); // can't be a team leader
 };
 

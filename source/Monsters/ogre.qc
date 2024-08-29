@@ -593,9 +593,9 @@ void() monster_ogre = {
     self.th_pain    = ogre_pain;
     self.think      = monster_walk;
 
-    ai_join_team(TRUE); // can be a team leader
+    ai_team_join(TEAM_OGRE_1, TRUE); // can be a team leader
 };
 
 void() monster_ogre_marksman = {
-    monster_ogre ();
+    monster_ogre();
 };

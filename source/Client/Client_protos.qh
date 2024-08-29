@@ -1,13 +1,13 @@
-// Header table for directory 'Client' created at 13:54:24 on 25 Aug 2024
+// Header table for directory 'Client' created at 15:25:46 on 28 Aug 2024
 //
 //========================================================================================
 //
 // sourcefile : Client/player.qc, 23676 bytes
 // sourcefile : Client/inventory.qc, 11190 bytes
-// sourcefile : Client/weapons.qc, 51756 bytes
+// sourcefile : Client/weapons.qc, 51778 bytes
 // sourcefile : Client/grapple.qc, 20602 bytes
 // sourcefile : Client/skins.qc, 5278 bytes
-// sourcefile : Client/target.qc, 6066 bytes
+// sourcefile : Client/target.qc, 6060 bytes
 // sourcefile : Client/camera.qc, 15822 bytes
 // sourcefile : Client/client_extra.qc, 31769 bytes
 // sourcefile : Client/client.qc, 41676 bytes
@@ -136,7 +136,7 @@ void (float opt) change_client_skin;
 // Client/target.qc...
 
 /*---public---*/
-// $VER: target.qc 1.97 © Karlos (10/3/2000)
+// $VER: target.qc 1.97 ï¿½ Karlos (10/3/2000)
 
 // public function prototypes
 // highlevel

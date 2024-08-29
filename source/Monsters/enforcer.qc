@@ -608,5 +608,5 @@ void() monster_enforcer = {
     self.think       = monster_walk;
     self.cell_charge = 20;
 
-    ai_join_team(TRUE); // can be a team leader
+    ai_team_join(TEAM_ARMY_1, TRUE); // can be a team leader
 };

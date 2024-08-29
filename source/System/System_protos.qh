@@ -1,34 +1,11 @@
-// Header table for directory 'System' created at 13:54:21 on 25 Aug 2024
+// Header table for directory 'System' created at 15:25:43 on 28 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : System/subs.qc, 7865 bytes
 // sourcefile : System/version.qc, 672 bytes
 // sourcefile : System/utilities.qc, 9877 bytes
+// sourcefile : System/subs.qc, 7865 bytes
 //=========================================================================================
-
-
-// System/subs.qc...
-
-/*---public---*/
-// $VER: subs.qc 1.06 id software
-
-// public function prototypes
-void() SUB_Null;
-void() SUB_Remove;
-void() SUB_regen;
-void(void() thinkst) SUB_CheckRefire;
-void()  SUB_CalcMoveDone;
-void() DelayThink;
-void() InitTrigger;
-void() SUB_CalcAngleMoveDone;
-void() SUB_UseTargets;
-void(entity ent, vector destangle, float tspeed, void() func) SUB_CalcAngleMoveEnt;
-void(entity ent, vector tdest, float tspeed, void() func) SUB_CalcMoveEnt;
-void(float normal) SUB_AttackFinished;
-void(vector destangle, float tspeed, void() func) SUB_CalcAngleMove;
-void(vector tdest, float tspeed, void() func) SUB_CalcMove;
-/*---private---*/
 
 
 // System/version.qc...
@@ -74,4 +51,27 @@ float sound2_used;
 float sound3_used;
 float sound4_used;
 
+/*---private---*/
+
+
+// System/subs.qc...
+
+/*---public---*/
+// $VER: subs.qc 1.06 id software
+
+// public function prototypes
+void() SUB_Null;
+void() SUB_Remove;
+void() SUB_regen;
+void(void() thinkst) SUB_CheckRefire;
+void()  SUB_CalcMoveDone;
+void() DelayThink;
+void() InitTrigger;
+void() SUB_CalcAngleMoveDone;
+void() SUB_UseTargets;
+void(entity ent, vector destangle, float tspeed, void() func) SUB_CalcAngleMoveEnt;
+void(entity ent, vector tdest, float tspeed, void() func) SUB_CalcMoveEnt;
+void(float normal) SUB_AttackFinished;
+void(vector destangle, float tspeed, void() func) SUB_CalcAngleMove;
+void(vector tdest, float tspeed, void() func) SUB_CalcMove;
 /*---private---*/

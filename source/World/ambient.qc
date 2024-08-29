@@ -192,12 +192,6 @@ void() light_globe = {
     makestatic(self);
 };
 
-void() FireAmbient = {
-    precache_sound("ambience/fire1.wav");
-    // attenuate fast
-    ambientsound(self.origin, "ambience/fire1.wav", 0.5, ATTN_STATIC);
-};
-
 
 // QUAKED light_torch_small_walltorch (0 .5 0) (-10 -10 -20) (10 10 20)
 // Short wall torch
@@ -205,10 +199,7 @@ void() FireAmbient = {
 // Default style is 0
 
 void() light_torch_small_walltorch = {
-    precache_model("progs/flame.mdl");
-    setmodel(self, "progs/flame.mdl");
-    FireAmbient();
-    makestatic(self);
+    flame_init(self, "progs/flame.mdl");
 };
 
 
@@ -216,11 +207,8 @@ void() light_torch_small_walltorch = {
 // Large yellow flame ball
 
 void() light_flame_large_yellow = {
-    precache_model("progs/flame2.mdl");
-    setmodel(self, "progs/flame2.mdl");
     self.frame = 1;
-    FireAmbient();
-    makestatic(self);
+    flame_init(self, "progs/flame2.mdl");
 };
 
 
@@ -228,10 +216,7 @@ void() light_flame_large_yellow = {
 // Small yellow flame ball
 
 void() light_flame_small_yellow = {
-    precache_model("progs/flame2.mdl");
-    setmodel(self, "progs/flame2.mdl");
-    FireAmbient();
-    makestatic(self);
+    flame_init(self, "progs/flame2.mdl");
 };
 
 
@@ -239,10 +224,7 @@ void() light_flame_small_yellow = {
 // Small white flame ball
 
 void() light_flame_small_white = {
-    precache_model("progs/flame2.mdl");
-    setmodel(self, "progs/flame2.mdl");
-    FireAmbient();
-    makestatic(self);
+    flame_init(self, "progs/flame2.mdl");
 };
 
 //========================================================================================
@@ -291,7 +273,7 @@ void() func_illusionary = {
     self.movetype = MOVETYPE_NONE;
     self.solid    = SOLID_NOT;
     setmodel(self, self.model);
-    makestatic();
+    makestatic(self);
 };
 
 // QUAKED func_episodegate (0 .5 .8) ? E1 E2 E3 E4
