@@ -291,5 +291,5 @@ void() monster_knight = {
     self.th_die   = knight_die;
     self.think    = monster_walk;
 
-    ai_join_team(TRUE); // can be a team leader
+    ai_team_join(TEAM_KNIGHT_1, TRUE); // can be a team leader
 };

@@ -1,15 +1,15 @@
-// Header table for directory 'World' created at 13:54:24 on 25 Aug 2024
+// Header table for directory 'World' created at 15:25:10 on 28 Aug 2024
 //
 //========================================================================================
 //
 // sourcefile : World/items.qc, 41308 bytes
-// sourcefile : World/ambient.qc, 11753 bytes
-// sourcefile : World/traps.qc, 6535 bytes
+// sourcefile : World/ambient.qc, 11280 bytes
+// sourcefile : World/traps.qc, 6544 bytes
 // sourcefile : World/plats.qc, 9046 bytes
 // sourcefile : World/triggers.qc, 17145 bytes
 // sourcefile : World/buttons.qc, 3512 bytes
 // sourcefile : World/doors.qc, 19428 bytes
-// sourcefile : World/world.qc, 15229 bytes
+// sourcefile : World/world.qc, 15227 bytes
 //=========================================================================================
 
 

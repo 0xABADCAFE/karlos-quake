@@ -1,10 +1,10 @@
-// Header table for directory 'Server' created at 13:54:20 on 25 Aug 2024
+// Header table for directory 'Server' created at 15:25:11 on 28 Aug 2024
 //
 //========================================================================================
 //
 // sourcefile : Server/randomgame.qc, 8605 bytes
 // sourcefile : Server/mikerules.qc, 10506 bytes
-// sourcefile : Server/impulse.qc, 9831 bytes
+// sourcefile : Server/impulse.qc, 9809 bytes
 // sourcefile : Server/cheats.qc, 3677 bytes
 // sourcefile : Server/server.qc, 14931 bytes
 //=========================================================================================

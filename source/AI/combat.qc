@@ -88,7 +88,7 @@ void(entity targ, entity attacker) Killed = {
         WriteByte(MSG_ALL, SVC_KILLEDMONSTER);
         self.deadflag = DEAD_DYING;
         monster_death_use();
-        ai_update_teams(targ, attacker);
+        ai_team_update(targ, attacker);
     }
     else if (self.flags & FL_CLIENT) {
         ClientObituary(self, attacker);

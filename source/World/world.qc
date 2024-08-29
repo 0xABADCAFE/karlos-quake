@@ -377,7 +377,7 @@ void() worldspawn = {
     if (cvar("deathmatch") == 0) {
         // initialize monsters in a non-deathmatch game
         clear_monster_caches();
-        ai_reset_teams();
+        ai_team_init();
     }
 
     // Handle server master stuff
