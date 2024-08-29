@@ -1,9 +1,8 @@
-// Header table for directory 'AI' created at 15:25:12 on 28 Aug 2024
+// Header table for directory 'AI' created at 15:25:50 on 28 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : AI/ai_team.qc, 20283 bytes
-// sourcefile : AI/ai_team_manage.qc, 15492 bytes
+// sourcefile : AI/ai_team.qc, 19057 bytes
 // sourcefile : AI/smart.qc, 10488 bytes
 // sourcefile : AI/combat.qc, 11289 bytes
 // sourcefile : AI/ai.qc, 18361 bytes
@@ -18,34 +17,14 @@
 
 // public function prototypes
 float (entity observer, entity observed) is_enemy_member;
-void(entity caller, float radius, float by_sight, float by_sound) team_call_for_backup;
-void() set_enemy_all;
-void() set_enemy_none;
+void(entity caller, float radius, float by_sight, float by_sound) ai_team_call_for_help;
+void() ai_team_set_all_enemy;
+void() ai_team_clear_all_enemy;
 void() ai_team_init;
 void(float team_id, float can_be_leader) ai_team_join;
 entity(float team_id) ai_team_properties;
 void() dprint_team_stats;
 void(entity whosdead, entity whodunnit) ai_team_update;
-string(float team_id) ai_team_name;
-void(float team_id) list_enemy_teams;
-
-/*---private---*/
-
-
-// AI/ai_team_manage.qc...
-
-/*---public---*/
-// $VER: ai_team_manage.qc 1.10 Karlos (05/02/2000)
-
-// public function prototypes
-
-void() ai_team_init;
-void(float team_id, float can_be_leader) ai_team_join;
-entity(float team_id) ai_team_properties;
-
-void() dprint_team_stats;
-void(entity whosdead, entity whodunnit) ai_team_update;
-string(float team_id) ai_team_name;
 void(float team_id) list_enemy_teams;
 
 /*---private---*/

@@ -127,7 +127,7 @@ void() laser_track = {
                 (developer & DV_SHOW_TEAM_AI)
             ) {
                 local string t_name, t_mbmr;
-                t_name = ai_team_name(trace_ent.teamgroup);
+                t_name = trace_ent.ai_team.netname;
                 t_mbmr = ftos(trace_ent.teammember);
                 self.owner.netname_delay = time + 2;
                 dprint6 (trace_ent.netname, " [", t_name, "/", t_mbmr, "]\n");

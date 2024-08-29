@@ -287,11 +287,11 @@ void () ImpulseCommands_3 = {
     }
 
     if (self.impulse == IM_SET_ALL_ENEMY) {
-        set_enemy_all();
+        ai_team_set_all_enemy();
         return;
     }
     if (self.impulse == IM_SET_DEFAULT_ENEMY) {
-        set_enemy_none();
+        ai_team_clear_all_enemy();
         return;
     }
     // debug : security

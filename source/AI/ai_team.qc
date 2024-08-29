@@ -7,22 +7,45 @@
 
 // public function prototypes
 float (entity observer, entity observed) is_enemy_member;
-void(entity caller, float radius, float by_sight, float by_sound) team_call_for_backup;
-void() set_enemy_all;
-void() set_enemy_none;
+void(entity caller, float radius, float by_sight, float by_sound) ai_team_call_for_help;
+void() ai_team_set_all_enemy;
+void() ai_team_clear_all_enemy;
 void() ai_team_init;
 void(float team_id, float can_be_leader) ai_team_join;
 entity(float team_id) ai_team_properties;
 void() dprint_team_stats;
 void(entity whosdead, entity whodunnit) ai_team_update;
-string(float team_id) ai_team_name;
 void(float team_id) list_enemy_teams;
 
 /*---private---*/
+
+// Entities representing teams. These entities contain shared state for team members.
+//
+// .team         Team ID
+// .netname      Team name
+// .owner        Team leader
+// .ammo_shells  Team size
+// .ammo_nails   Enemy team bitmask
+entity ai_team_none;
+entity ai_team_army_1;
+entity ai_team_army_2;
+entity ai_team_army_3;
+entity ai_team_knight_1;
+entity ai_team_knight_2;
+entity ai_team_knight_3;
+entity ai_team_undead_1;
+entity ai_team_undead_2;
+entity ai_team_undead_3;
+entity ai_team_ogre_1;
+entity ai_team_ogre_2;
+entity ai_team_ogre_3;
+
+
 //================================================================================
 
-// TODO Consider making the teams actual entities as this would allow reference sharing of state
-
+/**
+ * Checks if an observed entity belongs to a hostile team
+ */
 float (entity observer, entity observed) is_enemy_member = {
     // two members of the same team cannot be enemies (unless zero)
 
@@ -39,7 +62,7 @@ float (entity observer, entity observed) is_enemy_member = {
 
 };
 
-void(entity caller, float radius, float by_sight, float by_sound) team_call_for_backup =
+void(entity caller, float radius, float by_sight, float by_sound) ai_team_call_for_help =
 {
     if (!self.teamgroup || self.teamgroup == TEAM_CLIENT) {
         return;
@@ -48,9 +71,9 @@ void(entity caller, float radius, float by_sight, float by_sound) team_call_for_
     local string t_name, t_mbmr;
 
     if (developer & DV_SHOW_TEAM_AI) {
-        t_name = ai_team_name(caller.teamgroup);
+        t_name = caller.ai_team.netname;
         t_mbmr = ftos(caller.teammember);
-        dprint6 (caller.netname, " [",t_name, "/",t_mbmr,"] has called for assistance\n");
+        dprint6(caller.netname, " [",t_name, "/",t_mbmr,"] has called for assistance\n");
     }
 
     // allow a monster to call for help from any of his team who are within
@@ -69,7 +92,7 @@ void(entity caller, float radius, float by_sight, float by_sound) team_call_for_
                 // his current enemy....
 
                 if (!head.enemy || !is_visible(head.enemy, head)) {
-                    t_name = ai_team_name(head.teamgroup);
+                    t_name = head.ai_team.netname;
                     t_mbmr = ftos(head.teammember);
                     // if head is of same team, come to help
                     if (caller.teamgroup == head.teamgroup) {
@@ -108,85 +131,40 @@ void(entity caller, float radius, float by_sight, float by_sound) team_call_for_
     }
 };
 
-void() set_enemy_all = {
-    team_army_1_enemy   = TEAM_ANY;
-    team_army_2_enemy   = TEAM_ANY;
-    team_army_3_enemy   = TEAM_ANY;
-    team_knight_1_enemy = TEAM_ANY;
-    team_knight_2_enemy = TEAM_ANY;
-    team_knight_3_enemy = TEAM_ANY;
-    team_undead_1_enemy = TEAM_ANY;
-    team_undead_2_enemy = TEAM_ANY;
-    team_undead_3_enemy = TEAM_ANY;
-    team_ogre_1_enemy   = TEAM_ANY;
-    team_ogre_2_enemy   = TEAM_ANY;
-    team_ogre_3_enemy   = TEAM_ANY;
-    bprint("All teams enemy\n");
+void() ai_team_set_all_enemy = {
+
+//    ai_team_none.ammo_nails     = TEAM_ANY;
+    ai_team_army_1.ammo_nails   = TEAM_ANY;
+    ai_team_army_2.ammo_nails   = TEAM_ANY;
+    ai_team_army_3.ammo_nails   = TEAM_ANY;
+    ai_team_knight_1.ammo_nails = TEAM_ANY;
+    ai_team_knight_2.ammo_nails = TEAM_ANY;
+    ai_team_knight_3.ammo_nails = TEAM_ANY;
+    ai_team_undead_1.ammo_nails = TEAM_ANY;
+    ai_team_undead_2.ammo_nails = TEAM_ANY;
+    ai_team_undead_3.ammo_nails = TEAM_ANY;
+    ai_team_ogre_1.ammo_nails   = TEAM_ANY;
+    ai_team_ogre_2.ammo_nails   = TEAM_ANY;
+    ai_team_ogre_3.ammo_nails   = TEAM_ANY;
+    dprint("All teams enemy\n");
 };
 
-void() set_enemy_none = {
-    team_army_1_enemy   = TEAM_CLIENT;
-    team_army_2_enemy   = TEAM_CLIENT;
-    team_army_3_enemy   = TEAM_CLIENT;
-    team_knight_1_enemy = TEAM_CLIENT;
-    team_knight_2_enemy = TEAM_CLIENT;
-    team_knight_3_enemy = TEAM_CLIENT;
-    team_undead_1_enemy = TEAM_CLIENT;
-    team_undead_2_enemy = TEAM_CLIENT;
-    team_undead_3_enemy = TEAM_CLIENT;
-    team_ogre_1_enemy   = TEAM_CLIENT;
-    team_ogre_2_enemy   = TEAM_CLIENT;
-    team_ogre_3_enemy   = TEAM_CLIENT;
+void() ai_team_clear_all_enemy = {
+    ai_team_army_1.ammo_nails   = TEAM_CLIENT;
+    ai_team_army_2.ammo_nails   = TEAM_CLIENT;
+    ai_team_army_3.ammo_nails   = TEAM_CLIENT;
+    ai_team_knight_1.ammo_nails = TEAM_CLIENT;
+    ai_team_knight_2.ammo_nails = TEAM_CLIENT;
+    ai_team_knight_3.ammo_nails = TEAM_CLIENT;
+    ai_team_undead_1.ammo_nails = TEAM_CLIENT;
+    ai_team_undead_2.ammo_nails = TEAM_CLIENT;
+    ai_team_undead_3.ammo_nails = TEAM_CLIENT;
+    ai_team_ogre_1.ammo_nails   = TEAM_CLIENT;
+    ai_team_ogre_2.ammo_nails   = TEAM_CLIENT;
+    ai_team_ogre_3.ammo_nails   = TEAM_CLIENT;
     bprint("No teams enemy\n");
 };
 
-// ai_team_manage.qc
-//============================================================================
-//
-//   TEAM AI
-//
-//       This file contains the functions needed to set up and maintain the
-//    monster team database. It handles the assignment of monsters to teams
-//    and updates the database about the friend / foe relationship of all
-//    the monster teams.
-//
-//    TODO - Each team should be an entity as this will dramatically simplify
-//           handling of state. However, 12 is a considerable number to
-//           reserve and depletes the pool of available entities.
-//
-//           makestatic
-//
-//============================================================================
-/*---public---*/
-// $VER: ai_team_manage.qc 1.10 Karlos (05/02/2000)
-
-// public function prototypes
-
-
-/*---private---*/
-
-// Entities representing teams. These entities are made static after spawn
-//
-// .team         Team ID
-// .netname      Team name
-// .owner        Team leader
-// .ammo_shells  Team size
-// .ammo_nails   Enemy team bitmask
-
-
-entity ai_team_none;
-entity ai_team_army_1;
-entity ai_team_army_2;
-entity ai_team_army_3;
-entity ai_team_knight_1;
-entity ai_team_knight_2;
-entity ai_team_knight_3;
-entity ai_team_undead_1;
-entity ai_team_undead_2;
-entity ai_team_undead_3;
-entity ai_team_ogre_1;
-entity ai_team_ogre_2;
-entity ai_team_ogre_3;
 
 entity(float id, float base, string name, float enemy_mask) ai_team_spawn = {
     local entity e;
@@ -199,17 +177,17 @@ entity(float id, float base, string name, float enemy_mask) ai_team_spawn = {
     e.ammo_shells = 0;
     e.ammo_nails  = enemy_mask;
 
-    // Make the entity static as it's just a data container
-    //makestatic(e);
-
-    dprint3("Created team ", e.netname, "\n");
-
+    //dprint3("Created team ", e.netname, "\n");
     return e;
 };
 
 
 //================================================================================
 
+/**
+ * Create the team database. Each team is spawned as an entity then the teams are
+ * grouped by circular linking.
+ */
 void() ai_team_create_all = {
     ai_team_none     = ai_team_spawn(TEAM_NONE, TEAM_NONE, "unteamed", TEAM_CLIENT);
     ai_team_army_1   = ai_team_spawn(TEAM_ARMY_1, TEAM_ARMY_1, "army_1", TEAM_CLIENT);
@@ -286,60 +264,17 @@ void() ai_team_init = {
     tmp = ftos(100 * diff_class_enemy_lim);
     dprint3("  tolerance_df : ", tmp, " %\n");
 
-
-    dprint("Resetting team database\n");
+    dprint("Creating team database\n");
 
     ai_team_create_all();
-
-    // TODO - this is all going away
-    team_none_size     = 0;
-    team_army_1_size   = 0;
-    team_army_2_size   = 0;
-    team_army_3_size   = 0;
-    team_army_1_enemy  = TEAM_CLIENT;
-    team_army_2_enemy  = TEAM_CLIENT;
-    team_army_3_enemy  = TEAM_CLIENT;
-    team_army_1_leader = world;
-    team_army_2_leader = world;
-    team_army_3_leader = world;
-
-    team_knight_1_size   = 0;
-    team_knight_2_size   = 0;
-    team_knight_3_size   = 0;
-    team_knight_1_enemy  = TEAM_CLIENT;
-    team_knight_2_enemy  = TEAM_CLIENT;
-    team_knight_3_enemy  = TEAM_CLIENT;
-    team_knight_1_leader = world;
-    team_knight_2_leader = world;
-    team_knight_3_leader = world;
-
-    team_undead_1_size   = 0;
-    team_undead_2_size   = 0;
-    team_undead_3_size   = 0;
-    team_undead_1_enemy  = TEAM_CLIENT;
-    team_undead_2_enemy  = TEAM_CLIENT;
-    team_undead_3_enemy  = TEAM_CLIENT;
-    team_undead_1_leader = world;
-    team_undead_2_leader = world;
-    team_undead_3_leader = world;
-
-    team_ogre_1_size     = 0;
-    team_ogre_2_size     = 0;
-    team_ogre_3_size     = 0;
-    team_ogre_1_enemy    = TEAM_CLIENT;
-    team_ogre_2_enemy    = TEAM_CLIENT;
-    team_ogre_3_enemy    = TEAM_CLIENT;
-    team_ogre_1_leader   = world;
-    team_ogre_2_leader   = world;
-    team_ogre_3_leader   = world;
-
 };
 
 //================================================================================
 
 /**
  * This is a disgusting hack that uses the current temporary bodyque_head entity
- * to return multiple properties about the enumerated team.
+ * to return multiple properties about the enumerated team for id that dont have
+ * a dedicated entity.
  *
  * .armortype  contains the enemy team bitmask
  * .armorvalue contans the team size
@@ -418,60 +353,6 @@ entity(float team_id) ai_team_properties = {
     return e;
 };
 
-// TODO this can go away
-string(float team_id) ai_team_name = {
-    // attatch meaningful names to teams
-
-    if (team_id == TEAM_NONE) {
-        return "unteamed";
-    }
-    else if (team_id == TEAM_ARMY_1) {
-        return "army_1";
-    }
-    else if (team_id == TEAM_ARMY_2) {
-        return "army_2";
-    }
-    else if (team_id == TEAM_ARMY_3) {
-        return "army_3";
-    }
-    else if (team_id == TEAM_KNIGHT_1) {
-        return "knight_1";
-    }
-    else if (team_id == TEAM_KNIGHT_2) {
-        return "knight_2";
-    }
-    else if (team_id == TEAM_KNIGHT_3) {
-        return "knight_3";
-    }
-    else if (team_id == TEAM_UNDEAD_1) {
-        return "undead_1";
-    }
-    else if (team_id == TEAM_UNDEAD_2) {
-        return "undead_2";
-    }
-    else if (team_id == TEAM_UNDEAD_3) {
-        return "undead_3";
-    }
-    else if (team_id == TEAM_OGRE_1) {
-        return "ogre_1";
-    }
-    else if (team_id == TEAM_OGRE_2) {
-        return "ogre_2";
-    }
-    else if (team_id == TEAM_OGRE_3) {
-        return "ogre_3";
-    }
-    else if (team_id == TEAM_CLIENT) {
-        return "client";
-    }
-    else if (team_id == TEAM_WORLD) {
-        return "the environment";
-    }
-
-    return "unknown team id";
-};
-
-
 void(float team_id) dprint_team = {
     local entity e_team;
     e_team = ai_team_properties(team_id);
@@ -502,7 +383,7 @@ void() dprint_team_stats = {
     dprint_team(TEAM_OGRE_3);
 
     local string tmp;
-    tmp = ftos(team_none_size);
+    tmp = ftos(ai_team_none.ammo_shells);
     dprint3("Unteamed monsters : ", tmp, "\n");
 };
 
@@ -515,22 +396,22 @@ void(float team_id) list_enemy_teams = {
         return;
     }
 
-    local float id_bit;
+    local float id_bit, mask;
     local string tmp;
     id_bit = 1;
 
     local entity e_team;
     e_team  = ai_team_properties(team_id);
+    mask    = e_team.armortype;
 
     dprint2(e_team.netname, " enemies : ");
     while (id_bit <= TEAM_OGRE_3) {
-        if (e_team.armortype & id_bit) {
-            tmp = ai_team_name(id_bit);
-            dprint2(tmp, "\n");
+        if (mask & id_bit) {
+            e_team = ai_team_properties(id_bit);
+            dprint2(e_team.netname, "\n");
         }
         id_bit = id_bit * 2;
     }
-
 };
 
 /**
@@ -556,6 +437,8 @@ void(entity e_victim, entity e_killer) ai_team_update = {
             "]\n"
         );
         e_victim.ai_team.owner = world;
+
+        // TODO Regroup?
     }
 
     // blacklist killers team
@@ -600,6 +483,10 @@ float(float base_id) ai_team_vary = {
     return base_id;
 };
 
+/**
+ * Adds monster (self) to the specified team
+ *
+ */
 void(entity e_team) ai_team_add = {
     e_team.ammo_shells = e_team.ammo_shells + 1;
     self.teammember    = e_team.ammo_shells;
@@ -609,7 +496,9 @@ void(entity e_team) ai_team_add = {
 };
 
 /**
- * Assigns a monster to a team (or the unteamed team)
+ * Assigns a monster (self) to a team (or the unteamed team). The team parameter specifies the
+ * base team ID and the code will use that or one of the siblings, based on paramters such as
+ * size and dispersion.
  */
 void(float team_id, float can_be_leader) ai_team_join = {
     // called from monster initialisation code
@@ -638,10 +527,9 @@ void(float team_id, float can_be_leader) ai_team_join = {
                     e_team.owner = self;
                 }
 
-                dprint2("Assigned ", self.netname);
-                dprint2(" to ", e_team.netname);
-                dprint("\n");
-
+                //dprint2("Assigned ", self.netname);
+                //dprint2(" to ", e_team.netname);
+                //dprint("\n");
 
                 // Job done!
                 return;

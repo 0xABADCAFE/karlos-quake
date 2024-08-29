@@ -70,25 +70,12 @@ float TEAM_WORLD  = 0;    // world / traps have zero id to stop monsters getting
 float TEAM_CLIENT = 4096; // all clients are regarded as a single team
 float TEAM_NONE   = 8192; // for loners
 float TEAM_ANY    = 16383;
-float team_none_size;     // number of loners
 
 // grunts / enforcers / dogs
 
 float TEAM_ARMY_1 = 1;  // group id for this team
 float TEAM_ARMY_2 = 2;  // all monsters in the same group id considered friendly
 float TEAM_ARMY_3 = 4;
-
-float team_army_1_size; // number in this team, used during selection
-float team_army_2_size; //
-float team_army_3_size; //
-
-entity team_army_1_leader; // Only certian monsters can be selected for this
-entity team_army_2_leader;
-entity team_army_3_leader;
-
-float team_army_1_enemy; // team id mask which this team deems an enemy
-float team_army_2_enemy; //
-float team_army_3_enemy; //
 
 // knights / hell knights
 
@@ -100,13 +87,6 @@ float team_knight_1_size;
 float team_knight_2_size;
 float team_knight_3_size;
 
-float team_knight_1_enemy;
-float team_knight_2_enemy;
-float team_knight_3_enemy;
-
-entity team_knight_1_leader; // Only certian monsters can be selected for this
-entity team_knight_2_leader;
-entity team_knight_3_leader;
 
 // fish / zombies / scraggs
 
@@ -114,35 +94,11 @@ float TEAM_UNDEAD_1 = 64;
 float TEAM_UNDEAD_2 = 128;
 float TEAM_UNDEAD_3 = 256;
 
-float team_undead_1_size;
-float team_undead_2_size;
-float team_undead_3_size;
-
-float team_undead_1_enemy;
-float team_undead_2_enemy;
-float team_undead_3_enemy;
-
-entity team_undead_1_leader; // Only certian monsters can be selected for this
-entity team_undead_2_leader;
-entity team_undead_3_leader;
-
-// ogres /
+// ogres
 
 float TEAM_OGRE_1 = 512;
 float TEAM_OGRE_2 = 1024;
 float TEAM_OGRE_3 = 2048;
-
-float team_ogre_1_size;
-float team_ogre_2_size;
-float team_ogre_3_size;
-
-float team_ogre_1_enemy;
-float team_ogre_2_enemy;
-float team_ogre_3_enemy;
-
-entity team_ogre_1_leader; // Only certian monsters can be selected for this
-entity team_ogre_2_leader;
-entity team_ogre_3_leader;
 
 // misc stuff
 entity sight_entity;
