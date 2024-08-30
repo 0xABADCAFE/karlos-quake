@@ -104,7 +104,7 @@ float(entity caller, entity who, float by_sight, float by_sound) AI_CanRespond =
         }
     }
 
-    if (!(see & hear)) {
+    if (!(see | hear)) {
         return FALSE;
     }
 
@@ -188,11 +188,6 @@ void(entity caller, float radius, float by_sight, float by_sound) AI_TeamCallFor
                 }
                 head.enemy = caller;
                 head.think = FoundTarget;
-            } else {
-                dprint2(
-                    head.netname,
-                    " ignoring call\n"
-                );
             }
         }
 

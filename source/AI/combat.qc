@@ -263,8 +263,8 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage = {
             }
         }
         // team assistance stuff
-        if (AI_JudgeHazard(attacker) > 25 * random() || self.health <= 25) {
-            AI_TeamCallForHelp(self, 700, TRUE, TRUE);
+        if (AI_JudgeHazard(attacker) > 25 * random() || self.health <= 30) {
+            AI_TeamCallForHelp(self, 800, TRUE, TRUE);
         }
     }
 
@@ -315,7 +315,7 @@ void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDam
                             T_Damage(head, inflictor, attacker, points * 0.5);
                         }
                         else {
-                            T_Damage (head, inflictor, attacker, points);
+                            T_Damage(head, inflictor, attacker, points);
                         }
 
                         if (inflictor.weapon == IT_LIGHTNING) {

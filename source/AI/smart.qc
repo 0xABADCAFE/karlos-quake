@@ -254,6 +254,7 @@ float (entity thing, entity to) is_audible = {
         chance = 0.4 * chance;
     }
 
+
     // return if audible
     return random() < chance;
 };
