@@ -92,6 +92,12 @@ void(string mdlname, vector bmin, vector bmax, float hbase, float hvar) monster_
     }
     self.health     = hbase + (hvar * random());
     self.health     = self.health * (1 + (skill_fact * 0.16667));
+
+    // Store the inverse value to allow us to work out what fraction of
+    // our health remains when getting battered.
+    self.max_health = 1.0 / self.health;
+
+
     self.takedamage = DAMAGE_AIM;
 
     // spread think times so they don't all happen at same time

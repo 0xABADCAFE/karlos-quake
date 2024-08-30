@@ -1,66 +1,17 @@
-// Header table for directory 'Client' created at 15:25:46 on 28 Aug 2024
+// Header table for directory 'Client' created at 15:51:46 on 28 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : Client/player.qc, 23676 bytes
-// sourcefile : Client/inventory.qc, 11190 bytes
-// sourcefile : Client/weapons.qc, 51778 bytes
-// sourcefile : Client/grapple.qc, 20602 bytes
+// sourcefile : Client/weapons.qc, 51312 bytes
 // sourcefile : Client/skins.qc, 5278 bytes
-// sourcefile : Client/target.qc, 6060 bytes
 // sourcefile : Client/camera.qc, 15822 bytes
 // sourcefile : Client/client_extra.qc, 31769 bytes
-// sourcefile : Client/client.qc, 41676 bytes
+// sourcefile : Client/client.qc, 41677 bytes
+// sourcefile : Client/target.qc, 6060 bytes
+// sourcefile : Client/player.qc, 23676 bytes
+// sourcefile : Client/inventory.qc, 11190 bytes
+// sourcefile : Client/grapple.qc, 20782 bytes
 //=========================================================================================
-
-
-// Client/player.qc...
-
-/*---public---*/
-// $VER: player.qc 1.72 � Karlos (11/09/1999)
-
-// public function prototypes
-// highlevel
-void() PainSound;
-void() DeathSound;
-void() PlayerDead;
-void() GibPlayer;
-void() PlayerDie;
-void() set_suicide_frame;
-
-// lowlevel
-void() player_pain;
-void() player_run;
-void() player_axe1;
-void() player_axeb1;
-void() player_axec1;
-void() player_axed1;
-void() player_shot1;
-void() player_nail1;
-void() player_light1;
-void() player_rocket1;
-void() player_ion1;
-void() player_gren_rt1;
-void() player_gren_lf1;
-void() player_stand1;
-void() precache_male;
-void() precache_female;
-/*---private---*/
-
-
-// Client/inventory.qc...
-
-/*---public---*/
-// $VER: inventory.qc 1.53 Karlos (22/09/1999)
-
-// public function prototypes
-// highlevel
-void()                   inv_toggle;
-void()                   inv_list_items;
-void(float use_item)     inv_equip_item;
-void(float item_dropped) inv_drop_item;
-void()                   inv_prefetch;
-/*---private---*/
 
 
 // Client/weapons.qc...
@@ -103,24 +54,6 @@ void() superspike_touch;
 /*---private---*/
 
 
-// Client/grapple.qc...
-
-/*---public---*/
-// $VER: grapple.qc 1.12 Karlos (08/10/1999) based on code by Perceli Manole
-
-// public functions provided
-// highlevel
-void() inv_grapple_fire;          // launches hook
-void() inv_grapple_release;          // releases hook
-void() inv_grapple_retract;   // begin winching up
-void() inv_grapple_extend;    // allow to drop
-void() inv_grapple_lock;      // locks chain at current length
-void(vector shot_dir, float shot_impulse) grapple_weapon_kick; // weaponkick effect
-// public structure extensions
-.float      grapple;             // grappling hook flags
-/*---private---*/
-
-
 // Client/skins.qc...
 
 /*---public---*/
@@ -130,22 +63,6 @@ void(vector shot_dir, float shot_impulse) grapple_weapon_kick; // weaponkick eff
 // highlevel
 void () load_client_skin;
 void (float opt) change_client_skin;
-/*---private---*/
-
-
-// Client/target.qc...
-
-/*---public---*/
-// $VER: target.qc 1.97 � Karlos (10/3/2000)
-
-// public function prototypes
-// highlevel
-void(entity target_owner) inv_toggle_target;
-void(entity torch_owner)  inv_toggle_torch;
-
-// public structure extensions
-.entity     laser_target_spot;        // player's laser target
-
 /*---private---*/
 
 
@@ -217,4 +134,87 @@ void()   CheckPowerups;
 
 void()   player_set_weapon_view;
 
+/*---private---*/
+
+
+// Client/target.qc...
+
+/*---public---*/
+// $VER: target.qc 1.97 � Karlos (10/3/2000)
+
+// public function prototypes
+// highlevel
+void(entity target_owner) inv_toggle_target;
+void(entity torch_owner)  inv_toggle_torch;
+
+// public structure extensions
+.entity     laser_target_spot;        // player's laser target
+
+/*---private---*/
+
+
+// Client/player.qc...
+
+/*---public---*/
+// $VER: player.qc 1.72 � Karlos (11/09/1999)
+
+// public function prototypes
+// highlevel
+void() PainSound;
+void() DeathSound;
+void() PlayerDead;
+void() GibPlayer;
+void() PlayerDie;
+void() set_suicide_frame;
+
+// lowlevel
+void() player_pain;
+void() player_run;
+void() player_axe1;
+void() player_axeb1;
+void() player_axec1;
+void() player_axed1;
+void() player_shot1;
+void() player_nail1;
+void() player_light1;
+void() player_rocket1;
+void() player_ion1;
+void() player_gren_rt1;
+void() player_gren_lf1;
+void() player_stand1;
+void() precache_male;
+void() precache_female;
+/*---private---*/
+
+
+// Client/inventory.qc...
+
+/*---public---*/
+// $VER: inventory.qc 1.53 Karlos (22/09/1999)
+
+// public function prototypes
+// highlevel
+void()                   inv_toggle;
+void()                   inv_list_items;
+void(float use_item)     inv_equip_item;
+void(float item_dropped) inv_drop_item;
+void()                   inv_prefetch;
+/*---private---*/
+
+
+// Client/grapple.qc...
+
+/*---public---*/
+// $VER: grapple.qc 1.12 Karlos (08/10/1999) based on code by Perceli Manole
+
+// public functions provided
+// highlevel
+void() inv_grapple_fire;      // launches hook
+void() inv_grapple_release;   // releases hook
+void() inv_grapple_retract;   // begin winching up
+void() inv_grapple_extend;    // allow to drop
+void() inv_grapple_lock;      // locks chain at current length
+void(vector shot_dir, float shot_impulse) grapple_weapon_kick; // weaponkick effect
+// public structure extensions
+.float grapple;             // grappling hook flags
 /*---private---*/

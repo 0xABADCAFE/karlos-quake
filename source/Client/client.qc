@@ -682,7 +682,7 @@ void() PutClientInServer = {
     if (!self.cl_color) {
         self.cl_color = cvar("_cl_color");
     }
-    self.teamgroup = TEAM_CLIENT; // used for monster team ai
+    self.ai_team_id = TEAM_CLIENT; // used for monster team ai
 
     if (deathmatch || coop) {
         makevectors(self.angles);

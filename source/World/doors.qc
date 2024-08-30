@@ -432,7 +432,7 @@ Key doors are allways wait -1.
 */
 
 void() func_door = {
-    self.teamgroup = TEAM_WORLD;
+    self.ai_team_id = TEAM_WORLD;
     self.netname   = "a door";
     self.deadflag  = DEAD_DEAD;
 
@@ -696,7 +696,7 @@ If a secret door has a targetname, it will only be opened by it's botton or trig
 */
 
 void () func_door_secret = {
-    self.teamgroup = TEAM_WORLD;
+    self.ai_team_id = TEAM_WORLD;
     self.netname   = "a door";
     self.deadflag  = DEAD_DEAD;
     if (self.sounds == 0) {

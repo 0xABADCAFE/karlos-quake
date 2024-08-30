@@ -21,7 +21,7 @@ void() enf_atk1;
    Hit points          : 80, 40
 
    Specifics..
-      Uses new ai_predict_aim() ai for speculative targeting based on opponents velocity
+      Uses new AI_PredictAim() ai for speculative targeting based on opponents velocity
       and position.
       Projectile speed sensitive to skill setting
       Footstep handling
@@ -75,11 +75,7 @@ void() Laser_Touch = {
         T_Damage(other, self, self.owner, 8 * (1 + random()) );
     }
     else {
-        WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-        WriteByte(MSG_BROADCAST, TE_GUNSHOT);
-        WriteCoord(MSG_BROADCAST, org_x);
-        WriteCoord(MSG_BROADCAST, org_y);
-        WriteCoord(MSG_BROADCAST, org_z);
+        Net_TempEntity(org, TE_GUNSHOT);
     }
     remove(self);
 };
@@ -154,7 +150,7 @@ void() enf_fire_laser = {
 
     tmp = vlen(self.origin - self.enemy.origin);
 
-    // use ai_predict_aim(), basing intercept time on distance
+    // use AI_PredictAim(), basing intercept time on distance
     // if closeish, use intercept of 0.5 time units
     // else use intercept of about 0.75 units
 
@@ -164,7 +160,7 @@ void() enf_fire_laser = {
     else {
         tmp = 0.75;
     }
-    self.futuretarget = ai_predict_aim(self.enemy, 700 + skill * 200, tmp, enf_shoot_ahead, targ_too_far);
+    self.futuretarget = AI_PredictAim(self.enemy, 700 + skill * 200, tmp, enf_shoot_ahead, targ_too_far);
 
 };
 
@@ -608,5 +604,5 @@ void() monster_enforcer = {
     self.think       = monster_walk;
     self.cell_charge = 20;
 
-    ai_team_join(TEAM_ARMY_1, TRUE); // can be a team leader
+    AI_TeamJoin(TEAM_ARMY_1, TRUE); // can be a team leader
 };

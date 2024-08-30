@@ -591,7 +591,7 @@ void(float dist) ai_run = {
         }
         else {
             // Couldn't see old enemy so look for a new one
-            self.enemy = ai_pick_new_target(self, 500);
+            self.enemy = AI_PickNewTarget(self, 500);
 
             // self.enemy = world;
 

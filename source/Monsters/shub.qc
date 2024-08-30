@@ -167,11 +167,7 @@ void() finale_2 = {
     // start a teleport splash inside shub
 
     o = shub.origin - '0 100 0';
-    WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-    WriteByte(MSG_BROADCAST, TE_TELEPORT);
-    WriteCoord(MSG_BROADCAST, o_x);
-    WriteCoord(MSG_BROADCAST, o_y);
-    WriteCoord(MSG_BROADCAST, o_z);
+    Net_TempEntity(o, TE_TELEPORT);
 
     sound(shub, CHAN_VOICE, "misc/r_tele1.wav", 1, ATTN_NORM);
 

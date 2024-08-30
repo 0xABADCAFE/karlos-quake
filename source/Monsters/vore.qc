@@ -238,7 +238,7 @@ void() monster_shalrath = {
     self.th_missile = shal_attack1;
     self.think      = monster_walk;
 
-    ai_team_join(TEAM_NONE, FALSE); // cannot be a team leader
+    AI_TeamJoin(TEAM_NONE, FALSE); // cannot be a team leader
 
     self.nextthink = time + 0.5 + random ()*0.5;
 };

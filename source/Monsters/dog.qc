@@ -486,5 +486,5 @@ void() monster_dog = {
     self.th_missile = dog_leap1;
     self.think      = monster_walk;
 
-    ai_team_join(TEAM_ARMY_1, FALSE); // Sorry pup, you can't be the team leader
+    AI_TeamJoin(TEAM_ARMY_1, FALSE); // Sorry pup, you can't be the team leader
 };

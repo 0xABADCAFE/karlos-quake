@@ -445,7 +445,7 @@ void() monster_demon1 = {
     self.th_pain    = demon1_pain;
     self.think      = monster_walk;
 
-    ai_team_join(TEAM_NONE, FALSE); // cannot be a team leader
+    AI_TeamJoin(TEAM_NONE, FALSE); // cannot be a team leader
 
 };
 

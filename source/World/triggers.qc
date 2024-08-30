@@ -336,11 +336,7 @@ void(vector org) spawn_tfog = {
     s.origin    = org;
     s.nextthink = time + 0.2;
     s.think     = play_teleport;
-    WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-    WriteByte(MSG_BROADCAST, TE_TELEPORT);
-    WriteCoord(MSG_BROADCAST, org_x);
-    WriteCoord(MSG_BROADCAST, org_y);
-    WriteCoord(MSG_BROADCAST, org_z);
+    Net_TempEntity(org, TE_TELEPORT);
 };
 
 void() tdeath_touch = {

@@ -4,13 +4,12 @@
 // contains some handy maths and other functions not defined in QuakeC
 
 // public function prototypes
-float(vector from, vector onto) vdotprod;
 float()                         crandom;
 vector()                        wall_velocity;
 string (float thing)            name_of_thing;
 vector(float length)            vrandom;
 void()                          entity_push;
-
+void(vector org, float type)    Net_TempEntity;
 // sound que stuff
 void(entity e, float e_chan, string e_sound, float e_vol, float e_attn, float used, float max) sound_autolimit;
 float sound1_used;
@@ -55,9 +54,9 @@ vector(float length) vrandom = {
 //   vdotprod() : returns float dot product of vector AB . CD
 //
 //======================================================================================
-float (vector from, vector onto) vdotprod = {
-    return from_x * onto_x + from_y * onto_y + from_z * onto_z;
-};
+//float (vector from, vector onto) vdotprod = {
+//    return from_x * onto_x + from_y * onto_y + from_z * onto_z;
+//};
 
 
 //======================================================================================
@@ -223,68 +222,6 @@ string (float thing) name_of_thing = {
 
 //======================================================================================
 //
-//   thing_to_model() : returns the string modelname of a thing, currently unused
-//
-//======================================================================================
-//
-//string (float thing) thing_to_model =
-//{
-//   // returns the model of 'thing'
-//
-//   if (thing == IT_AXE)
-//      return "";
-//   else if (thing == IT_SHOTGUN)
-//      return ""
-//   else if (thing == IT_SUPER_SHOTGUN)
-//      return "progs/g_shot.mdl";
-//   else if (thing == IT_NAILGUN)
-//      return "progs/g_nail.mdl";
-//   else if (thing == IT_SUPER_NAILGUN)
-//      return "progs/g_nail2.mdl";
-//   else if (thing == IT_GRENADE_LAUNCHER)
-//      return "progs/g_rock.mdl";
-//   else if (thing == IT_ROCKET_LAUNCHER)
-//      return "progs/g_rock2.mdl";
-//   else if (thing == IT_LIGHTNING)
-//      return "progs/g_light.mdl";
-//   else if (thing == IT_EXTRA_WEAPON)
-//      return "";
-//   else if (thing == IT_SHELLS)
-//      return "maps/b_shell1.bsp";
-//   else if (thing == IT_NAILS)
-//      return "nails";
-//   else if (thing == IT_ROCKETS)
-//      return "rockets";
-//   else if (thing == IT_CELLS)
-//      return "cells";
-//   else if (thing == IT_ARMOR1)
-//      return "progs/armor.mdl";
-//   else if (thing == IT_ARMOR2)
-//      return "progs/armor.mdl";
-//   else if (thing == IT_ARMOR3)
-//      return "progs/armor.mdl";
-//   else if (thing == IT_SUPERHEALTH)
-//      return "maps/b_bh100.bsp";
-//   else if (thing == IT_KEY1)
-//      return "Silver Key";
-//   else if (thing == IT_KEY2)
-//      return "Gold Key";
-//   else if (thing == IT_INVISIBILITY)
-//      return "Ring of Shadows";
-//   else if (thing == IT_INVULNERABILITY)
-//      return "Pentagram of Protection";
-//   else if (thing == IT_SUIT)
-//      return "Biohazard Suit";
-//   else if (thing == IT_QUAD)
-//      return "Quad Damage";
-//};
-//
-
-
-
-
-//======================================================================================
-//
 //   SOUND QUEUE FUNCTIONS
 //
 //======================================================================================
@@ -333,3 +270,13 @@ void() handle_sound_queue = {
     }
 };
 
+/**
+ * Broadcast a new temporary entity.
+ */
+void(vector org, float type) Net_TempEntity = {
+    WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
+    WriteByte(MSG_BROADCAST, type);
+    WriteCoord(MSG_BROADCAST, org_x);
+    WriteCoord(MSG_BROADCAST, org_y);
+    WriteCoord(MSG_BROADCAST, org_z);
+};

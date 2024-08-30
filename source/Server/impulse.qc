@@ -238,60 +238,60 @@ void () ImpulseCommands_3 = {
         return;
     }
     if (self.impulse == IM_LIST_ARMY1_ENEMY) {
-        list_enemy_teams(TEAM_ARMY_1);
+        AI_TeamListEnemy(TEAM_ARMY_1);
         return;
     }
     if (self.impulse == IM_LIST_ARMY2_ENEMY) {
-        list_enemy_teams(TEAM_ARMY_2);
+        AI_TeamListEnemy(TEAM_ARMY_2);
         return;
     }
     if (self.impulse == IM_LIST_ARMY3_ENEMY) {
-        list_enemy_teams(TEAM_ARMY_3);
+        AI_TeamListEnemy(TEAM_ARMY_3);
         return;
     }
     if (self.impulse == IM_LIST_KNIGHT1_ENEMY) {
-        list_enemy_teams(TEAM_KNIGHT_1);
+        AI_TeamListEnemy(TEAM_KNIGHT_1);
         return;
     }
     if (self.impulse == IM_LIST_KNIGHT2_ENEMY) {
-        list_enemy_teams(TEAM_KNIGHT_2);
+        AI_TeamListEnemy(TEAM_KNIGHT_2);
         return;
     }
     if (self.impulse == IM_LIST_KNIGHT3_ENEMY) {
-        list_enemy_teams(TEAM_KNIGHT_3);
+        AI_TeamListEnemy(TEAM_KNIGHT_3);
         return;
     }
     if (self.impulse == IM_LIST_UNDEAD1_ENEMY) {
-        list_enemy_teams(TEAM_UNDEAD_1);
+        AI_TeamListEnemy(TEAM_UNDEAD_1);
         return;
     }
     if (self.impulse == IM_LIST_UNDEAD2_ENEMY) {
-        list_enemy_teams(TEAM_UNDEAD_2);
+        AI_TeamListEnemy(TEAM_UNDEAD_2);
         return;
     }
     if (self.impulse == IM_LIST_UNDEAD3_ENEMY) {
-        list_enemy_teams(TEAM_UNDEAD_3);
+        AI_TeamListEnemy(TEAM_UNDEAD_3);
         return;
     }
     if (self.impulse == IM_LIST_OGRE1_ENEMY) {
-        list_enemy_teams(TEAM_OGRE_1);
+        AI_TeamListEnemy(TEAM_OGRE_1);
         return;
     }
     if (self.impulse == IM_LIST_OGRE2_ENEMY) {
-        list_enemy_teams(TEAM_OGRE_2);
+        AI_TeamListEnemy(TEAM_OGRE_2);
         return;
     }
     if (self.impulse == IM_LIST_OGRE3_ENEMY) {
-        list_enemy_teams(TEAM_OGRE_3);
+        AI_TeamListEnemy(TEAM_OGRE_3);
         return;
     }
 
     if (self.impulse == IM_SET_ALL_ENEMY) {
-        ai_team_set_all_enemy();
+        AI_TeamSetAllEnemy();
         return;
     }
     if (self.impulse == IM_SET_DEFAULT_ENEMY) {
-        ai_team_clear_all_enemy();
+        AI_TeamClearAllEnemy();
         return;
     }
     // debug : security

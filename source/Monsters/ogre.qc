@@ -55,7 +55,7 @@ $frame pull1 pull2 pull3 pull4 pull5 pull6 pull7 pull8 pull9 pull10 pull11
 /*---private---*/
 
 void() OgreGrenadeExplode = {
-    ai_radius_alert(self, self.owner, 600, TRUE, TRUE);
+    AI_RadiusAlert(self, self.owner, 600, TRUE, TRUE);
     T_RadiusDamage(self, self.owner, 30 * (1 + random()), world);
     BecomeExplosion();
 };
@@ -593,7 +593,7 @@ void() monster_ogre = {
     self.th_pain    = ogre_pain;
     self.think      = monster_walk;
 
-    ai_team_join(TEAM_OGRE_1, TRUE); // can be a team leader
+    AI_TeamJoin(TEAM_OGRE_1, TRUE); // can be a team leader
 };
 
 void() monster_ogre_marksman = {

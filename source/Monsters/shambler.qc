@@ -402,5 +402,5 @@ void() monster_shambler = {
     self.think      = monster_walk;
 
     // shamblers currently join TEAM_NONE
-    ai_team_join(TEAM_NONE, FALSE); // cannot be a team leader
+    AI_TeamJoin(TEAM_NONE, FALSE); // cannot be a team leader
 };

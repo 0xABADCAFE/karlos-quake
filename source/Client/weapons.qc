@@ -169,11 +169,7 @@ void() W_FireAxe = {
     else {
         // hit wall
         sound(self, CHAN_AUX1, "player/axhit2.wav", 0.7 + (0.3 * random()), ATTN_NORM);
-        WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-        WriteByte(MSG_BROADCAST, TE_GUNSHOT);
-        WriteCoord(MSG_BROADCAST, org_x);
-        WriteCoord(MSG_BROADCAST, org_y);
-        WriteCoord(MSG_BROADCAST, org_z);
+        Net_TempEntity(org, TE_GUNSHOT);
     }
 };
 
@@ -229,11 +225,7 @@ void(float damage, vector dir) TraceAttack = {
         AddMultiDamage(trace_ent, damage);
     }
     else {
-        WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-        WriteByte(MSG_BROADCAST, TE_GUNSHOT);
-        WriteCoord(MSG_BROADCAST, org_x);
-        WriteCoord(MSG_BROADCAST, org_y);
-        WriteCoord(MSG_BROADCAST, org_z);
+        Net_TempEntity(org, TE_GUNSHOT);
     }
 };
 
@@ -299,12 +291,12 @@ void(vector dir, vector spread) fire_machine_bullet = {
     }
     else {
         hitpoint = trace_endpos - direction * 4;
-
-        WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-        WriteByte(MSG_BROADCAST, TE_SPIKE);
-        WriteCoord(MSG_BROADCAST, hitpoint_x);
-        WriteCoord(MSG_BROADCAST, hitpoint_y);
-        WriteCoord(MSG_BROADCAST, hitpoint_z);
+        Net_TempEntity(hitpoint, TE_SPIKE);
+        //WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
+        //WriteByte(MSG_BROADCAST, TE_SPIKE);
+        //WriteCoord(MSG_BROADCAST, hitpoint_x);
+        //WriteCoord(MSG_BROADCAST, hitpoint_y);
+        //WriteCoord(MSG_BROADCAST, hitpoint_z);
     }
 };
 
@@ -342,7 +334,7 @@ void() W_FireSuperShotgun = {
     FireBullets(18, dir, '0.14 0.08 0');
 
     if (deathmatch == 0) {
-        ai_radius_alert(self, self, 400, FALSE, TRUE);
+        AI_RadiusAlert(self, self, 400, FALSE, TRUE);
     }
 
     grapple_weapon_kick(dir, -30);
@@ -414,7 +406,7 @@ void() T_MissileTouch = {
     // was done in the impact
     T_RadiusDamage(self, self.owner, 120, other);
     if (deathmatch == 0) {
-        ai_radius_alert(self, self.owner, 1000, TRUE, TRUE);
+        AI_RadiusAlert(self, self.owner, 1000, TRUE, TRUE);
     }
 
     self.origin = self.origin - 8*normalize(self.velocity);
@@ -748,7 +740,7 @@ void(vector loc, vector dir, float rgb, float ramp) draw_ions = {
 void() ion_end = {
     T_RadiusDamage(self, self.owner, 30, self.owner);
     if (deathmatch == 0) {
-        ai_radius_alert(self, self.owner, 250, TRUE, FALSE);
+        AI_RadiusAlert(self, self.owner, 250, TRUE, FALSE);
     }
     sound (self, CHAN_WEAPON, "shared/frying.wav", 1, ATTN_NORM);
     remove(self);
@@ -766,11 +758,12 @@ void(float beam_energy, vector org, vector direction, entity whofired) ion_strea
     dir = normalize(to - org);
 
     // do teleport style flash at end point
-    WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-    WriteByte(MSG_BROADCAST, TE_TELEPORT);
-    WriteCoord(MSG_BROADCAST, to_x);
-    WriteCoord(MSG_BROADCAST, to_y);
-    WriteCoord(MSG_BROADCAST, to_z);
+    Net_TempEntity(to, TE_TELEPORT);
+    //WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
+    //WriteByte(MSG_BROADCAST, TE_TELEPORT);
+    //WriteCoord(MSG_BROADCAST, to_x);
+    //WriteCoord(MSG_BROADCAST, to_y);
+    //WriteCoord(MSG_BROADCAST, to_z);
 
     radius_flash(to, 0.4);
 
@@ -885,7 +878,7 @@ void() GrenadeExplode = {
 
     // wake up monsters
     if (deathmatch == 0) {
-        ai_radius_alert(self, self.owner, 800, TRUE, TRUE);
+        AI_RadiusAlert(self, self.owner, 800, TRUE, TRUE);
     }
     BecomeExplosion();
 };
@@ -918,7 +911,7 @@ void() GrenadeTouch = {
     else {
         // wake up monsters to grenade
         if (deathmatch == 0) {
-            ai_radius_alert(self, self.owner, 400, TRUE, TRUE);
+            AI_RadiusAlert(self, self.owner, 400, TRUE, TRUE);
         }
 
         r = random(); // random bounce sounds
@@ -1202,7 +1195,7 @@ void() spike_touch = {
         WriteCoord(MSG_BROADCAST, self.origin_z);
     }
     if (deathmatch == 0) {
-        ai_radius_alert(self, self.owner, 100, FALSE, TRUE);
+        AI_RadiusAlert(self, self.owner, 100, FALSE, TRUE);
     }
     remove(self);
 };
@@ -1229,14 +1222,10 @@ void() superspike_touch = {
         T_Damage(other, self, self.owner, 18);
     }
     else {
-        WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-        WriteByte(MSG_BROADCAST, TE_SUPERSPIKE);
-        WriteCoord(MSG_BROADCAST, self.origin_x);
-        WriteCoord(MSG_BROADCAST, self.origin_y);
-        WriteCoord(MSG_BROADCAST, self.origin_z);
+        Net_TempEntity(self.origin, TE_SUPERSPIKE);
     }
     if (deathmatch == 0) {
-        ai_radius_alert(self, self.owner, 100, FALSE, TRUE);
+        AI_RadiusAlert(self, self.owner, 100, FALSE, TRUE);
     }
 
     remove(self);
