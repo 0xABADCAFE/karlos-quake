@@ -223,7 +223,7 @@ void() func_plat = {
         self.state = STATE_BOTTOM;
     }
     self.deadflag  = DEAD_DEAD;
-    self.teamgroup = TEAM_WORLD;
+    self.ai_team_id = TEAM_WORLD;
     self.netname   = "a platform";
 };
 

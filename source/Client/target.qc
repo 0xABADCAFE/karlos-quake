@@ -51,7 +51,7 @@ void() laser_track = {
     if (self.owner.flags & FL_USING_TORCH) {
         // wake up monsters to the light
         if (deathmatch == 0) {
-            ai_radius_alert(self, self.owner, 200, TRUE, FALSE);
+            AI_RadiusAlert(self, self.owner, 200, TRUE, FALSE);
         }
 
         // player is using torch
@@ -128,7 +128,7 @@ void() laser_track = {
             ) {
                 local string t_name, t_mbmr;
                 t_name = trace_ent.ai_team.netname;
-                t_mbmr = ftos(trace_ent.teammember);
+                t_mbmr = ftos(trace_ent.ai_team_pos);
                 self.owner.netname_delay = time + 2;
                 dprint6 (trace_ent.netname, " [", t_name, "/", t_mbmr, "]\n");
             }

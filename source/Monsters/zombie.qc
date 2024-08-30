@@ -549,6 +549,6 @@ void() monster_zombie = {
         }
         self.think = monster_walk;
 
-        ai_team_join(TEAM_UNDEAD_1, TRUE); // can be a team leader
+        AI_TeamJoin(TEAM_UNDEAD_1, TRUE); // can be a team leader
     }
 };

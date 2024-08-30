@@ -1,22 +1,22 @@
-// Header table for directory 'Monsters' created at 15:25:44 on 28 Aug 2024
+// Header table for directory 'Monsters' created at 15:51:45 on 28 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : Monsters/shub.qc, 9598 bytes
-// sourcefile : Monsters/enforcer.qc, 20206 bytes
-// sourcefile : Monsters/vore.qc, 7880 bytes
-// sourcefile : Monsters/rotfish.qc, 7924 bytes
-// sourcefile : Monsters/hellknight.qc, 21301 bytes
-// sourcefile : Monsters/spawn.qc, 8436 bytes
-// sourcefile : Monsters/chthon.qc, 13670 bytes
-// sourcefile : Monsters/zombie.qc, 23417 bytes
-// sourcefile : Monsters/dog.qc, 15496 bytes
-// sourcefile : Monsters/scragg.qc, 12087 bytes
-// sourcefile : Monsters/grunt.qc, 20928 bytes
-// sourcefile : Monsters/knight.qc, 11650 bytes
-// sourcefile : Monsters/shambler.qc, 13549 bytes
-// sourcefile : Monsters/fiend.qc, 14225 bytes
-// sourcefile : Monsters/ogre.qc, 20068 bytes
+// sourcefile : Monsters/shub.qc, 9437 bytes
+// sourcefile : Monsters/enforcer.qc, 20021 bytes
+// sourcefile : Monsters/vore.qc, 7879 bytes
+// sourcefile : Monsters/rotfish.qc, 7923 bytes
+// sourcefile : Monsters/hellknight.qc, 21300 bytes
+// sourcefile : Monsters/spawn.qc, 8258 bytes
+// sourcefile : Monsters/chthon.qc, 13312 bytes
+// sourcefile : Monsters/zombie.qc, 23416 bytes
+// sourcefile : Monsters/dog.qc, 15495 bytes
+// sourcefile : Monsters/scragg.qc, 12084 bytes
+// sourcefile : Monsters/grunt.qc, 20927 bytes
+// sourcefile : Monsters/knight.qc, 11649 bytes
+// sourcefile : Monsters/shambler.qc, 13548 bytes
+// sourcefile : Monsters/fiend.qc, 14224 bytes
+// sourcefile : Monsters/ogre.qc, 20066 bytes
 // sourcefile : Monsters/monsters.qc, 8603 bytes
 //=========================================================================================
 

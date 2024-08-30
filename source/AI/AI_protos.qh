@@ -1,12 +1,12 @@
-// Header table for directory 'AI' created at 15:25:50 on 28 Aug 2024
+// Header table for directory 'AI' created at 15:51:49 on 28 Aug 2024
 //
 //========================================================================================
 //
-// sourcefile : AI/ai_team.qc, 19057 bytes
-// sourcefile : AI/smart.qc, 10488 bytes
-// sourcefile : AI/combat.qc, 11289 bytes
-// sourcefile : AI/ai.qc, 18361 bytes
+// sourcefile : AI/ai_team.qc, 17599 bytes
+// sourcefile : AI/ai.qc, 18359 bytes
 // sourcefile : AI/fight.qc, 7331 bytes
+// sourcefile : AI/smart.qc, 10554 bytes
+// sourcefile : AI/combat.qc, 11313 bytes
 //=========================================================================================
 
 
@@ -16,53 +16,17 @@
 // $VER: ai_team.qc 1.00 Karlos'99 (23/1/2000)
 
 // public function prototypes
-float (entity observer, entity observed) is_enemy_member;
-void(entity caller, float radius, float by_sight, float by_sound) ai_team_call_for_help;
-void() ai_team_set_all_enemy;
-void() ai_team_clear_all_enemy;
-void() ai_team_init;
-void(float team_id, float can_be_leader) ai_team_join;
-entity(float team_id) ai_team_properties;
+float (entity observer, entity observed) AI_TeamIsEnemy;
+void(entity caller, float radius, float by_sight, float by_sound) AI_TeamCallForHelp;
+void() AI_TeamSetAllEnemy;
+void() AI_TeamClearAllEnemy;
+void() AI_TeamInit;
+void(float team_id, float can_be_leader) AI_TeamJoin;
+entity(float team_id) AI_TeamProperties;
 void() dprint_team_stats;
-void(entity whosdead, entity whodunnit) ai_team_update;
-void(float team_id) list_enemy_teams;
+void(entity whosdead, entity whodunnit) AI_TeamUpdate;
+void(float team_id) AI_TeamListEnemy;
 
-/*---private---*/
-
-
-// AI/smart.qc...
-
-/*---public---*/
-// $VER: smart.qc 2.02 Karlos (24/1/2000)
-
-// public function prototypes
-
-vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void() too_far) ai_predict_aim;
-void(entity targ, entity projectile, float proj_speed) ai_shoot_ahead;
-
-
-float(entity what) ai_judge_hazard;
-entity (entity who, float viewdist) ai_pick_new_target;
-
-void(entity monster, entity startler) ai_alert;
-void(entity thing, entity initiator, float radius, float by_sight, float by_sound) ai_radius_alert;
-float(entity thing, entity to) is_visible;
-float(entity thing, entity to) is_audible;
-
-
-/*---private---*/
-
-
-// AI/combat.qc...
-
-/*---public---*/
-// $VER: combat.qc 1.82 Karlos '99 (02/10/1999)
-// public function prototypes
-float(entity targ, entity inflictor) CanDamage;
-void(entity targ, entity attacker) Killed;
-void(entity targ, entity inflictor, entity attacker, float damage) T_Damage;
-void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDamage;
-void(entity attacker, float damage) T_BeamDamage;
 /*---private---*/
 
 
@@ -115,4 +79,40 @@ void(float d) ai_charge;
 void() ai_charge_side;
 void() ai_melee;
 void() ai_melee_side;
+/*---private---*/
+
+
+// AI/smart.qc...
+
+/*---public---*/
+// $VER: smart.qc 2.02 Karlos (24/1/2000)
+
+// public function prototypes
+
+vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void() too_far) AI_PredictAim;
+void(entity targ, entity projectile, float proj_speed) AI_ShootAhead;
+
+
+float(entity what) AI_JudgeHazard;
+entity (entity who, float viewdist) AI_PickNewTarget;
+
+void(entity monster, entity startler) AI_Alert;
+void(entity thing, entity initiator, float radius, float by_sight, float by_sound) AI_RadiusAlert;
+float(entity thing, entity to) is_visible;
+float(entity thing, entity to) is_audible;
+
+
+/*---private---*/
+
+
+// AI/combat.qc...
+
+/*---public---*/
+// $VER: combat.qc 1.82 Karlos '99 (02/10/1999)
+// public function prototypes
+float(entity targ, entity inflictor) CanDamage;
+void(entity targ, entity attacker) Killed;
+void(entity targ, entity inflictor, entity attacker, float damage) T_Damage;
+void(entity inflictor, entity attacker, float damage, entity ignore) T_RadiusDamage;
+void(entity attacker, float damage) T_BeamDamage;
 /*---private---*/

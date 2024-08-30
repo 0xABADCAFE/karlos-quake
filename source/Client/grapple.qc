@@ -5,14 +5,14 @@
 
 // public functions provided
 // highlevel
-void() inv_grapple_fire;          // launches hook
-void() inv_grapple_release;          // releases hook
+void() inv_grapple_fire;      // launches hook
+void() inv_grapple_release;   // releases hook
 void() inv_grapple_retract;   // begin winching up
 void() inv_grapple_extend;    // allow to drop
 void() inv_grapple_lock;      // locks chain at current length
 void(vector shot_dir, float shot_impulse) grapple_weapon_kick; // weaponkick effect
 // public structure extensions
-.float      grapple;             // grappling hook flags
+.float grapple;             // grappling hook flags
 /*---private---*/
 // functions
 void (entity thing, float lifetime) allow_to_fall;
@@ -27,6 +27,10 @@ float MAX_CHAIN_LEN         = 1500;  // maximum chain length
 float CHAIN_LINK_LEN        = 55;    // length between chain link origins
 float GROW_RATE             = 15;    // maximum chain extend rate
 float SHRINK_RATE           = -30;   // maximum chain shorten rate
+
+float INV_CHAIN_LINK_LEN    = 0.0181818; // 1/CHAIN_LINK_LEN
+float INV_GROW_RATE         = 0.0666667; // 1/GROW_RATE
+float INV_INIT_VEL_SCALE    = 0.0454545;
 
 // structure extensions
 .float winch_celltime;               // used for winch motor cell draining
@@ -88,7 +92,7 @@ void () handle_chainlinks = {
         linkstart;        // length from hook at which currlink starts
 
     // predicts hook's future position since chain links fall behind
-    currpos       = vlen(self.velocity) / 22;   // currpos used here just as an intermediate value
+    currpos       = vlen(self.velocity) * INV_INIT_VEL_SCALE;   // currpos used here just as an intermediate value
     p_self_origin = self.origin + normalize(self.velocity) * currpos;
 
     // get info about chain
@@ -110,7 +114,7 @@ void () handle_chainlinks = {
     currpos  = 0;
 
     // generate and refresh links
-    linknum = ceil(chainlen / CHAIN_LINK_LEN);
+    linknum = ceil(chainlen * INV_CHAIN_LINK_LEN);
     while (currpos < linknum) {
         // add entities if chain's length grows
         if (currlink.goalentity == world) {
@@ -143,12 +147,12 @@ void () handle_chainlinks = {
         linkstart = (currpos - 1) * CHAIN_LINK_LEN;
         if (currpos < linknum) {
             //setorigin (currlink, p_self_origin + chainunit * (linkstart + CHAIN_LINK_LEN / 2 ));
-            targetpos = p_self_origin + chainunit * (linkstart + CHAIN_LINK_LEN / 2 );
+            targetpos = p_self_origin + chainunit * (linkstart + CHAIN_LINK_LEN * 0.5 );
             //currlink.frame = 9;
         }
         else {
             //setorigin (currlink, p_self_origin + chainunit * (linkstart + (chainlen - linkstart) / 2 ));
-            targetpos = p_self_origin + chainunit * (linkstart + (chainlen - linkstart) / 2 );
+            targetpos = p_self_origin + chainunit * (linkstart + (chainlen - linkstart) * 0.5 );
             //currlink.frame = floor((chainlen - linkstart) / CHAIN_LINK_LEN * 10);
         }
 
@@ -271,7 +275,7 @@ void () grapple_action = {
         }
         else {
             if (self.delay < time) {
-                restrain_force1 = growthstep / GROW_RATE;
+                restrain_force1 = growthstep * INV_GROW_RATE;
                 self.delay = time + 0.2;
             }
         }
@@ -338,15 +342,15 @@ void () grapple_action = {
     // if player's location is beyond the chain's reach
     if (chainlen > self.armorvalue) {
         // determine player's velocity component of chain vector
-        i1 = vdotprod(self.owner.velocity,chainvec);
-        i2 = vdotprod(chainvec,chainvec);
+        i1 = self.owner.velocity * chainvec; // dot
+        i2 = chainvec * chainvec;            // dot
         velpart = chainvec * (i1 / i2);
 
         // restrainment default force
         restrain_force2 = (chainlen - self.armorvalue) * 5;
 
         // if player's velocity heading is away from the hook
-        if (vdotprod(self.owner.velocity,chainvec) < 0) {
+        if ((self.owner.velocity * chainvec) < 0) { // dot
             if (chainlen > self.armorvalue) {
                 self.owner.velocity = self.owner.velocity - (velpart * 0.4);
             }
@@ -390,7 +394,7 @@ void() grapple_touch = {
     self.owner.grapple = self.owner.grapple | FL_GRAPPLE_ATTATCHED;
 
     if (other.solid != SOLID_SLIDEBOX) {
-        sound (self, CHAN_AUTO, "weapons/grapple_hit.wav", 1, ATTN_NORM);
+        sound(self, CHAN_AUTO, "weapons/grapple_hit.wav", 1, ATTN_NORM);
         self.avelocity = VEC_ZERO;
         // automatically wind in if hit world
         if (other == world) {

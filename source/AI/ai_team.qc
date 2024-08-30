@@ -6,16 +6,16 @@
 // $VER: ai_team.qc 1.00 Karlos'99 (23/1/2000)
 
 // public function prototypes
-float (entity observer, entity observed) is_enemy_member;
-void(entity caller, float radius, float by_sight, float by_sound) ai_team_call_for_help;
-void() ai_team_set_all_enemy;
-void() ai_team_clear_all_enemy;
-void() ai_team_init;
-void(float team_id, float can_be_leader) ai_team_join;
-entity(float team_id) ai_team_properties;
+float (entity observer, entity observed) AI_TeamIsEnemy;
+void(entity caller, float radius, float by_sight, float by_sound) AI_TeamCallForHelp;
+void() AI_TeamSetAllEnemy;
+void() AI_TeamClearAllEnemy;
+void() AI_TeamInit;
+void(float team_id, float can_be_leader) AI_TeamJoin;
+entity(float team_id) AI_TeamProperties;
 void() dprint_team_stats;
-void(entity whosdead, entity whodunnit) ai_team_update;
-void(float team_id) list_enemy_teams;
+void(entity whosdead, entity whodunnit) AI_TeamUpdate;
+void(float team_id) AI_TeamListEnemy;
 
 /*---private---*/
 
@@ -26,7 +26,6 @@ void(float team_id) list_enemy_teams;
 // .owner        Team leader
 // .ammo_shells  Team size
 // .ammo_nails   Enemy team bitmask
-entity ai_team_none;
 entity ai_team_army_1;
 entity ai_team_army_2;
 entity ai_team_army_3;
@@ -46,37 +45,108 @@ entity ai_team_ogre_3;
 /**
  * Checks if an observed entity belongs to a hostile team
  */
-float (entity observer, entity observed) is_enemy_member = {
+float (entity observer, entity observed) AI_TeamIsEnemy = {
     // two members of the same team cannot be enemies (unless zero)
 
-    if (observer.teamgroup == observed.teamgroup) {
+    // clients are always seen as enemies to monsters (for now)
+    if (observed.ai_team_id == TEAM_CLIENT) {
+        return TRUE;
+    }
+    else if (observed.ai_team_id == TEAM_NONE) {
+        return FALSE;
+    }
+    else if (observer.ai_team_id == observed.ai_team_id) {
         return FALSE;
     }
 
-    // clients are always seen as enemies to monsters (for now)
-    if (observed.teamgroup == TEAM_CLIENT) {
-        return TRUE;
-    }
-
-    return (observer.ai_team.ammo_nails & observed.teamgroup) != 0;
+    return (observer.ai_team.ammo_nails & observed.ai_team_id) != 0;
 
 };
 
-void(entity caller, float radius, float by_sight, float by_sound) ai_team_call_for_help =
-{
-    if (!self.teamgroup || self.teamgroup == TEAM_CLIENT) {
+/**
+ * Check if an entity can respond to the caller
+ *
+ */
+float(entity caller, entity who, float by_sight, float by_sound) AI_CanRespond = {
+    // Ealy out chain
+    if (!(who.flags & FL_MONSTER)) {
+        // Not a monster
+        return FALSE;
+    }
+    else if (who.deadflag != DEAD_NO) {
+        // Dying or dead
+        return FALSE;
+    }
+    else if (who.ai_team_id == TEAM_NONE) {
+        // Has to be teamed
+        return FALSE;
+    }
+    else if (who == caller) {
+        // Logically this can only happen once so it's the least likely
+        return FALSE;
+    }
+
+    // We have a candidate responder
+    // Check if the caller can be seen/heard
+    local float see, hear;
+
+    if (by_sound) {
+        hear = is_audible(caller, who);
+    } else {
+        hear = FALSE;
+    }
+
+    if (!hear) {
+        if (by_sight) {
+            see = is_visible(caller, who);
+        } else {
+            see = FALSE;
+        }
+    }
+
+    if (!(see & hear)) {
+        return FALSE;
+    }
+
+    if (who.enemy) {
+        // If the responder is busy fighting an existing visible enemy...
+        if (is_visible(who.enemy, who)) {
+            return FALSE;
+        }
+    }
+    return TRUE;
+};
+
+void(entity caller, float radius, float by_sight, float by_sound) AI_TeamCallForHelp = {
+    // Use the existing .wait field for rate limiting calls to help
+    if (time < self.wait) {
         return;
     }
+
+    // Unteamed and clients never call for help
+    if (!self.ai_team_id || self.ai_team_id & (TEAM_CLIENT|TEAM_NONE)) {
+        return;
+    }
+
+    // Rate limit
+    self.wait = time + 0.5;
 
     local string t_name, t_mbmr;
 
     if (developer & DV_SHOW_TEAM_AI) {
         t_name = caller.ai_team.netname;
-        t_mbmr = ftos(caller.teammember);
-        dprint6(caller.netname, " [",t_name, "/",t_mbmr,"] has called for assistance\n");
+        t_mbmr = ftos(caller.ai_team_pos);
+        dprint6(
+            caller.netname,
+            " [",
+            t_name,
+            "/",
+            t_mbmr,
+            "] call for help\n"
+        );
     }
 
-    // allow a monster to call for help from any of his team who are within
+    // Allow a monster to call for help from any of his team who are within
     // radius.
     // Additionally, enable sight/sound when activating team mates
 
@@ -84,54 +154,53 @@ void(entity caller, float radius, float by_sight, float by_sound) ai_team_call_f
 
     head = findradius(caller.origin, radius);
     while (head) {
-        // first of all, head must be a living monster
-        if (head.flags & FL_MONSTER && head.deadflag == DEAD_NO && head != caller) {
-            // is caller visible or audible to head ?
-            if (by_sight & is_visible(caller, head) || by_sound & is_audible(caller, head)) {
-                // if head already has an enemy, switch if head cannot see
-                // his current enemy....
 
-                if (!head.enemy || !is_visible(head.enemy, head)) {
-                    t_name = head.ai_team.netname;
-                    t_mbmr = ftos(head.teammember);
-                    // if head is of same team, come to help
-                    if (caller.teamgroup == head.teamgroup) {
-                        if (developer & DV_SHOW_TEAM_AI) {
-                            dprint6(
-                                head.netname,
-                                " [",
-                                t_name,
-                                "/",
-                                t_mbmr,
-                                ": friend] responding\n"
-                            );
-                        }
-                        head.enemy = caller.enemy;
-                        head.think = FoundTarget;
-                    }
-                    // if head sees caller as an enemy, come to kill...ho..ho..ho
-                    else if (is_enemy_member(head, caller)) {
-                        if (developer & DV_SHOW_TEAM_AI) {
-                            dprint6(
-                                head.netname,
-                                " [",
-                                t_name,
-                                "/",
-                                t_mbmr,
-                                ": enemy] responding\n"
-                            );
-                        }
-                        head.enemy = caller;
-                        head.think = FoundTarget;
-                    }
+        if (AI_CanRespond(caller, head, by_sight, by_sound)) {
+
+            t_name = head.ai_team.netname;
+            t_mbmr = ftos(head.ai_team_pos);
+            // if responder is of same team, come to help
+            if (caller.ai_team_id == head.ai_team_id) {
+                if (developer & DV_SHOW_TEAM_AI) {
+                    dprint6(
+                        head.netname,
+                        " [",
+                        t_name,
+                        "/",
+                        t_mbmr,
+                        ":F] responding\n"
+                    );
                 }
+                head.enemy = caller.enemy;
+                head.think = FoundTarget;
+            }
+            // if responder sees caller as an enemy, come to kill...ho..ho..ho
+            else if (AI_TeamIsEnemy(head, caller)) {
+                if (developer & DV_SHOW_TEAM_AI) {
+                    dprint6(
+                        head.netname,
+                        " [",
+                        t_name,
+                        "/",
+                        t_mbmr,
+                        ":E] responding\n"
+                    );
+                }
+                head.enemy = caller;
+                head.think = FoundTarget;
+            } else {
+                dprint2(
+                    head.netname,
+                    " ignoring call\n"
+                );
             }
         }
+
         head = head.chain;
     }
 };
 
-void() ai_team_set_all_enemy = {
+void() AI_TeamSetAllEnemy = {
 
 //    ai_team_none.ammo_nails     = TEAM_ANY;
     ai_team_army_1.ammo_nails   = TEAM_ANY;
@@ -149,7 +218,7 @@ void() ai_team_set_all_enemy = {
     dprint("All teams enemy\n");
 };
 
-void() ai_team_clear_all_enemy = {
+void() AI_TeamClearAllEnemy = {
     ai_team_army_1.ammo_nails   = TEAM_CLIENT;
     ai_team_army_2.ammo_nails   = TEAM_CLIENT;
     ai_team_army_3.ammo_nails   = TEAM_CLIENT;
@@ -168,14 +237,14 @@ void() ai_team_clear_all_enemy = {
 
 entity(float id, float base, string name, float enemy_mask) ai_team_spawn = {
     local entity e;
-    e             = spawn();
-    e.classname   = "ai_team";
-    e.team        = id;
-    e.teamclass   = base;
-    e.netname     = name;
-    e.owner       = world;
-    e.ammo_shells = 0;
-    e.ammo_nails  = enemy_mask;
+    e               = spawn();
+    e.classname     = "ai_team";
+    e.team          = id;
+    e.ai_team_class = base;
+    e.netname       = name;
+    e.owner         = world;
+    e.ammo_shells   = 0;
+    e.ammo_nails    = enemy_mask;
 
     //dprint3("Created team ", e.netname, "\n");
     return e;
@@ -189,7 +258,6 @@ entity(float id, float base, string name, float enemy_mask) ai_team_spawn = {
  * grouped by circular linking.
  */
 void() ai_team_create_all = {
-    ai_team_none     = ai_team_spawn(TEAM_NONE, TEAM_NONE, "unteamed", TEAM_CLIENT);
     ai_team_army_1   = ai_team_spawn(TEAM_ARMY_1, TEAM_ARMY_1, "army_1", TEAM_CLIENT);
     ai_team_army_2   = ai_team_spawn(TEAM_ARMY_2, TEAM_ARMY_1, "army_2", TEAM_CLIENT);
     ai_team_army_3   = ai_team_spawn(TEAM_ARMY_3, TEAM_ARMY_1, "army_3", TEAM_CLIENT);
@@ -219,9 +287,11 @@ void() ai_team_create_all = {
     ai_team_ogre_1.chain   = ai_team_ogre_2;
     ai_team_ogre_2.chain   = ai_team_ogre_3;
     ai_team_ogre_3.chain   = ai_team_ogre_1;
+
+    ai_team_unteamed       = 0;
 };
 
-void() ai_team_init = {
+void() AI_TeamInit = {
 
     // Clears the monster team database
     // Should be called before any monster initialisation (eg worldspawn)
@@ -232,36 +302,36 @@ void() ai_team_init = {
     // since the random monster switching tends to cause a large dispersion
 
     // team maximum size : 0 - 31
-    team_maxmembers      = map_opts & TEAM_MAX_BITS;
+    ai_team_max_size      = map_opts & TEAM_MAX_BITS;
 
     // team dispersion   : 0 - 0.96875
-    team_dispersion      = (map_opts & TEAM_DISP_BITS)/1024;
+    ai_team_spread      = (map_opts & TEAM_DISP_BITS)/1024;
 
     // equivalent class tolerance : 0 - 0.96875
-    same_class_enemy_lim = (map_opts & TEAM_SAME_TOL_BITS)/32768;
-    diff_class_enemy_lim = (map_opts & TEAM_DIFF_TOL_BITS)/1048576;
+    ai_team_tolerance_same = (map_opts & TEAM_SAME_TOL_BITS)/32768;
+    ai_team_tolerance_diff = (map_opts & TEAM_DIFF_TOL_BITS)/1048576;
 
     if (randomgame) {
         // Inc non-equiv tolerance 50% in random game, limit to equiv tolerance
-        diff_class_enemy_lim = 1.5 * diff_class_enemy_lim;
-        if (diff_class_enemy_lim > same_class_enemy_lim) {
-            diff_class_enemy_lim = same_class_enemy_lim;
+        ai_team_tolerance_diff = 1.5 * ai_team_tolerance_diff;
+        if (ai_team_tolerance_diff > ai_team_tolerance_same) {
+            ai_team_tolerance_diff = ai_team_tolerance_same;
         }
     }
 
     local string tmp;
 
     dprint("Monster team parameters initialized\n");
-    tmp = ftos(team_maxmembers);
+    tmp = ftos(ai_team_max_size);
     dprint3("  maximum size : ", tmp, "\n");
 
-    tmp = ftos(100 * team_dispersion);
+    tmp = ftos(100 * ai_team_spread);
     dprint3("  dispersion   : ", tmp, " %\n");
 
-    tmp = ftos(100 * same_class_enemy_lim);
+    tmp = ftos(100 * ai_team_tolerance_same);
     dprint3("  tolerance_sm : ", tmp, " %\n");
 
-    tmp = ftos(100 * diff_class_enemy_lim);
+    tmp = ftos(100 * ai_team_tolerance_diff);
     dprint3("  tolerance_df : ", tmp, " %\n");
 
     dprint("Creating team database\n");
@@ -287,12 +357,9 @@ void() ai_team_init = {
  * The entity is returned because we might want to change this to a dedicated
  * one later. Do not assume what the entity is.
  */
-entity(float team_id) ai_team_properties = {
+entity(float team_id) AI_TeamProperties = {
 
-    if (team_id == TEAM_NONE) {
-        return ai_team_none;
-    }
-    else if (team_id == TEAM_ARMY_1) {
+    if (team_id == TEAM_ARMY_1) {
         return ai_team_army_1;
     }
     else if (team_id == TEAM_ARMY_2) {
@@ -334,28 +401,31 @@ entity(float team_id) ai_team_properties = {
     local entity e;
     e = bodyque_head;
 
-    if (team_id == TEAM_CLIENT) {
-        e.team       = team_id;
-        e.netname    = "client";
-    }
-    else if (team_id == TEAM_WORLD) {
-        e.team       = team_id;
-        e.netname    = "the environment";
-    } else {
-        e.team         = -1;
-        e.netname      = "unknown";
-    }
-
     e.ammo_shells  = 0;
     e.ammo_nails   = 0;
     e.owner        = world;
+    e.ai_team_id   = team_id;
+
+    if (team_id == TEAM_NONE) {
+        e.netname = "unteamed";
+        e.ammo_shells = ai_team_unteamed;
+    }
+    else if (team_id == TEAM_CLIENT) {
+        e.netname    = "client";
+    }
+    else if (team_id == TEAM_WORLD) {
+        e.netname    = "the environment";
+    } else {
+        e.netname    = "unknown";
+    }
+
 
     return e;
 };
 
-void(float team_id) dprint_team = {
+void(float team_id) AI_TeamDump = {
     local entity e_team;
-    e_team = ai_team_properties(team_id);
+    e_team = AI_TeamProperties(team_id);
     if (e_team.ammo_shells) {
         local string tmp;
         tmp  = ftos(e_team.ammo_shells);
@@ -369,27 +439,27 @@ void(float team_id) dprint_team = {
 void() dprint_team_stats = {
     // prints info on the teams
 
-    dprint_team(TEAM_ARMY_1);
-    dprint_team(TEAM_ARMY_2);
-    dprint_team(TEAM_ARMY_3);
-    dprint_team(TEAM_KNIGHT_1);
-    dprint_team(TEAM_KNIGHT_2);
-    dprint_team(TEAM_KNIGHT_3);
-    dprint_team(TEAM_UNDEAD_1);
-    dprint_team(TEAM_UNDEAD_2);
-    dprint_team(TEAM_UNDEAD_3);
-    dprint_team(TEAM_OGRE_1);
-    dprint_team(TEAM_OGRE_2);
-    dprint_team(TEAM_OGRE_3);
+    AI_TeamDump(TEAM_ARMY_1);
+    AI_TeamDump(TEAM_ARMY_2);
+    AI_TeamDump(TEAM_ARMY_3);
+    AI_TeamDump(TEAM_KNIGHT_1);
+    AI_TeamDump(TEAM_KNIGHT_2);
+    AI_TeamDump(TEAM_KNIGHT_3);
+    AI_TeamDump(TEAM_UNDEAD_1);
+    AI_TeamDump(TEAM_UNDEAD_2);
+    AI_TeamDump(TEAM_UNDEAD_3);
+    AI_TeamDump(TEAM_OGRE_1);
+    AI_TeamDump(TEAM_OGRE_2);
+    AI_TeamDump(TEAM_OGRE_3);
 
     local string tmp;
-    tmp = ftos(ai_team_none.ammo_shells);
+    tmp = ftos(ai_team_unteamed);
     dprint3("Unteamed monsters : ", tmp, "\n");
 };
 
 //================================================================================
 
-void(float team_id) list_enemy_teams = {
+void(float team_id) AI_TeamListEnemy = {
     // lists all teams deemed hostile to team_id
 
     if ((team_id == TEAM_NONE) || (team_id == TEAM_WORLD)) {
@@ -401,13 +471,13 @@ void(float team_id) list_enemy_teams = {
     id_bit = 1;
 
     local entity e_team;
-    e_team  = ai_team_properties(team_id);
+    e_team  = AI_TeamProperties(team_id);
     mask    = e_team.armortype;
 
     dprint2(e_team.netname, " enemies : ");
     while (id_bit <= TEAM_OGRE_3) {
         if (mask & id_bit) {
-            e_team = ai_team_properties(id_bit);
+            e_team = AI_TeamProperties(id_bit);
             dprint2(e_team.netname, "\n");
         }
         id_bit = id_bit * 2;
@@ -417,9 +487,9 @@ void(float team_id) list_enemy_teams = {
 /**
  * When a monster is killed, figure out the consequences...
  */
-void(entity e_victim, entity e_killer) ai_team_update = {
-    if (e_victim.ai_team == ai_team_none) {
-        ai_team_none.ammo_shells = ai_team_none.ammo_shells - 1;
+void(entity e_victim, entity e_killer) AI_TeamUpdate = {
+    if (e_victim.ai_team_id == TEAM_NONE) {
+        ai_team_unteamed = ai_team_unteamed - 1;
         return;
     }
 
@@ -444,16 +514,16 @@ void(entity e_victim, entity e_killer) ai_team_update = {
     // blacklist killers team
     if (e_victim.ai_team != e_killer.ai_team) {
         if (
-            e_victim.teamclass != e_killer.teamclass &&
-            random() > diff_class_enemy_lim
+            e_victim.ai_team_class != e_killer.ai_team_class &&
+            random() > ai_team_tolerance_diff
         ) {
-            e_victim.ai_team.ammo_nails = e_victim.ai_team.ammo_nails | e_killer.teamgroup;
+            e_victim.ai_team.ammo_nails = e_victim.ai_team.ammo_nails | e_killer.ai_team_id;
         }
-        else if (is_enemy_member(e_killer, e_victim)) {
-            e_victim.ai_team.ammo_nails = e_victim.ai_team.ammo_nails | e_killer.teamgroup;
+        else if (AI_TeamIsEnemy(e_killer, e_victim)) {
+            e_victim.ai_team.ammo_nails = e_victim.ai_team.ammo_nails | e_killer.ai_team_id;
         }
-        else if (random() > same_class_enemy_lim) {
-            e_victim.ai_team.ammo_nails = e_victim.ai_team.ammo_nails | e_killer.teamgroup;
+        else if (random() > ai_team_tolerance_same) {
+            e_victim.ai_team.ammo_nails = e_victim.ai_team.ammo_nails | e_killer.ai_team_id;
         }
     }
 
@@ -463,11 +533,11 @@ void(entity e_victim, entity e_killer) ai_team_update = {
 
 /**
  * Takes a base team ID and chooses one of the alternatives, based on the
- * team_dispersion chance. The returned ID will be one of the three teams
+ * ai_team_spread chance. The returned ID will be one of the three teams
  * in the same group as the base.
  */
-float(float base_id) ai_team_vary = {
-    if (random() < team_dispersion) {
+float(float base_id) AI_TeamVariation = {
+    if (random() < ai_team_spread) {
         local float r;
         r = random();
         if (r < 0.333) {
@@ -487,12 +557,12 @@ float(float base_id) ai_team_vary = {
  * Adds monster (self) to the specified team
  *
  */
-void(entity e_team) ai_team_add = {
-    e_team.ammo_shells = e_team.ammo_shells + 1;
-    self.teammember    = e_team.ammo_shells;
+void(entity e_team) AI_TeamAdd = {
+    e_team.ammo_shells = e_team.ammo_shells + 1; // Increase the size
+    self.ai_team_pos   = e_team.ammo_shells;     // assign member ID
     self.ai_team       = e_team;
-    self.teamgroup     = e_team.team;
-    self.teamclass     = e_team.teamclass;
+    self.ai_team_id    = e_team.team;
+    self.ai_team_class = e_team.ai_team_class;
 };
 
 /**
@@ -500,24 +570,24 @@ void(entity e_team) ai_team_add = {
  * base team ID and the code will use that or one of the siblings, based on paramters such as
  * size and dispersion.
  */
-void(float team_id, float can_be_leader) ai_team_join = {
+void(float team_id, float can_be_leader) AI_TeamJoin = {
     // called from monster initialisation code
 
     if (team_id != TEAM_NONE) {
 
         // Choose one of the team variations. This is determined by the dispersion settings.
-        team_id = ai_team_vary(team_id);
+        team_id = AI_TeamVariation(team_id);
 
         local float tries;
         local entity e_team;
 
-        e_team = ai_team_properties(team_id);
+        e_team = AI_TeamProperties(team_id);
         tries  = 0;
 
         while (tries < 3) {
-            if (e_team.ammo_shells < team_maxmembers) {
+            if (e_team.ammo_shells < ai_team_max_size) {
                 // We can fit in here.
-                ai_team_add(e_team);
+                AI_TeamAdd(e_team);
 
                 // See if we can be leader...
                 if (
@@ -540,9 +610,13 @@ void(float team_id, float can_be_leader) ai_team_join = {
                 tries  = tries + 1;
             }
         }
+    } else {
+        // Unteamed
+        ai_team_unteamed   = ai_team_unteamed + 1;
+        self.ai_team_pos   = ai_team_unteamed;
+        self.ai_team       = world;
+        self.ai_team_id    = TEAM_NONE;
+        self.ai_team_class = TEAM_NONE;
     }
-
-    // Add to the unteamed team
-    ai_team_add(ai_team_none);
 };
 

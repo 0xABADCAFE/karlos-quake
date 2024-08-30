@@ -180,11 +180,7 @@ void() tbaby_die2 = [ $exp, tbaby_run1 ] {
 
    sound(self, CHAN_VOICE, "blob/death1.wav", 1, ATTN_NORM);
    self.origin = self.origin - 8 * normalize(self.velocity);
-   WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-   WriteByte(MSG_BROADCAST, TE_TAREXPLOSION);
-   WriteCoord(MSG_BROADCAST, self.origin_x);
-   WriteCoord(MSG_BROADCAST, self.origin_y);
-   WriteCoord(MSG_BROADCAST, self.origin_z);
+   Net_TempEntity(self.origin, TE_TAREXPLOSION);
    self.deadflag = DEAD_DEAD;
    BecomeExplosion();
 };
@@ -228,6 +224,6 @@ void() monster_tarbaby = {
     self.th_die     = tbaby_die1;
     self.think      = monster_walk;
 
-    ai_team_join(TEAM_NONE, FALSE); // cannot be a team leader
+    AI_TeamJoin(TEAM_NONE, FALSE); // cannot be a team leader
 };
 

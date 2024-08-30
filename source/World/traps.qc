@@ -22,7 +22,7 @@ void() fire_touch;
 void() misc_fireball = {
     precache_model("progs/lavaball.mdl");
     precache_sound("boss1/throw.wav");
-    self.teamgroup = TEAM_WORLD;
+    self.ai_team_id = TEAM_WORLD;
     self.netname   = "a lavaball";
     self.deadflag  = DEAD_DEAD;
     self.classname = "fireball";
@@ -98,7 +98,7 @@ void() misc_explobox = {
         dprint3("Explosive box fell out of level at ", vtos(self.origin), "\n");
         remove(self);
     }
-    self.teamgroup = TEAM_WORLD;
+    self.ai_team_id = TEAM_WORLD;
     self.netname   = "an explosive box";
 };
 
@@ -125,7 +125,7 @@ void() misc_explobox2 = {
         dprint3("Explosive box fell out of level at ", vtos(self.origin), "\n");
         remove(self);
     }
-    self.teamgroup = TEAM_WORLD;
+    self.ai_team_id = TEAM_WORLD;
     self.netname   = "an explosive box";
 };
 
@@ -162,7 +162,7 @@ void() shooter_think = {
 
 void() trap_spikeshooter = {
     self.deadflag  = DEAD_DEAD;
-    self.teamgroup = TEAM_WORLD;
+    self.ai_team_id = TEAM_WORLD;
     self.netname   = "a gun trap";
 
     SetMovedir();
@@ -195,7 +195,7 @@ void(entity e, string m) flame_init = {
     precache_sound("ambience/fire1.wav");
     ambientsound(e.origin, "ambience/fire1.wav", 0.5, ATTN_STATIC);
 
-    e.teamgroup = TEAM_WORLD;
+    e.ai_team_id = TEAM_WORLD;
     e.netname   = "fire";
     e.deadflag  = DEAD_DEAD;
 

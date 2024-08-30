@@ -17,7 +17,7 @@ void() monster_wizard ;
 
    Specifics..
 
-      Replaced the shootin function with one using ai_shoot_ahead function, thus
+      Replaced the shootin function with one using AI_ShootAhead function, thus
    allowing speculative shooting
 
 =========================================================================================*/
@@ -63,7 +63,7 @@ void(vector org) launch_snot = {
     setsize(newmis, VEC_ZERO, VEC_ZERO);
     setorigin(newmis, org);
 
-    ai_shoot_ahead(self.enemy, newmis, 500 + 200 * skill);
+    AI_ShootAhead(self.enemy, newmis, 500 + 200 * skill);
 };
 
 void() wiz_run1;
@@ -368,5 +368,5 @@ void() monster_wizard = {
     self.th_die     = wiz_die;
     self.think      = monster_fly;
 
-    ai_team_join(TEAM_UNDEAD_1, TRUE); // can be a team leader
+    AI_TeamJoin(TEAM_UNDEAD_1, TRUE); // can be a team leader
 };

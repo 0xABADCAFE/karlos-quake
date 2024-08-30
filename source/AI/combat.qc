@@ -88,7 +88,7 @@ void(entity targ, entity attacker) Killed = {
         WriteByte(MSG_ALL, SVC_KILLEDMONSTER);
         self.deadflag = DEAD_DYING;
         monster_death_use();
-        ai_team_update(targ, attacker);
+        AI_TeamUpdate(targ, attacker);
     }
     else if (self.flags & FL_CLIENT) {
         ClientObituary(self, attacker);
@@ -215,10 +215,10 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage = {
             screen_message(targ, "warning : condition critical\n", MSG_WARN, TRUE);
         }
         else if (targ.health < 40) {
-            screen_message (targ, "servere injuries sustained\n", MSG_WARN, TRUE);
+            screen_message(targ, "servere injuries sustained\n", MSG_WARN, TRUE);
         }
         else if (targ.health < 50) {
-            screen_message (targ, "heavy injuries sustained\n", MSG_WARN, TRUE);
+            screen_message(targ, "heavy injuries sustained\n", MSG_WARN, TRUE);
         }
     }
 
@@ -236,22 +236,22 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage = {
             // || (self.classname == "monster_army" ) )
 
             // Karlos team ai test
-            // get mad at different teams, based on diff_class_enemy_lim...
+            // get mad at different teams, based on ai_team_tolerance_diff...
             // and reduce the likelyhood of getting mad at an equivalent team
-            // based on same_class_enemy_lim
+            // based on ai_team_tolerance_same
 
-            if (self.teamgroup != attacker.teamgroup) {
+            if (self.ai_team_id != attacker.ai_team_id) {
                 // Ok, so we are talking different teams here...
-                // get mad if teams diff AND chance > diff_class_enemy_lim
-                //     OR if teams same AND chance > same_class_enemy_lim
+                // get mad if teams diff AND chance > ai_team_tolerance_diff
+                //     OR if teams same AND chance > ai_team_tolerance_same
                 if (
                     (
-                        self.teamclass != attacker.teamclass &&
-                        random() > diff_class_enemy_lim
+                        self.ai_team_class != attacker.ai_team_class &&
+                        random() > ai_team_tolerance_diff
                     ) ||
                     (
-                        self.teamclass == attacker.teamclass &&
-                        random() > same_class_enemy_lim
+                        self.ai_team_class == attacker.ai_team_class &&
+                        random() > ai_team_tolerance_same
                     )
                 ) {
                     if (self.enemy.classname == "player") {
@@ -263,8 +263,8 @@ void(entity targ, entity inflictor, entity attacker, float damage) T_Damage = {
             }
         }
         // team assistance stuff
-        if (ai_judge_hazard(attacker) > 25 * random() || self.health <= 25) {
-            ai_team_call_for_help(self, 700, TRUE, TRUE);
+        if (AI_JudgeHazard(attacker) > 25 * random() || self.health <= 25) {
+            AI_TeamCallForHelp(self, 700, TRUE, TRUE);
         }
     }
 

@@ -205,7 +205,7 @@ void() worldspawn = {
 
     // set up world definition for team ai
 
-    self.teamgroup = TEAM_WORLD;
+    self.ai_team_id = TEAM_WORLD;
 
     InitBodyQue();
 
@@ -377,7 +377,7 @@ void() worldspawn = {
     if (cvar("deathmatch") == 0) {
         // initialize monsters in a non-deathmatch game
         clear_monster_caches();
-        ai_team_init();
+        AI_TeamInit();
     }
 
     // Handle server master stuff

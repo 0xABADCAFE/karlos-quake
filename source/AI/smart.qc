@@ -4,15 +4,15 @@
 
 // public function prototypes
 
-vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void() too_far) ai_predict_aim;
-void(entity targ, entity projectile, float proj_speed) ai_shoot_ahead;
+vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void() too_far) AI_PredictAim;
+void(entity targ, entity projectile, float proj_speed) AI_ShootAhead;
 
 
-float(entity what) ai_judge_hazard;
-entity (entity who, float viewdist) ai_pick_new_target;
+float(entity what) AI_JudgeHazard;
+entity (entity who, float viewdist) AI_PickNewTarget;
 
-void(entity monster, entity startler) ai_alert;
-void(entity thing, entity initiator, float radius, float by_sight, float by_sound) ai_radius_alert;
+void(entity monster, entity startler) AI_Alert;
+void(entity thing, entity initiator, float radius, float by_sight, float by_sound) AI_RadiusAlert;
 float(entity thing, entity to) is_visible;
 float(entity thing, entity to) is_audible;
 
@@ -21,7 +21,7 @@ float(entity thing, entity to) is_audible;
 
 //   Thanks to Mike Allan for help with brainstorming algorithm...
 //   self is attackin entity
-vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void() too_far) ai_predict_aim = {
+vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void() too_far) AI_PredictAim = {
 
     local vector target_velocity, predicted_target;
     local float movetime, time_of_flight, attack_time, target_dist, target_speed, predicted_target_dist;
@@ -33,7 +33,7 @@ vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void
 
     if (target_dist < 200 || target_speed < 100) {
         // target is close or moving unpredictably
-        // dprint("ai_predict_aim() : shoot at target immediately\n");
+        // dprint("AI_PredictAim() : shoot at target immediately\n");
 
         self.think = shootfunc;
         self.nextthink = time + 0.01;
@@ -46,7 +46,7 @@ vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void
         // too far away for prediction to be useful - should't happed normally
         // beacuse normal AI routine would realise this before attacking
         // but may be useful for slower projectiles
-        // dprint("ai_predict_aim() : target distant\n");
+        // dprint("AI_PredictAim() : target distant\n");
 
         self.think     = too_far;
         self.nextthink = time + 0.01;
@@ -89,7 +89,7 @@ vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void
     self.think     = shootfunc;
     self.nextthink = time + attack_time;
 
-    // dprint("ai_predict_aim() shoot at : ");
+    // dprint("AI_PredictAim() shoot at : ");
     // dprint(vtos(predicted_target));
     // dprint(" in ");
     // dprint(ftos(attack_time));
@@ -99,7 +99,7 @@ vector (entity targ, float proj_speed, float t_intercept, void() shootfunc, void
 };
 
 
-void(entity targ, entity projectile, float proj_speed) ai_shoot_ahead = {
+void(entity targ, entity projectile, float proj_speed) AI_ShootAhead = {
    local vector   predicted_target, target_velocity, dir;
    local float t_intercept, target_dist, predicted_target_dist;
 
@@ -129,11 +129,11 @@ void(entity targ, entity projectile, float proj_speed) ai_shoot_ahead = {
    projectile.angles   = vectoangles(dir);
 };
 
-void(entity monster, entity startler) ai_alert = {
+void(entity monster, entity startler) AI_Alert = {
     if (deathmatch) {
         return;
     }
-    // dprint ("ai_alert()\n");
+    // dprint ("AI_Alert()\n");
     // function to alert a monster, like monster_use, but not based on self.
 
     // startler must a monster or client entity
@@ -165,14 +165,14 @@ void(entity monster, entity startler) ai_alert = {
     // allow startled monster to immediately go nuts if the startler is from
     // an enemy team
 
-    if (is_enemy_member(monster, startler)) {
+    if (AI_TeamIsEnemy(monster, startler)) {
         // use this enemy
         monster.enemy        = startler;
         monster.think        = FoundTarget;
     }
 };
 
-void(entity thing, entity initiator, float radius, float by_sight, float by_sound) ai_radius_alert = {
+void(entity thing, entity initiator, float radius, float by_sight, float by_sound) AI_RadiusAlert = {
     if (deathmatch) {
         return;
     }
@@ -189,7 +189,7 @@ void(entity thing, entity initiator, float radius, float by_sight, float by_soun
                 (by_sight & is_visible(thing, head)) ||
                 (by_sound & is_audible(thing, head))
             ) {
-                ai_alert(head, initiator);
+                AI_Alert(head, initiator);
             }
         }
         head = head.chain;
@@ -235,9 +235,9 @@ float (entity thing, entity to) is_audible = {
 
     local float    radius, chance;
 
-    radius = vlen(thing.origin - to.origin) / 700;
+    radius = vlen(thing.origin - to.origin);
 
-    chance = 1 / radius;
+    chance = 700 / radius;
     if (chance > 1) {
         chance = 1;
     }
@@ -259,10 +259,11 @@ float (entity thing, entity to) is_audible = {
 };
 
 
-float(entity what) ai_judge_hazard= {
+float(entity what) AI_JudgeHazard= {
     // returns a value based on how dangerous 'what' is...
     // monsters
     // TODO - move values to an unused entity field
+    // TODO - Include health assessment
     if (what.flags & FL_MONSTER) {
         if (what.classname == "monster_shambler") {
             return 50;
@@ -301,7 +302,7 @@ float(entity what) ai_judge_hazard= {
     else return 0;
 };
 
-entity(entity who, float viewdist) ai_pick_new_target = {
+entity(entity who, float viewdist) AI_PickNewTarget = {
     // This function will allow monsters which have killed or lost their
     // existing enemies to look around their immediate vicinity for a
     // new target.
@@ -334,17 +335,15 @@ entity(entity who, float viewdist) ai_pick_new_target = {
 
     head = findradius(who.origin, viewdist);
 
+    // TODO does this result in passification
     while (head) {
         if ((head.flags & (FL_CLIENT | FL_MONSTER)) && head.deadflag == DEAD_NO) {
-            if ((is_enemy_member(who, head) == TRUE) && is_visible(head, who)) {
-                if (is_enemy_member(who, head) == FALSE) {
-                    dprint("AI error : non enemy flagged as hostile !\n");
-                }
+            if ((AI_TeamIsEnemy(who, head) == TRUE) && is_visible(head, who)) {
 
                 target_suit = (best_target.health / 400) +
-                              (ai_judge_hazard(best_target)/100);
+                              (AI_JudgeHazard(best_target)/100);
                 check_suit  = (head.health / 400) +
-                              (ai_judge_hazard(head)/100);
+                              (AI_JudgeHazard(head)/100);
                 if (check_suit < target_suit) {
                     best_target = head;
                 }

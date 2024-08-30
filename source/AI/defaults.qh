@@ -32,12 +32,12 @@
 // If the latter route is taken, individuals will still recognise each other and
 // avoid attacking, but will cease to share info on enemies etc..
 
-.float teamgroup;     // The team id a monster belongs to
+.float ai_team_id;    // The team id a monster belongs to
                       // Will be zero for loners....
 
-.float teamclass;     // the basic class of a monsters team
+.float ai_team_class; // the basic class of a monsters team
                       // used to recognise equivalent teams
-.float teammember;    // actual position within the team
+.float ai_team_pos;   // actual position within the team
 
 .entity ai_team;
 
@@ -51,19 +51,20 @@ float TEAM_DISP_BITS       = 992;       // team dispersion
 float TEAM_SAME_TOL_BITS   = 31744;      // how tolerant of same team class
 float TEAM_DIFF_TOL_BITS   = 1015808;    // how tolerant of diff team class
 
-// default team_maxmembers      = 16
-// default team_dispersion      = 0.25
-// default same_class_enemy_lim = 0.75   -- higher == more tolerant
-// default diff_class_enemy_lim = 0.25
+// default ai_team_max_size      = 16
+// default ai_team_spread      = 0.25
+// default ai_team_tolerance_same = 0.75   -- higher == more tolerant
+// default ai_team_tolerance_diff = 0.25
 
-float team_maxmembers;       // maximum team size
+float ai_team_unteamed;      // Number of unteamed monsters
+float ai_team_max_size;      // maximum team size
 
-float team_dispersion;       // how closely packed teams are (0.0 - 1.0)
+float ai_team_spread;        // how closely packed teams are (0.0 - 1.0)
                              // 0.0 : follows placement order (linear)
                              // 1.0 : totally random ordering
 
-float same_class_enemy_lim;  // how tolerant of equivalent teams
-float diff_class_enemy_lim;  // how tolerant of non-equivalent teams
+float ai_team_tolerance_same;  // how tolerant of equivalent teams
+float ai_team_tolerance_diff;  // how tolerant of non-equivalent teams
 
 float TEAM_WORLD  = 0;    // world / traps have zero id to stop monsters getting
                           // mad at them

@@ -458,11 +458,7 @@ void() BecomeExplosion = {
             particle (self.origin, VEC_ZERO, 75, 255);
         }
         else {
-            WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-            WriteByte(MSG_BROADCAST, TE_EXPLOSION);
-            WriteCoord(MSG_BROADCAST, self.origin_x);
-            WriteCoord(MSG_BROADCAST, self.origin_y);
-            WriteCoord(MSG_BROADCAST, self.origin_z);
+            Net_TempEntity(self.origin, TE_EXPLOSION);
         }
     }
 
@@ -590,11 +586,7 @@ void() shrapnel_touch = {
     // on average, 1/5 will give a 'tink' effect...
 
     if (random() < 0.2) {
-        WriteByte(MSG_BROADCAST, SVC_TEMPENTITY);
-        WriteByte(MSG_BROADCAST, TE_SPIKE);
-        WriteCoord(MSG_BROADCAST, self.origin_x);
-        WriteCoord(MSG_BROADCAST, self.origin_y);
-        WriteCoord(MSG_BROADCAST, self.origin_z);
+        Net_TempEntity(self.origin, TE_SPIKE);
     }
     /*
     if (random() > 0.6)
