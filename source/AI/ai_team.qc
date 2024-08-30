@@ -605,6 +605,8 @@ void(float team_id, float can_be_leader) AI_TeamJoin = {
                 tries  = tries + 1;
             }
         }
+        // Having failed to assign to a class based team, allow that to grow.
+        ai_team_max_size = ai_team_max_size + 1;
     } else {
         // Unteamed
         ai_team_unteamed   = ai_team_unteamed + 1;
